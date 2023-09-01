@@ -1,12 +1,15 @@
 package com.ssafy.tott.housegeo.domain;
 
 import com.ssafy.tott.global.domain.BaseEntity;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.region.domain.Region;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -36,4 +39,7 @@ public class HouseGeo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
+
+    @OneToMany(mappedBy = "houseGeo", fetch = FetchType.LAZY)
+    private List<HouseDetail> houseDetailList = new ArrayList<>();
 }

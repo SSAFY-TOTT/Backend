@@ -5,6 +5,7 @@ import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
+import com.ssafy.tott.wishlist.domain.Wishlist;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,6 +40,9 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Account> accounts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Wishlist> wishlists = new ArrayList<>();
 
     @Builder
     public Member(String name, Email email, Password password, PhoneNumber phoneNumber, Long creditLine) {
