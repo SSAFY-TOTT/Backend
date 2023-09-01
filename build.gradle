@@ -44,11 +44,11 @@ dependencies {
     /* querydsl End */
 }
 
-tasks.named('test') {
+/* querydsl Start */
+test {
     useJUnitPlatform()
 }
 
-/* querydsl Start */
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
