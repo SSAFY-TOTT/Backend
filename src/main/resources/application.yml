@@ -1,0 +1,5 @@
+spring:
+  jpa:
+    open-in-view: true
+  config:
+    import: security/application-database.yml
