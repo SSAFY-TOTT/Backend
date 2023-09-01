@@ -1,11 +1,14 @@
 package com.ssafy.tott.region.domain;
 
 import com.ssafy.tott.global.domain.BaseEntity;
+import com.ssafy.tott.housegeo.domain.HouseGeo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -29,6 +32,9 @@ public class Region extends BaseEntity {
 
     @Column(length = 50, nullable = false)
     private String legalDongName;
+
+    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
+    private List<HouseGeo> houseGeoList = new ArrayList<>();
 
     public Region(String districtCode, String districtName, String legalDongCode, String legalDongName) {
         this.districtCode = districtCode;
