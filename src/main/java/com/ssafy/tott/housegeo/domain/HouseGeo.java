@@ -31,11 +31,17 @@ public class HouseGeo extends BaseEntity {
     @Column(nullable = false)
     private double latitude;
 
-    @Column(name = "main_number", nullable = false)
-    private int mainNumber; // 본번
+    @Column(name = "main_number", length = 10, nullable = false)
+    private String mainNumber; // 본번
 
-    @Column(name = "sub_number", nullable = false)
-    private int subNumber;  // 부번
+    @Column(name = "sub_number", length = 10, nullable = false)
+    private String subNumber;  // 부번
+
+    @Column(nullable = false)
+    private int constructionYear;
+
+    @Column(length = 30, nullable = false)
+    private String buildingName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
@@ -45,7 +51,8 @@ public class HouseGeo extends BaseEntity {
     private List<HouseDetail> houseDetailList = new ArrayList<>();
 
     @Builder
-    public HouseGeo(String geoIdentifier, double longitude, double latitude, int mainNumber, int subNumber, Region region) {
+    public HouseGeo(String geoIdentifier, double longitude, double latitude, String mainNumber, String subNumber,
+                    Region region) {
         this.geoIdentifier = geoIdentifier;
         this.longitude = longitude;
         this.latitude = latitude;
