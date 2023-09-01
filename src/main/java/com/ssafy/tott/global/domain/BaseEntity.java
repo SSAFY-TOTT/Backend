@@ -18,12 +18,12 @@ import java.time.LocalDate;
 public abstract class BaseEntity {
     @CreatedBy
     @Column(nullable = false)
-    private long createdMemberId;
+    private int createdMemberId;
     @CreatedDate
     @Column(nullable = false)
     private LocalDate createdDate;
     @LastModifiedBy
-    private long updatedMemberId;
+    private int updatedMemberId;
     @LastModifiedDate
     private LocalDate updatedDate;
 }

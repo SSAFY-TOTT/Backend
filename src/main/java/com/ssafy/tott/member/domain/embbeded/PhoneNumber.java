@@ -8,6 +8,6 @@ import javax.persistence.Embeddable;
 @Getter
 @Embeddable
 public class PhoneNumber {
-    @Column(unique = true, nullable = false)
+    @Column(name = "phone_number", unique = true, nullable = false)
     private String value;
 }

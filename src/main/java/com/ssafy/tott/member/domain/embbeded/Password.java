@@ -8,6 +8,6 @@ import javax.persistence.Embeddable;
 @Getter
 @Embeddable
 public class Password {
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String value;
 }
