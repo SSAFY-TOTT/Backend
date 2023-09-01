@@ -82,3 +82,19 @@ Resolves: #123
 Ref: #456
 Related to: #48, #45
 ```
+
+## Branch Naming
+
+브랜치의 이름은 다음과 같이 작성합니다.
+`{github tag}/#{이슈 번호}`
+
+1. github tag 는 `feature`, `docs`, `chore`, `fix` 등이 있습니다.
+2. 이슈 번호는 관련된 이슈 번호를 작성하면 됩니다.
+
+### 예시
+
+---
+
+해당 내용이 기능 구현이라면 `feature/#{이슈 번호}`로 작성합니다.
+> `feature/#1` 와 같습니다.
+
