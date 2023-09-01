@@ -30,4 +30,17 @@ public class HouseDetail extends BaseEntity {
 
     @OneToMany(mappedBy = "houseDetail", fetch = FetchType.LAZY)
     private List<Wishlist> wishlists = new ArrayList<>();
+
+    public HouseDetail(int id, long price, double area, int floor, HouseGeo houseGeo) {
+        this.id = id;
+        this.price = price;
+        this.area = area;
+        this.floor = floor;
+        addRelatedByGeo(houseGeo);
+    }
+
+    private void addRelatedByGeo(HouseGeo houseGeo) {
+        this.houseGeo = houseGeo;
+        houseGeo.getHouseDetailList().add(this);
+    }
 }

@@ -4,6 +4,7 @@ import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.region.domain.Region;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,4 +43,19 @@ public class HouseGeo extends BaseEntity {
 
     @OneToMany(mappedBy = "houseGeo", fetch = FetchType.LAZY)
     private List<HouseDetail> houseDetailList = new ArrayList<>();
+
+    @Builder
+    public HouseGeo(String geoIdentifier, double longitude, double latitude, int mainNumber, int subNumber, Region region) {
+        this.geoIdentifier = geoIdentifier;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.mainNumber = mainNumber;
+        this.subNumber = subNumber;
+        addRelatedByRegion(region);
+    }
+
+    public void addRelatedByRegion(Region region) {
+        this.region = region;
+        region.getHouseGeoList().add(this);
+    }
 }
