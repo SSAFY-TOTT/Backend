@@ -60,4 +60,28 @@ class EmailTest {
         assertThatThrownBy(() -> Email.from(inValidEmailString))
                 .isInstanceOf(RuntimeException.class);
     }
+
+    @DisplayName("이메일 로컬 영역의 길이가 올바르지 않으면 예외를 던진다.")
+    @Test
+    void fail04() {
+        /* Given */
+        String invalidEmailString = "sinhanbank20230915@gmail.com";
+
+        /* When */
+        /* Then */
+        assertThatThrownBy(() -> Email.from(invalidEmailString))
+                .isInstanceOf(RuntimeException.class);
+    }
+
+    @DisplayName("이메일 도메인 영역의 길이가 올바르지 않으면 예외를 던진다.")
+    @Test
+    void fail05() {
+        /* Given */
+        String invalidEmailString = "sinhan0915@gmail.sinhan";
+
+        /* When */
+        /* Then */
+        assertThatThrownBy(() -> Email.from(invalidEmailString))
+                .isInstanceOf(RuntimeException.class);
+    }
 }
