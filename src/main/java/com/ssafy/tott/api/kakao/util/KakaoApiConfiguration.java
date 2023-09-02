@@ -1,6 +1,6 @@
-package com.ssafy.tott.kakao.util;
+package com.ssafy.tott.api.kakao.util;
 
-import com.ssafy.tott.kakao.property.KakaoProperties;
+import com.ssafy.tott.api.kakao.property.KakaoProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

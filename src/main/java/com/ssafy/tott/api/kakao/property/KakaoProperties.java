@@ -1,4 +1,4 @@
-package com.ssafy.tott.kakao.property;
+package com.ssafy.tott.api.kakao.property;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

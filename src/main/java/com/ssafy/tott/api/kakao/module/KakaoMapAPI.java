@@ -1,7 +1,7 @@
-package com.ssafy.tott.kakao.module;
+package com.ssafy.tott.api.kakao.module;
 
-import com.ssafy.tott.kakao.data.KakaoAPIResponse;
-import com.ssafy.tott.kakao.property.KakaoAddressProperties;
+import com.ssafy.tott.api.kakao.data.KakaoAPIResponse;
+import com.ssafy.tott.api.kakao.property.KakaoAddressProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

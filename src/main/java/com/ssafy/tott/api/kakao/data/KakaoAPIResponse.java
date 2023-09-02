@@ -1,4 +1,4 @@
-package com.ssafy.tott.kakao.data;
+package com.ssafy.tott.api.kakao.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
