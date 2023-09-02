@@ -24,7 +24,8 @@ class PasswordTest {
 
     @DisplayName("올바른 형식의 비밀번호를 입력하지 않으면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(strings = {"password1234!@", "Password1234", "Password!@", "비밀번호1234!@", "Password1234_"})
+    @ValueSource(strings = {"password1234!@", "PASSWORD1234!@", "비밀번호1234!@",
+            "Password1234", "Password!@", "Password1234_"})
     void fail(String invalidPassword) {
         /* Given */
         /* When */
