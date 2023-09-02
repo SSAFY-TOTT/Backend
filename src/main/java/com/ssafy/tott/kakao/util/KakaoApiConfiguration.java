@@ -1,6 +1,6 @@
-package com.ssafy.tott.scheduler.util;
+package com.ssafy.tott.kakao.util;
 
-import com.ssafy.tott.scheduler.property.KakaoProperties;
+import com.ssafy.tott.kakao.property.KakaoProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

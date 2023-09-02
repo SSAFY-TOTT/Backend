@@ -1,4 +1,4 @@
-package com.ssafy.tott.scheduler.property;
+package com.ssafy.tott.kakao.property;
 
 import lombok.Getter;
 import org.springframework.context.annotation.Configuration;
