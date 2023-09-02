@@ -28,13 +28,9 @@ public class Email {
     }
 
     private static void validateEmailFormat(String email) {
-        if (isInvalidEmail(email)) {
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
             /* TODO: 2023/09/02 추후 `Custom Exception`으로 수정 */
             throw new RuntimeException();
         }
-    }
-
-    private static boolean isInvalidEmail(String email) {
-        return !EMAIL_PATTERN.matcher(email).matches();
     }
 }

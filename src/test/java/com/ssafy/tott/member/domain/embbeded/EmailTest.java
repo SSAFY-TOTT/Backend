@@ -2,6 +2,8 @@ package com.ssafy.tott.member.domain.embbeded;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,60 +27,12 @@ class EmailTest {
         );
     }
 
-    @DisplayName("이메일 로컬 영역이 올바르지 않으면 예외를 던진다.")
-    @Test
-    void fail01() {
+    @DisplayName("올바른 형식의 이메일을 입력하지 않으면 예외를 던진다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"신한0915@gmail.com", "sinhan0915gmail.com", "sinhan0915@gmailcom",
+            "sinhanbank20230915@gmail.com", "sinhan0915@gmail.sinhan"})
+    void fail(String invalidEmailString) {
         /* Given */
-        String invalidEmailString = "신한0915@gmail.com";
-
-        /* When */
-        /* Then */
-        assertThatThrownBy(() -> Email.from(invalidEmailString))
-                .isInstanceOf(RuntimeException.class);
-    }
-
-    @DisplayName("이메일에 @가 없으면 예외를 던진다.")
-    @Test
-    void fail02() {
-        /* Given */
-        String inValidEmailString = "sinhan0915gmail.com";
-
-        /* When */
-        /* Then */
-        assertThatThrownBy(() -> Email.from(inValidEmailString))
-                .isInstanceOf(RuntimeException.class);
-    }
-
-    @DisplayName("이메일 도메인 영역이 올바르지 않으면 예외를 던진다.")
-    @Test
-    void fail03() {
-        /* Given */
-        String inValidEmailString = "sinhan0915@gmailcom";
-
-        /* When */
-        /* Then */
-        assertThatThrownBy(() -> Email.from(inValidEmailString))
-                .isInstanceOf(RuntimeException.class);
-    }
-
-    @DisplayName("이메일 로컬 영역의 길이가 올바르지 않으면 예외를 던진다.")
-    @Test
-    void fail04() {
-        /* Given */
-        String invalidEmailString = "sinhanbank20230915@gmail.com";
-
-        /* When */
-        /* Then */
-        assertThatThrownBy(() -> Email.from(invalidEmailString))
-                .isInstanceOf(RuntimeException.class);
-    }
-
-    @DisplayName("이메일 도메인 영역의 길이가 올바르지 않으면 예외를 던진다.")
-    @Test
-    void fail05() {
-        /* Given */
-        String invalidEmailString = "sinhan0915@gmail.sinhan";
-
         /* When */
         /* Then */
         assertThatThrownBy(() -> Email.from(invalidEmailString))
