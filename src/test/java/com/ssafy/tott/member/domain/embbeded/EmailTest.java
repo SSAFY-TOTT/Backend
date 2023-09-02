@@ -15,7 +15,7 @@ class EmailTest {
     @Test
     void success() {
         /* Given */
-        String validEmailString = "sinhan0915@gmail.com";
+        String validEmailString = "shinhan0915@gmail.com";
 
         /* When */
         Email email = Email.from(validEmailString);
@@ -29,8 +29,8 @@ class EmailTest {
 
     @DisplayName("올바른 형식의 이메일을 입력하지 않으면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(strings = {"신한0915@gmail.com", "sinhan0915gmail.com", "sinhan0915@gmailcom",
-            "sinhanbank20230915@gmail.com", "sinhan0915@gmail.sinhan"})
+    @ValueSource(strings = {"신한0915@gmail.com", "shinhan0915gmail.com", "shinhan0915@gmailcom",
+            "shinhanbank20230915@gmail.com", "shinhan0915@gmail.sinhan"})
     void fail(String invalidEmailString) {
         /* Given */
         /* When */
