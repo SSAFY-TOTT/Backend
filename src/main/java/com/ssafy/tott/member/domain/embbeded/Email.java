@@ -10,4 +10,12 @@ import javax.persistence.Embeddable;
 public class Email {
     @Column(name = "email", unique = true, nullable = false)
     private String value;
+
+    private Email(String email) {
+        value = email;
+    }
+
+    public static Email from(String email) {
+        return new Email(email);
+    }
 }
