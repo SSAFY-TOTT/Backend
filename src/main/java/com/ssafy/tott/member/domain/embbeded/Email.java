@@ -28,13 +28,13 @@ public class Email {
     }
 
     private static void validateEmailFormat(String email) {
-        if (isNotValidEmail(email)) {
+        if (isInvalidEmail(email)) {
             /* TODO: 2023/09/02 추후 `Custom Exception`으로 수정 */
             throw new RuntimeException();
         }
     }
 
-    private static boolean isNotValidEmail(String email) {
+    private static boolean isInvalidEmail(String email) {
         return !EMAIL_PATTERN.matcher(email).matches();
     }
 }
