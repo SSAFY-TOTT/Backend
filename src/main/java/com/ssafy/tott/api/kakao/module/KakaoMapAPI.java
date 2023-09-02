@@ -4,19 +4,13 @@ import com.ssafy.tott.api.kakao.data.KakaoAPIResponse;
 import com.ssafy.tott.api.kakao.property.KakaoAddressProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/kakao")
 public class KakaoMapAPI {
     private final WebClient kakaoWebClient;
     private final KakaoAddressProperties kakaoAddressProperties;
 
-    @GetMapping("/address")
     public KakaoAPIResponse kakaoAddressSearch(String roadAddress) {
         /* roadAddress : 지번 ( 구 / 동 / 본번-부번 ) */
         return kakaoWebClient.method(kakaoAddressProperties.getMethod())
