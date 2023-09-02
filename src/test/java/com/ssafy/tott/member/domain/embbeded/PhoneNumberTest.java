@@ -28,7 +28,7 @@ class PhoneNumberTest {
 
     @DisplayName("올바른 형식의 전화번호를 입력하지 않으면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(strings = {"123456789", "일이삼사오육칠팔", "1234567*", "abcdefggh"})
+    @ValueSource(strings = {"123456789", "일이삼사오육칠팔", "1234567*", "abcdefggh", "1234"})
     void fail(String invalidPhoneNumber) {
         /* Given */
         /* When */
