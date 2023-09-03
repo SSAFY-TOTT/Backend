@@ -1,22 +1,20 @@
-package com.ssafy.tott.api.shinhan.service.transfer1;
+package com.ssafy.tott.api.shinhan.service.searchname;
 
 import com.ssafy.tott.api.CoreAPI;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
-import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
+import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 @RequiredArgsConstructor
 @Component
-public class ShinhanBankTransfer1API implements CoreAPI {
-
+public class ShinhanBankSearchNameAPI implements CoreAPI {
     private final ShinhanBankWebClientFactory shinhanBankWebClientFactory;
 
-    @Value("${SHINHAN_BANK.API.URI.1TRANSFER}")
+    @Value("${SHINHAN_BANK.API.URI.SEARCH_NAME}")
     private String uri;
 
     @Override
@@ -25,7 +23,7 @@ public class ShinhanBankTransfer1API implements CoreAPI {
         return webClient.post()
                 .bodyValue(json)
                 .retrieve()
-                .bodyToMono(ShinhanBankTransfer1Response.class)
+                .bodyToMono(ShinhanBankSearchNameResponse.class)
                 .block();
     }
 }
