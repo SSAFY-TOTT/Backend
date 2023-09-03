@@ -16,11 +16,11 @@ public class HouseAPI {
 
     public RentApiModel fetchAPI(int start, int end) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
-        urlBuilder.append("/" +  URLEncoder.encode(key,"UTF-8") );
-        urlBuilder.append("/" +  URLEncoder.encode("json","UTF-8") );
-        urlBuilder.append("/" + URLEncoder.encode("tbLnOpendataRentV","UTF-8"));
-        urlBuilder.append("/" + URLEncoder.encode(String.valueOf(start),"UTF-8"));
-        urlBuilder.append("/" + URLEncoder.encode(String.valueOf(end),"UTF-8"));
+        urlBuilder.append('/').append(URLEncoder.encode(key,"UTF-8"))
+                .append('/').append( URLEncoder.encode("json","UTF-8"))
+                .append('/').append(URLEncoder.encode("tbLnOpendataRentV","UTF-8"))
+                .append('/').append( URLEncoder.encode("1","UTF-8"))
+                .append('/').append(URLEncoder.encode("5","UTF-8"));
 
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(urlBuilder.toString(), RentApiModel.class);
