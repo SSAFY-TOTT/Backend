@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HouseAPI {
-    @Value("souldata.tbLnOpendataRentV.key")
+    @Value("seouldata.tbLnOpendataRentV.key")
     private String key;
 
     public RentApiModel fetchAPI(int start, int end) throws IOException {
