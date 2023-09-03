@@ -20,9 +20,9 @@ public class HouseDetail extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_detail_id")
     private int id;
-    private long price = 0L;
-    private double area = 0D;
-    private int floor = 0;
+    private long price;
+    private double area;
+    private int floor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "geo_id")
