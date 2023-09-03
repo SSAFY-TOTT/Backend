@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
-public class HouseAPITest implements APIConnect{
+public class HouseAPITest{
 
-    private String key = "6c6979506c726b64363262454c6d61";
+    private String key = "sample";
 
 
     @DisplayName("api 연동 test")
@@ -34,7 +34,7 @@ public class HouseAPITest implements APIConnect{
         urlBuilder.append("/" +  URLEncoder.encode("json","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
         urlBuilder.append("/" + URLEncoder.encode("tbLnOpendataRentV","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
         urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치 (sample인증키 사용시 5이내 숫자)*/
-        urlBuilder.append("/" + URLEncoder.encode("999","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
+        urlBuilder.append("/" + URLEncoder.encode("5","UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
         // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
 
         RestTemplate restTemplate = new RestTemplate();
@@ -53,7 +53,5 @@ public class HouseAPITest implements APIConnect{
                 .filter(row -> row.getRentArea() != null && row.getRentArea() != 0D)
                 .filter(row -> row.getFlrNo() != null && row.getFlrNo() != 0D)
                 .collect(Collectors.toList());
-        System.out.println(result);
-        System.out.println(result.size());
     }
 }
