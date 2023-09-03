@@ -14,13 +14,13 @@ public class HouseAPI {
     @Value("souldata.tbLnOpendataRentV.key")
     private String key;
 
-    public RentApiModel fetchAPI() throws IOException {
+    public RentApiModel fetchAPI(int start, int end) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
         urlBuilder.append("/" +  URLEncoder.encode(key,"UTF-8") );
         urlBuilder.append("/" +  URLEncoder.encode("json","UTF-8") );
         urlBuilder.append("/" + URLEncoder.encode("tbLnOpendataRentV","UTF-8"));
-        urlBuilder.append("/" + URLEncoder.encode("1","UTF-8"));
-        urlBuilder.append("/" + URLEncoder.encode("999","UTF-8"));
+        urlBuilder.append("/" + URLEncoder.encode(String.valueOf(start),"UTF-8"));
+        urlBuilder.append("/" + URLEncoder.encode(String.valueOf(end),"UTF-8"));
 
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(urlBuilder.toString(), RentApiModel.class);
