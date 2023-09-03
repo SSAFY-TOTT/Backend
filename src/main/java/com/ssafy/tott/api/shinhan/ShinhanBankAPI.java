@@ -27,30 +27,30 @@ public class ShinhanBankAPI {
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
 
-    public ShinhanBankAPIResponse getSearchNameAPI(String bankCode, String account) {
+    public ShinhanBankAPIResponse fetchSearchNameAPI(String bankCode, String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
                 SearchNameRequestDataBody.of(bankCode, account)
         );
-        String json = getJson(request);
+        String json = convertRequestToJson(request);
         return searchNameAPI.fetchAPI(json);
     }
 
-    public ShinhanBankAPIResponse getTransfer1API(String bankCode, String account, String memo) {
+    public ShinhanBankAPIResponse fetchTransfer1API(String bankCode, String account, String memo) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
                 Transfer1RequestDataBody.of(bankCode, account, memo)
         );
-        String json = getJson(request);
+        String json = convertRequestToJson(request);
         return transfer1API.fetchAPI(json);
     }
 
-    private String getJson(ShinhanBankAPIRequest request) {
-        return requestToJson(request)
+    private String convertRequestToJson(ShinhanBankAPIRequest request) {
+        return processingRequestToJson(request)
                 .orElseThrow(() -> new APIException(APIErrorCode.SERVER_ERROR_JSON_PROCESS));
     }
 
-    private Optional<String> requestToJson(ShinhanBankAPIRequest data) {
+    private Optional<String> processingRequestToJson(ShinhanBankAPIRequest data) {
         ObjectMapper objectMapper = objectMapperConfig.getObjectMapper();
         try {
             return Optional.of(objectMapper.writeValueAsString(data));
