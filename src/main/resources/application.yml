@@ -2,4 +2,6 @@ spring:
   jpa:
     open-in-view: true
   config:
-    import: security/application-database.yml
+    import:
+      - security/application-api.yml
+      - security/application-database.yml
