@@ -3,7 +3,5 @@ spring:
     open-in-view: true
   config:
     import:
+      - security/application-api.yml
       - security/application-database.yml
-      - security/application-key.yml
-
-
