@@ -12,5 +12,5 @@ public class MemberSignupRequest {
     private String password;
     private String phoneNumber;
     private BankCode bankCode;
-    private String account;
+    private String accountNumber;
 }
