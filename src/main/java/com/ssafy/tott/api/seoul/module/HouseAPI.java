@@ -2,7 +2,9 @@ package com.ssafy.tott.api.seoul.module;
 
 import com.ssafy.tott.api.seoul.data.RentApiModel;
 import com.ssafy.tott.api.seoul.data.RentRow;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -10,23 +12,25 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
+@Component
 public class HouseAPI {
-    @Value("seouldata.tbLnOpendataRentV.key")
-    private String key;
+    @Value("${seouldata.tbLnOpendataRentV.key}")
+    private final String key;
 
     public RentApiModel fetchAPI(int start, int end) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
         urlBuilder.append('/').append(URLEncoder.encode(key,"UTF-8"))
                 .append('/').append( URLEncoder.encode("json","UTF-8"))
                 .append('/').append(URLEncoder.encode("tbLnOpendataRentV","UTF-8"))
-                .append('/').append( URLEncoder.encode("1","UTF-8"))
-                .append('/').append(URLEncoder.encode("5","UTF-8"));
+                .append('/').append( URLEncoder.encode(String.valueOf(start),"UTF-8"))
+                .append('/').append(URLEncoder.encode(String.valueOf(end),"UTF-8"));
 
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(urlBuilder.toString(), RentApiModel.class);
     }
 
-    private List<RentRow> filteringRentHouse(RentApiModel rentApiModel){
+    public List<RentRow> filteringRentHouse(RentApiModel rentApiModel){
         List<RentRow> result = rentApiModel.getTbLnOpendataRentV().getRow().stream()
                 .filter(row -> row.getRentGbn().equals("전세"))
                 .filter(row -> row.getCntrctPrd().equals(""))
