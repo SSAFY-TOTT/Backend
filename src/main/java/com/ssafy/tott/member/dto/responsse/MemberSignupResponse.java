@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class MemberSignupResponse {
     private String accountNumber;
-    private String memo;
+    private String bankCode;
 
-    private MemberSignupResponse(String accountNumber, String memo) {
+    private MemberSignupResponse(String accountNumber, String bankCode) {
         this.accountNumber = accountNumber;
-        this.memo = memo;
+        this.bankCode = bankCode;
     }
 
-    public static MemberSignupResponse of(String accountNumber, String memo) {
-        return new MemberSignupResponse(accountNumber, memo);
+    public static MemberSignupResponse of(String accountNumber, String bankCode) {
+        return new MemberSignupResponse(accountNumber, bankCode);
     }
 }

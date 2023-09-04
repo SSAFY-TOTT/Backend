@@ -26,4 +26,8 @@ public abstract class BaseEntity {
     private int updateMemberId;
     @LastModifiedDate
     private LocalDate updateDate;
+
+    public void initCreateMemberId(int id) {
+        this.createMemberId = id;
+    }
 }

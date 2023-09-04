@@ -10,6 +10,7 @@ import com.ssafy.tott.member.dto.request.MemberSignupRequest;
 import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
 import com.ssafy.tott.member.exception.MemberErrorCode;
 import com.ssafy.tott.member.exception.MemberException;
+import com.ssafy.tott.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,24 +22,12 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class MemberVerificationService {
     private final MemberVerificationCacheRepository repository;
+    private final MemberMapper mapper;
 
     public MemberVerificationCache cachingBySignupRequest(MemberSignupRequest request) {
-        Email email = Email.from(request.getEmail());
-        Password password = Password.from(request.getPassword());
-        PhoneNumber phoneNumber = PhoneNumber.from(request.getPhoneNumber());
-        AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
-
-        MemberVerificationCache cache = MemberVerificationCache.builder()
-                .account(accountNumber.getValue())
-                .bankCode(request.getBankCode())
-                .email(email)
-                .password(password)
-                .phoneNumber(phoneNumber)
-                .memo(generateMemo())
-                .build();
+        MemberVerificationCache cache = mapper.toMemberVerificationCache(request, generateMemo());
         return repository.save(cache);
     }
-
 
     private String generateMemo() {
         return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "전세역전");

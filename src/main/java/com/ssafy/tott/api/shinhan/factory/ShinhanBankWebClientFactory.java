@@ -20,7 +20,6 @@ public class ShinhanBankWebClientFactory {
                 .baseUrl(Objects.requireNonNull(url) + uri)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-                .defaultHeader(HttpHeaders.ACCEPT_ENCODING, StandardCharsets.UTF_8.name())
                 .build();
     }
 }
