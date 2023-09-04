@@ -17,7 +17,7 @@ public class AccountNumber {
     private static final String ACCOUNT_NUMBER_FORMAT = "^\\d{10,14}$";
     private static final Pattern ACCOUNT_NUMBER_PATTERN = Pattern.compile(ACCOUNT_NUMBER_FORMAT);
 
-    @Column(name = "account_number")
+    @Column(name = "account_number", unique = true, nullable = false)
     private String value;
 
     private AccountNumber(String value) {

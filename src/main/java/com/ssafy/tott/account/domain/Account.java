@@ -20,7 +20,7 @@ public class Account extends BaseEntity {
     private int id;
 
     @Embedded
-    private AccountNumber number;
+    private AccountNumber accountNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -34,8 +34,8 @@ public class Account extends BaseEntity {
     private Member member;
 
     @Builder
-    public Account(AccountNumber number, BankCode bankCode, Long amount, Member member) {
-        this.number = number;
+    public Account(AccountNumber accountNumber, BankCode bankCode, Long amount, Member member) {
+        this.accountNumber = accountNumber;
         this.bankCode = bankCode;
         this.amount = amount;
         connectToMember(member);

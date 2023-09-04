@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public enum APIErrorCode implements ErrorCode {
-    SERVER_ERROR_BY_JSON_PROCESSING(500, "API_01", "내부 서버 오류 입니다.");
+    SERVER_ERROR_BY_JSON_PROCESSING(500, "API_01", "내부 서버 오류 입니다."),
+    SERVER_ERROR_BY_OUTER_API_SERVER(500, "API_02", "API 서버 오류 입니다.");
 
     private int statusCode;
     private String errorCode;

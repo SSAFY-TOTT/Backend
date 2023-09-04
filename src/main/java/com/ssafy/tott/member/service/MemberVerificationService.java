@@ -37,6 +37,6 @@ public class MemberVerificationService {
     }
 
     private String generateMemo() {
-        return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "TOTT");
+        return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "전세역전");
     }
 }

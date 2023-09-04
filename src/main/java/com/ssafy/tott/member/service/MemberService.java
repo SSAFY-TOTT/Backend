@@ -23,7 +23,7 @@ public class MemberService {
         MemberVerificationCache cache = memberVerificationService.cachingBySignupRequest(request);
 
         ShinhanBankTransfer1Response transfer1Response = (ShinhanBankTransfer1Response) shinhanBankAPI
-                .fetchTransfer1API(request.getBankCode(), request.getAccountNumber(), cache.getMemo());
+                .fetchTransfer1API(cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
 
         /* TODO: 2023/09/04 결과 보고 정상적이지 않으면 예외 처리 */
         return MemberSignupResponse.of(cache.getAccountNumber(), cache.getMemo());

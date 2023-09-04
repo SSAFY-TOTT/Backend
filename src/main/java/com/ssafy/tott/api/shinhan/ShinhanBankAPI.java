@@ -6,13 +6,13 @@ import com.ssafy.tott.account.domain.BankCode;
 import com.ssafy.tott.api.config.ObjectMapperConfig;
 import com.ssafy.tott.api.exception.APIErrorCode;
 import com.ssafy.tott.api.exception.APIException;
-import com.ssafy.tott.api.shinhan.dto.DataBody;
+import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameAPI;
-import com.ssafy.tott.api.shinhan.service.searchname.dto.request.SearchNameRequestDataBody;
+import com.ssafy.tott.api.shinhan.service.searchname.dto.request.SearchNameRequestShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.service.transfer1.ShinhanBankTransfer1API;
-import com.ssafy.tott.api.shinhan.service.transfer1.dto.request.Transfer1RequestDataBody;
+import com.ssafy.tott.api.shinhan.service.transfer1.dto.request.Transfer1RequestShinhanBankDataBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,29 +34,23 @@ public class ShinhanBankAPI {
     public ShinhanBankAPIResponse fetchSearchNameAPI(String bankCode, String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                SearchNameRequestDataBody.of(bankCode, account)
+                SearchNameRequestShinhanBankDataBody.of(bankCode, account)
         );
-        logging(request.getDataBody());
         String json = convertRequestToJson(request);
-        return searchNameAPI.fetchAPI(json);
+        ShinhanBankAPIResponse response = searchNameAPI.fetchAPI(json);
+        validate(response);
+        return response;
     }
 
     public ShinhanBankAPIResponse fetchTransfer1API(BankCode bankCode, String accountNumber, String memo) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                Transfer1RequestDataBody.of(bankCode, accountNumber, memo)
+                Transfer1RequestShinhanBankDataBody.of(bankCode, accountNumber, memo)
         );
         String json = convertRequestToJson(request);
-        logging(request.getDataBody());
-        return transfer1API.fetchAPI(json);
-    }
-
-    private void logging(DataBody dataBody) {
-        log.info("{} [{}] ---> {}",
-                LocalDateTime.now(),
-                Thread.currentThread().getStackTrace()[1].getClassName(),
-                dataBody
-        );
+        ShinhanBankAPIResponse response = transfer1API.fetchAPI(json);
+        validate(response);
+        return response;
     }
 
     private String convertRequestToJson(ShinhanBankAPIRequest data) {
@@ -66,5 +60,20 @@ public class ShinhanBankAPI {
         } catch (JsonProcessingException e) {
             throw new APIException(APIErrorCode.SERVER_ERROR_BY_JSON_PROCESSING);
         }
+    }
+
+    private void validate(ShinhanBankAPIResponse response) {
+        if (response.isFailed()) {
+            throw new APIException(APIErrorCode.SERVER_ERROR_BY_OUTER_API_SERVER);
+        }
+    }
+
+    /* TODO: 2023/09/04 추후 `AOP`로 분리 */
+    private void logging(ShinhanBankDataBody shinhanBankDataBody) {
+        log.info("{} [{}] ---> {}",
+                LocalDateTime.now(),
+                Thread.currentThread().getStackTrace()[1].getClassName(),
+                shinhanBankDataBody
+        );
     }
 }
