@@ -21,6 +21,7 @@ public class ShinhanBankTransfer1API implements CoreAPI {
 
     @Override
     public ShinhanBankAPIResponse fetchAPI(String json) {
+        System.out.println(json);
         WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
         return webClient.post()
                 .bodyValue(json)

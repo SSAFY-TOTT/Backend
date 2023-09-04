@@ -7,6 +7,9 @@ import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
 import com.ssafy.tott.member.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
+import com.ssafy.tott.member.exception.MemberErrorCode;
+import com.ssafy.tott.member.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,7 @@ public class MemberVerificationService {
         AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
 
         MemberVerificationCache cache = MemberVerificationCache.builder()
-                .account(accountNumber)
+                .account(accountNumber.getValue())
                 .bankCode(request.getBankCode())
                 .email(email)
                 .password(password)
@@ -36,7 +39,22 @@ public class MemberVerificationService {
         return repository.save(cache);
     }
 
+
     private String generateMemo() {
         return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "전세역전");
+    }
+
+    public MemberVerificationCache verification(MemberVerificationRequest request) {
+        AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
+        MemberVerificationCache memberVerificationCache = repository.findById(accountNumber.getValue())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.ERROR_CLIENT_BY_INVALID_FIND_BY_ACCOUNT_NUMBER));
+        validateMemo(request.getMemo(), memberVerificationCache.getMemo());
+        return memberVerificationCache;
+    }
+
+    private void validateMemo(String memo, String validationMemo) {
+        if (!validationMemo.substring(0, 4).equals(memo)) {
+            throw new MemberException(MemberErrorCode.ERROR_CLIENT_BY_NOT_EQUALS_BY_VALIDATION_MEMO);
+        }
     }
 }

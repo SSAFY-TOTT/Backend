@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ShinhanBankAPIRequest {
     @JsonProperty
     private RequestDataHeader dataHeader;
-    @JsonProperty
+    @JsonProperty("dataBody")
     private ShinhanBankDataBody shinhanBankDataBody;
 
     private ShinhanBankAPIRequest(String key, ShinhanBankDataBody shinhanBankDataBody) {

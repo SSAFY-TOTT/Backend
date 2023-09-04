@@ -47,6 +47,7 @@ public class ShinhanBankAPI {
                 key,
                 Transfer1RequestShinhanBankDataBody.of(bankCode, accountNumber, memo)
         );
+        logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);
         ShinhanBankAPIResponse response = transfer1API.fetchAPI(json);
         validate(response);

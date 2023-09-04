@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @Component
@@ -18,6 +19,8 @@ public class ShinhanBankWebClientFactory {
         return WebClient.builder()
                 .baseUrl(Objects.requireNonNull(url) + uri)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+                .defaultHeader(HttpHeaders.ACCEPT_ENCODING, StandardCharsets.UTF_8.name())
                 .build();
     }
 }

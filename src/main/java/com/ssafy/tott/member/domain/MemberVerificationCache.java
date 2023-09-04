@@ -1,7 +1,6 @@
 package com.ssafy.tott.member.domain;
 
 import com.ssafy.tott.account.domain.BankCode;
-import com.ssafy.tott.account.domain.embbeded.AccountNumber;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
@@ -19,7 +18,6 @@ import javax.persistence.Id;
 @RedisHash(value = "member_verification_cache", timeToLive = 60 * 3)
 public class MemberVerificationCache {
     @Id
-    @Embedded
     private String id;
     @Enumerated(EnumType.STRING)
     private BankCode bankCode;
@@ -32,9 +30,9 @@ public class MemberVerificationCache {
     private String memo;
 
     @Builder
-    public MemberVerificationCache(AccountNumber account, BankCode bankCode, Email email, Password password,
+    public MemberVerificationCache(String account, BankCode bankCode, Email email, Password password,
                                    PhoneNumber phoneNumber, String memo) {
-        this.id = account.getValue();
+        this.id = account;
         this.bankCode = bankCode;
         this.email = email;
         this.password = password;
