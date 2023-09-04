@@ -5,37 +5,44 @@ import com.ssafy.tott.account.domain.embbeded.AccountNumber;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
+import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RedisHash(value = "member_verification_cache", timeToLive = 60 * 3)
 public class MemberVerificationCache {
     @Id
-    private AccountNumber account;
+    @Embedded
+    private String id;
     @Enumerated(EnumType.STRING)
     private BankCode bankCode;
+    @Embedded
     private Email email;
+    @Embedded
     private Password password;
+    @Embedded
     private PhoneNumber phoneNumber;
     private String memo;
 
     @Builder
     public MemberVerificationCache(AccountNumber account, BankCode bankCode, Email email, Password password,
                                    PhoneNumber phoneNumber, String memo) {
-        this.account = account;
+        this.id = account.getValue();
         this.bankCode = bankCode;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.memo = memo;
+    }
+
+    public String getAccountNumber() {
+        return id;
     }
 }

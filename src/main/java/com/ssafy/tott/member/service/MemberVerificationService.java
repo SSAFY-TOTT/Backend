@@ -2,24 +2,23 @@ package com.ssafy.tott.member.service;
 
 import com.ssafy.tott.account.domain.embbeded.AccountNumber;
 import com.ssafy.tott.member.domain.MemberVerificationCache;
-import com.ssafy.tott.member.domain.MemberVerificationRepository;
+import com.ssafy.tott.member.domain.MemberVerificationCacheRepository;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
 import com.ssafy.tott.member.dto.request.MemberSignupRequest;
-import com.ssafy.tott.member.util.MemoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class MemberVerificationService {
-    private final MemberVerificationRepository memberVerificationRepository;
-    private final MemoFactory memoFactory;
+    private final MemberVerificationCacheRepository repository;
 
-    @Transactional
     public MemberVerificationCache cachingBySignupRequest(MemberSignupRequest request) {
         Email email = Email.from(request.getEmail());
         Password password = Password.from(request.getPassword());
@@ -27,13 +26,17 @@ public class MemberVerificationService {
         AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
 
         MemberVerificationCache cache = MemberVerificationCache.builder()
+                .account(accountNumber)
+                .bankCode(request.getBankCode())
                 .email(email)
                 .password(password)
                 .phoneNumber(phoneNumber)
-                .account(accountNumber)
-                .bankCode(request.getBankCode())
-                .memo(memoFactory.generateMemo())
+                .memo(generateMemo())
                 .build();
-        return memberVerificationRepository.save(cache);
+        return repository.save(cache);
+    }
+
+    private String generateMemo() {
+        return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "TOTT");
     }
 }

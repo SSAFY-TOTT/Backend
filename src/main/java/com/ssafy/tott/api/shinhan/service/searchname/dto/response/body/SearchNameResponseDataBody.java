@@ -3,12 +3,12 @@ package com.ssafy.tott.api.shinhan.service.searchname.dto.response.body;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.tott.api.shinhan.dto.DataBody;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
-public class SearchNameResponseDataBody implements DataBody {
+@Getter
+public class SearchNameResponseDataBody extends DataBody {
     @JsonProperty("입금은행코드")
     private String bankCode;
 

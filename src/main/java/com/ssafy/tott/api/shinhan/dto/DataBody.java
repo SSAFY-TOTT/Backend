@@ -1,4 +1,8 @@
 package com.ssafy.tott.api.shinhan.dto;
 
-public interface DataBody {
+import lombok.Getter;
+
+
+@Getter
+public abstract class DataBody {
 }

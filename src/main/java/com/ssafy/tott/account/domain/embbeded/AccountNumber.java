@@ -26,7 +26,7 @@ public class AccountNumber {
 
     public static AccountNumber from(String value) {
         validateAccountNumber(value);
-        return new AccountNumber();
+        return new AccountNumber(value);
     }
 
     private static void validateAccountNumber(String value) {
