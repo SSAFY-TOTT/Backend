@@ -19,12 +19,12 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity<MemberSignupResponse> signup(@RequestBody MemberSignupRequest request) {
-        MemberSignupResponse response = memberService.save(request);
+        MemberSignupResponse response = memberService.signup(request);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/proof")
-    public ResponseEntity<?> proof() {
+    @PostMapping("/verification")
+    public ResponseEntity<?> verification() {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -16,10 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final MemberVerificationService memberVerificationService;
     private final MemoFactory memoFactory;
 
     @Transactional
-    public MemberSignupResponse save(MemberSignupRequest request) {
+    public MemberSignupResponse signup(MemberSignupRequest request) {
         /* TODO: 2023/09/04 검증 */
         Email email = Email.from(request.getEmail());
         Password password = Password.from(request.getPassword());
