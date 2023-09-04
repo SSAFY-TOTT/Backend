@@ -21,13 +21,16 @@ public class MemberVerificationCache {
     private Email email;
     private Password password;
     private PhoneNumber phoneNumber;
+    private String memo;
 
     @Builder
-    public MemberVerificationCache(String account, int bankCode, Email email, Password password, PhoneNumber phoneNumber) {
+    public MemberVerificationCache(String account, int bankCode, Email email, Password password,
+                                   PhoneNumber phoneNumber, String memo) {
         this.account = account;
         this.bankCode = bankCode;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.memo = memo;
     }
 }
