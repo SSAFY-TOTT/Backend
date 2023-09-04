@@ -1,5 +1,6 @@
 package com.ssafy.tott.account.domain;
 
+import com.ssafy.tott.account.domain.embbeded.AccountNumber;
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.member.domain.Member;
 import lombok.AccessLevel;
@@ -18,6 +19,13 @@ public class Account extends BaseEntity {
     @Column(name = "account_id")
     private int id;
 
+    @Embedded
+    private AccountNumber number;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BankCode bankCode;
+
     @Column(nullable = false)
     private Long amount;
 
@@ -26,7 +34,9 @@ public class Account extends BaseEntity {
     private Member member;
 
     @Builder
-    public Account(Long amount, Member member) {
+    public Account(AccountNumber number, BankCode bankCode, Long amount, Member member) {
+        this.number = number;
+        this.bankCode = bankCode;
         this.amount = amount;
         connectToMember(member);
     }

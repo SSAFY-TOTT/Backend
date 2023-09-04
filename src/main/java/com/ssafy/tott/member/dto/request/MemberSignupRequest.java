@@ -1,5 +1,6 @@
 package com.ssafy.tott.member.dto.request;
 
+import com.ssafy.tott.account.domain.BankCode;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,6 @@ public class MemberSignupRequest {
     private String email;
     private String password;
     private String phoneNumber;
-    private int bankCode;
+    private BankCode bankCode;
     private String account;
 }
