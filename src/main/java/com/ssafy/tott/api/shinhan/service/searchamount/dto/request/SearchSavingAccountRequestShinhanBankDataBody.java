@@ -16,7 +16,7 @@ public class SearchSavingAccountRequestShinhanBankDataBody extends ShinhanBankDa
         this.account = account;
     }
 
-    public static SearchSavingAccountRequestShinhanBankDataBody of(String accountNumber) {
-        return new SearchSavingAccountRequestShinhanBankDataBody(accountNumber);
+    public static SearchSavingAccountRequestShinhanBankDataBody from(String account) {
+        return new SearchSavingAccountRequestShinhanBankDataBody(account);
     }
 }

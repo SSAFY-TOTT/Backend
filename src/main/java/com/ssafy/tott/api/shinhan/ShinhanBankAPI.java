@@ -60,9 +60,8 @@ public class ShinhanBankAPI {
     public ShinhanBankAPIResponse searchSavingAccountAPI(String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                SearchSavingAccountRequestShinhanBankDataBody.of(account)
+                SearchSavingAccountRequestShinhanBankDataBody.from(account)
         );
-        logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);
         ShinhanBankAPIResponse response = searchAmountAPI.fetchAPI(json);
         validate(response);
