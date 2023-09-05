@@ -1,11 +1,11 @@
 package com.ssafy.tott.member.dto.responsse;
 
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
 public class MemberSignupResponse {
     private String accountNumber;
     private String bankCode;

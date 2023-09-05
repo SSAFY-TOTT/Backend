@@ -6,11 +6,9 @@ import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 @Getter
 public class Transfer1RequestShinhanBankDataBody extends ShinhanBankDataBody {
     @JsonProperty("입금은행코드")

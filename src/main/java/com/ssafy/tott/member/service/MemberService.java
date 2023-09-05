@@ -40,7 +40,7 @@ public class MemberService {
     public MemberVerificationResponse verification(MemberVerificationRequest request) {
         MemberVerificationCache memberVerificationCache = memberVerificationService.verification(request);
 
-        String bankCode = memberVerificationCache.getBankCode().getCode();
+        String bankCode = memberVerificationCache.getCodeByBankCode();
         String accountNumber = memberVerificationCache.getAccountNumber();
         ShinhanBankSearchNameResponse responseAPI = (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
