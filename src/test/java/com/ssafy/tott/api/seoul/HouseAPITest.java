@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class HouseAPITest{
 
-    private HouseAPI houseAPI = new HouseAPI();
+    private HouseAPI houseAPI;
 
     @DisplayName("api 연동 test")
     @Test
