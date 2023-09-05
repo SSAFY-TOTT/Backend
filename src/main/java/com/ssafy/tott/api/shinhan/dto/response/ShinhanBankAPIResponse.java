@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public abstract class ShinhanBankAPIResponse implements APIResponse {
     private static final String ERROR_CODE = "1";
-    @JsonProperty
+    @JsonProperty("dataHeader")
     private ResponseDataHeader dataHeader;
 
     public boolean isFailed() {

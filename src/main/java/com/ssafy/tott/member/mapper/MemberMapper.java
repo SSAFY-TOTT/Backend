@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class MemberMapper {
     public Member toMember(ShinhanBankSearchNameResponse response, MemberVerificationCache memberVerificationCache) {
         return Member.builder()
-                .name(response.getDataBody().getAccountOwnerName())
+                .name(response.getOwnerName())
                 .email(memberVerificationCache.getEmail())
                 .password(memberVerificationCache.getPassword())
                 .phoneNumber(memberVerificationCache.getPhoneNumber())

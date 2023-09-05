@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankAPIRequest {
-    @JsonProperty
+    @JsonProperty("dataHeader")
     private RequestDataHeader dataHeader;
     @JsonProperty("dataBody")
     private ShinhanBankDataBody shinhanBankDataBody;
