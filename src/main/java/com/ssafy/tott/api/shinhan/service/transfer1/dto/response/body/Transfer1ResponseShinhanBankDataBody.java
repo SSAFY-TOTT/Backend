@@ -1,20 +1,18 @@
-package com.ssafy.tott.api.shinhan.service.searchname.dto.response.body;
+package com.ssafy.tott.api.shinhan.service.transfer1.dto.response.body;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ssafy.tott.api.shinhan.dto.DataBody;
+import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
-public class SearchNameResponseDataBody implements DataBody {
+@Getter
+public class Transfer1ResponseShinhanBankDataBody extends ShinhanBankDataBody {
     @JsonProperty("입금은행코드")
     private String bankCode;
 
     @JsonProperty("입금계좌번호")
     private String account;
-
-    @JsonProperty("입금계좌성명")
-    private String accountOwnerName;
 }

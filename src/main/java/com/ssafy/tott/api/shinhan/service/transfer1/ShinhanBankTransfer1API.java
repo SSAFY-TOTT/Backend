@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.shinhan.service.transfer1;
 
-import com.ssafy.tott.api.CoreAPI;
+import com.ssafy.tott.api.APICore;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
 @Component
-public class ShinhanBankTransfer1API implements CoreAPI {
+public class ShinhanBankTransfer1API implements APICore {
 
     private final ShinhanBankWebClientFactory shinhanBankWebClientFactory;
 
