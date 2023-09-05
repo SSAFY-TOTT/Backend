@@ -59,13 +59,13 @@ public class ShinhanBankAPI {
         try {
             return objectMapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {
-            throw new APIException(APIErrorCode.SERVER_ERROR_BY_JSON_PROCESSING);
+            throw new APIException(APIErrorCode.ERROR_SERVER_BY_JSON_PROCESSING);
         }
     }
 
     private void validate(ShinhanBankAPIResponse response) {
         if (response.isFailed()) {
-            throw new APIException(APIErrorCode.SERVER_ERROR_BY_OUTER_API_SERVER);
+            throw new APIException(APIErrorCode.ERROR_SERVER_BY_OUTER_API_SERVER);
         }
     }
 
