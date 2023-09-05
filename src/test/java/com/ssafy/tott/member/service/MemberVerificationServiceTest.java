@@ -13,8 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.regex.Pattern;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class MemberVerificationServiceTest {
@@ -33,11 +32,12 @@ class MemberVerificationServiceTest {
     @Test
     void cachingBySignupRequestTest() {
         /* Given */
-        /* When */
-        /* `setUp()`에서 모든 작업을 진행 */
+        MemberSignupRequest request = MemberFixture.SHINHAN.toMemberSignupRequest();
 
+        /* When */
         /* Then */
-        assertThat(cache).isNotNull();
+        assertThatCode(() -> memberVerificationService.cachingBySignupRequest(request))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("숫자로 구성된 4자리 무작위 문자열을 생성한다.")
@@ -45,10 +45,9 @@ class MemberVerificationServiceTest {
     void generateMemoTest() {
         /* Given */
         Pattern pattern = Pattern.compile("^\\d{4}$");
-
-        /* When */
         String memo = cache.getMemo().substring(0, 4);
 
+        /* When */
         /* Then */
         assertThat(pattern.matcher(memo).matches()).isTrue();
     }
@@ -59,13 +58,12 @@ class MemberVerificationServiceTest {
         /* Given */
         String accountNumber = cache.getAccountNumber();
         String memo = cache.getMemo().substring(0, 4);
+        MemberVerificationRequest request = new MemberVerificationRequest(accountNumber, memo);
 
         /* When */
-        MemberVerificationCache memberVerificationCache = memberVerificationService
-                .verification(new MemberVerificationRequest(accountNumber, memo));
-
         /* Then */
-        assertThat(memberVerificationCache).isNotNull();
+        assertThatCode(() -> memberVerificationService.verification(request))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("사용자가 인증 번호 검증에 실패한다.")
@@ -74,10 +72,11 @@ class MemberVerificationServiceTest {
         /* Given */
         String accountNumber = cache.getAccountNumber();
         String memo = cache.getMemo().substring(0, 3);
+        MemberVerificationRequest request = new MemberVerificationRequest(accountNumber, memo);
 
         /* When */
         /* Then */
-        assertThatThrownBy(() -> memberVerificationService.verification(new MemberVerificationRequest(accountNumber, memo)))
+        assertThatThrownBy(() -> memberVerificationService.verification(request))
                 .isInstanceOf(MemberException.class);
     }
 }
