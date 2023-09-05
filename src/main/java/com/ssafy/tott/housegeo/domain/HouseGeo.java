@@ -15,15 +15,19 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "geo")
+@Table(
+        name = "geo",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name= "house_geo_identifier",
+                        columnNames={"main_number","sub_number"}
+                )
+        })
 public class HouseGeo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_geo_id")
     private int id;
-
-    @Column(length = 20, unique = true)
-    private String geoIdentifier;
 
     @Column(nullable = false)
     private double longitude;
@@ -31,11 +35,11 @@ public class HouseGeo extends BaseEntity {
     @Column(nullable = false)
     private double latitude;
 
-    @Column(name = "main_number", length = 10, nullable = false)
-    private String mainNumber; // 본번
+    @Column(name = "main_number", nullable = false)
+    private int mainNumber; // 본번
 
-    @Column(name = "sub_number", length = 10, nullable = false)
-    private String subNumber;  // 부번
+    @Column(name = "sub_number", nullable = false)
+    private int subNumber;  // 부번
 
     @Column(nullable = false)
     private int constructionYear;
@@ -51,13 +55,14 @@ public class HouseGeo extends BaseEntity {
     private List<HouseDetail> houseDetailList = new ArrayList<>();
 
     @Builder
-    public HouseGeo(String geoIdentifier, double longitude, double latitude, String mainNumber, String subNumber,
-                    Region region) {
-        this.geoIdentifier = geoIdentifier;
+    public HouseGeo(double longitude, double latitude, int mainNumber, int subNumber,
+                    Region region,String buildingName,int constructionYear) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.mainNumber = mainNumber;
         this.subNumber = subNumber;
+        this.buildingName = buildingName;
+        this.constructionYear = constructionYear;
         addRelatedByRegion(region);
     }
 
