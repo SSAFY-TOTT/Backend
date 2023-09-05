@@ -4,6 +4,7 @@ import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.wishlist.domain.Wishlist;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,7 @@ public class HouseDetail extends BaseEntity {
     private int id;
     private long price;
     private double area;
-    private int floor;
+    private double floor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "geo_id")
@@ -31,8 +32,8 @@ public class HouseDetail extends BaseEntity {
     @OneToMany(mappedBy = "houseDetail", fetch = FetchType.LAZY)
     private List<Wishlist> wishlists = new ArrayList<>();
 
-    public HouseDetail(int id, long price, double area, int floor, HouseGeo houseGeo) {
-        this.id = id;
+    @Builder
+    public HouseDetail(long price, double area, double floor, HouseGeo houseGeo) {
         this.price = price;
         this.area = area;
         this.floor = floor;
