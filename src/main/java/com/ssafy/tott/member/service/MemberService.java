@@ -45,7 +45,6 @@ public class MemberService {
         ShinhanBankSearchNameResponse responseAPI = (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
         Member savedMember = memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
-        savedMember.initCreateMemberId(savedMember.getId());
         return MemberVerificationResponse.from(savedMember.getId());
     }
 }

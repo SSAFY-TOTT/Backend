@@ -1,9 +1,7 @@
 package com.ssafy.tott.global.domain;
 
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,18 +14,9 @@ import java.time.LocalDate;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
-    @CreatedBy
-    @Column(nullable = false)
-    private int createMemberId;
     @CreatedDate
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDate createDate;
-    @LastModifiedBy
-    private int updateMemberId;
     @LastModifiedDate
     private LocalDate updateDate;
-
-    public void initCreateMemberId(int id) {
-        this.createMemberId = id;
-    }
 }
