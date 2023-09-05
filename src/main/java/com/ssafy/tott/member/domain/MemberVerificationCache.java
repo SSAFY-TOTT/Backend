@@ -43,8 +43,4 @@ public class MemberVerificationCache {
     public String getAccountNumber() {
         return id;
     }
-
-    public String getCodeByBankCode() {
-        return bankCode.getCode();
-    }
 }

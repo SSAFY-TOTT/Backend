@@ -35,6 +35,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     /* Lombok */
     compileOnly 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     /* DataBase */
     runtimeOnly 'com.h2database:h2'

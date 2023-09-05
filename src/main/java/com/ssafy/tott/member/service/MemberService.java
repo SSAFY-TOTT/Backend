@@ -1,5 +1,6 @@
 package com.ssafy.tott.member.service;
 
+import com.ssafy.tott.account.domain.BankCode;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
@@ -40,7 +41,7 @@ public class MemberService {
     public MemberVerificationResponse verification(MemberVerificationRequest request) {
         MemberVerificationCache memberVerificationCache = memberVerificationService.verification(request);
 
-        String bankCode = memberVerificationCache.getCodeByBankCode();
+        BankCode bankCode = memberVerificationCache.getBankCode();
         String accountNumber = memberVerificationCache.getAccountNumber();
         ShinhanBankSearchNameResponse responseAPI = (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 

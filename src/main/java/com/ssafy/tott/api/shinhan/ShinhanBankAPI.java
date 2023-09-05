@@ -31,10 +31,10 @@ public class ShinhanBankAPI {
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
 
-    public ShinhanBankAPIResponse fetchSearchNameAPI(String bankCode, String account) {
+    public ShinhanBankAPIResponse fetchSearchNameAPI(BankCode bankCode, String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                SearchNameRequestShinhanBankDataBody.of(bankCode, account)
+                SearchNameRequestShinhanBankDataBody.of(bankCode.getCode(), account)
         );
         String json = convertRequestToJson(request);
         ShinhanBankAPIResponse response = searchNameAPI.fetchAPI(json);
