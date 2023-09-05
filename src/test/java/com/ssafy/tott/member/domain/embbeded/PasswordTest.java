@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,9 +15,10 @@ class PasswordTest {
     void success() {
         /* Given */
         String validPasswordString = "Password1234!@";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         /* When */
-        Password password = Password.from(validPasswordString);
+        Password password = Password.of(validPasswordString, encoder);
 
         /* Then */
         assertThat(password).isNotNull();
@@ -28,9 +30,11 @@ class PasswordTest {
             "Password1234", "Password!@", "Password1234_"})
     void fail(String invalidPassword) {
         /* Given */
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
         /* When */
         /* Then */
-        assertThatThrownBy(() -> Password.from(invalidPassword))
+        assertThatThrownBy(() -> Password.of(invalidPassword, encoder))
                 .isInstanceOf(RuntimeException.class);
     }
 }
