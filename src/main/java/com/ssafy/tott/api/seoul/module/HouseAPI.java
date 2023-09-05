@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class HouseAPI {
     @Value("${seouldata.tbLnOpendataRentV.key}")
-    private final String key;
+    private String key;
 
     public RentApiModel fetchAPI(int start, int end) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
