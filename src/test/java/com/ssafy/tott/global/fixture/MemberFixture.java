@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public enum MemberFixture {
-    SHINHAN("shinhan1234@gmail.com", "Password1234!@", "12345678", BankCode.SHINHAN, "1234567890");
+    SHINHAN("shinhan1234@gmail.com", "Password1234!@", "12345678", BankCode.SHINHAN, "1234567890"),
+    JEONGUK("workju1124@gmail.com", "Password123!@", "64817041", BankCode.SHINHAN, "110545895267");
 
     private String email;
     private String password;

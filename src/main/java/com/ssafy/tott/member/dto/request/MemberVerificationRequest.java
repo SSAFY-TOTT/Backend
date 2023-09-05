@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 public class MemberVerificationRequest {
     private String accountNumber;
     private String memo;
+
+    public MemberVerificationRequest(String accountNumber, String memo) {
+        this.accountNumber = accountNumber;
+        this.memo = memo;
+    }
 }
