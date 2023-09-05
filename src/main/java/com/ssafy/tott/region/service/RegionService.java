@@ -13,7 +13,6 @@ import java.util.Optional;
 public class RegionService {
     private final RegionRepository regionRepository;
 
-
     public Region getRegion(RentRow row){
         Optional<Region> region = regionRepository.findByDistrictCodeAndLegalDongCode(Integer.parseInt(row.getSggCd()),Integer.parseInt(row.getBjdongCd()));
         return region.orElseGet(() -> regionRepository.save(Region.builder()

@@ -15,7 +15,8 @@ public class HouseGeoService {
     private final HouseGeoRepository houseGeoRepository;
 
     public HouseGeo getHouseGeo(RentRow row, Region region){
-        int mainNumber = Integer.parseInt(row.getBobn()), subNumber = Integer.parseInt(row.getBubn());
+        int mainNumber = Integer.parseInt(row.getBobn());
+        int subNumber = Integer.parseInt(row.getBubn());
         Optional<HouseGeo> houseGeo = houseGeoRepository.findByMainNumberAndSubNumber(mainNumber,subNumber);
         return houseGeo.orElseGet(() -> houseGeoRepository.save(HouseGeo.builder()
                 .latitude(0)

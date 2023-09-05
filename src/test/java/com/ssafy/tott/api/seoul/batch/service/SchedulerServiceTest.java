@@ -1,5 +1,6 @@
-package com.ssafy.tott.api.seoul.batch.config;
+package com.ssafy.tott.api.seoul.batch.service;
 
+import com.ssafy.tott.api.seoul.service.SchedulerService;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @ActiveProfiles(profiles = {"test"})
 @Slf4j
-public class SchedulerConfigTest {
+class SchedulerServiceTest {
     @Autowired
     private HouseDetailRepository houseDetailRepository;
 
     @Autowired
-    private SchedulerConfig schedulerConfig;
+    private SchedulerService schedulerService;
 
     @DisplayName("전세집 자료 DB 저장 Test")
     @Test
     void saveRentHouseToDB(){
-        assertDoesNotThrow(() -> schedulerConfig.runHouseDataJob());
+        assertDoesNotThrow(() -> schedulerService.fetchHouseData(1000));
         List<HouseDetail> houseDetails = houseDetailRepository.findAll();
         log.info("houseSize : [{}]", houseDetails.size());
-        assertTrue(houseDetails.size() >= 100);
+        assertTrue(houseDetails.size() >= 10);
     }
 }

@@ -31,7 +31,7 @@ class HouseAPITest{
 
     @DisplayName("filtering 테스트")
     @Test
-    void filteringRentHouseTest() throws IOException {
+    void filteringRentHouseTest(){
         //given
         RentApiModel model = houseAPI.fetchAPI(1,5);
 
