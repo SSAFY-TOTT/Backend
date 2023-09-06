@@ -2,9 +2,7 @@ package com.ssafy.tott.region.domain;
 
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +11,14 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name= "region_identifier",
+                        columnNames={"districtCode","legalDongCode"}
+                )
+        }
+)
 public class Region extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +26,15 @@ public class Region extends BaseEntity {
     private int id;
 
     /* district : 자치구 */
-    @Column(length = 20, nullable = false)
-    private String districtCode;
+    @Column(nullable = false)
+    private int districtCode;
 
     @Column(length = 50, nullable = false)
     private String districtName;
 
     /* legalDong : 법정동 */
-    @Column(length = 20, unique = true, nullable = false)
-    private String legalDongCode;
+    @Column(nullable = false)
+    private int legalDongCode;
 
     @Column(length = 50, nullable = false)
     private String legalDongName;
@@ -36,7 +42,8 @@ public class Region extends BaseEntity {
     @OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
     private List<HouseGeo> houseGeoList = new ArrayList<>();
 
-    public Region(String districtCode, String districtName, String legalDongCode, String legalDongName) {
+    @Builder
+    public Region(int districtCode, String districtName, int legalDongCode, String legalDongName) {
         this.districtCode = districtCode;
         this.districtName = districtName;
         this.legalDongCode = legalDongCode;

@@ -7,20 +7,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
+@ActiveProfiles(profiles = {"test"})
+@SpringBootTest
 class HouseAPITest {
 
-    private HouseAPI houseAPI = new HouseAPI();
+    @Autowired
+    private HouseAPI houseAPI;
 
     @DisplayName("api 연동 test")
     @Test
-    void connectAPI() throws IOException {
+    void connectAPI(){
         //given, when
         RentApiModel model = houseAPI.fetchAPI(1, 5);
 
@@ -30,7 +35,7 @@ class HouseAPITest {
 
     @DisplayName("filtering 테스트")
     @Test
-    void filteringRentHouseTest() throws IOException {
+    void filteringRentHouseTest(){
         //given
         RentApiModel model = houseAPI.fetchAPI(1, 5);
 
