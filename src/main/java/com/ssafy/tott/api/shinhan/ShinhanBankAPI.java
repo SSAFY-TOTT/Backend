@@ -57,7 +57,7 @@ public class ShinhanBankAPI {
         return response;
     }
 
-    public ShinhanBankAPIResponse searchAccountsAPI(String encodedName) {
+    public ShinhanBankAPIResponse fetchSearchAccountsAPI(String encodedName) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
                 ShinhanBankSearchAccountsRequestBody.from(encodedName)
