@@ -37,7 +37,6 @@ public class Budget {
     }
 
     public void removeRelated() {
-        member.getBudgets().remove(this);
         this.member = null;
     }
 }

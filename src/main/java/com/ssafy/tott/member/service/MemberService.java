@@ -12,6 +12,8 @@ import com.ssafy.tott.member.dto.request.MemberSignupRequest;
 import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
 import com.ssafy.tott.member.dto.responsse.MemberSignupResponse;
 import com.ssafy.tott.member.dto.responsse.MemberVerificationResponse;
+import com.ssafy.tott.member.exception.MemberErrorCode;
+import com.ssafy.tott.member.exception.MemberException;
 import com.ssafy.tott.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,10 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
         return MemberVerificationResponse.from(savedMember.getId());
+    }
+
+    public Member findById(int id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
     }
 }

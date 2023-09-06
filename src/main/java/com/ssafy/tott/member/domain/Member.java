@@ -72,4 +72,11 @@ public class Member extends BaseEntity {
     public String getEncryptedPassword() {
         return password.getValue();
     }
+
+    public void removeBudgets() {
+        for (Budget budget : budgets) {
+            budget.removeRelated();
+        }
+        budgets.clear();
+    }
 }
