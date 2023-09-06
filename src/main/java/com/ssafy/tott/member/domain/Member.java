@@ -1,6 +1,7 @@
 package com.ssafy.tott.member.domain;
 
 import com.ssafy.tott.account.domain.Account;
+import com.ssafy.tott.budget.domain.Budget;
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
@@ -46,6 +47,9 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Wishlist> wishlists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Budget> budgets = new ArrayList<>();
 
     @Builder
     public Member(String name, Email email, Password password, PhoneNumber phoneNumber, Long creditLine) {
