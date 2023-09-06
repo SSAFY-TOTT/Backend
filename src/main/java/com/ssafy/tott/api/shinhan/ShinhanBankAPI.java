@@ -60,7 +60,7 @@ public class ShinhanBankAPI {
     public ShinhanBankAPIResponse searchAccountsAPI(String encodedName) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                ShinhanBankSearchAccountsRequestBody.from("손현조")
+                ShinhanBankSearchAccountsRequestBody.from(encodedName)
         );
         logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);
