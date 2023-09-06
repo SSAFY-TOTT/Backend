@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class Documents {
-    @JsonProperty()
+    @JsonProperty
     private String x;
 
-    @JsonProperty()
+    @JsonProperty
     private String y;
 }
