@@ -27,14 +27,14 @@ public class Region extends BaseEntity {
     private int id;
 
     /* district : 자치구 */
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private int districtCode;
 
     @Column(length = 50, nullable = false)
     private String districtName;
 
     /* legalDong : 법정동 */
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private int legalDongCode;
 
     @Column(length = 50, nullable = false)
