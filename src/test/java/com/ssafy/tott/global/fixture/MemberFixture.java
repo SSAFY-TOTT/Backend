@@ -1,6 +1,7 @@
 package com.ssafy.tott.global.fixture;
 
 import com.ssafy.tott.account.domain.BankCode;
+import com.ssafy.tott.auth.dto.request.LoginRequest;
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
@@ -9,6 +10,7 @@ import com.ssafy.tott.member.dto.request.MemberSignupRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -40,9 +42,16 @@ public enum MemberFixture {
     public Member toMember() {
         return Member.builder().name(name)
                 .email(Email.from(email))
-                .password(Password.from(password))
+                .password(Password.of(password, new BCryptPasswordEncoder()))
                 .creditLine(0L)
                 .phoneNumber(PhoneNumber.from(phoneNumber))
+                .build();
+    }
+
+    public LoginRequest toLoginRequest() {
+        return LoginRequest.builder()
+                .email(email)
+                .password(password)
                 .build();
     }
 }
