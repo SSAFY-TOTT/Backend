@@ -9,6 +9,8 @@ import com.ssafy.tott.api.exception.APIException;
 import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
+import com.ssafy.tott.api.shinhan.service.searchamount.ShinhanBankSearchAmountAPI;
+import com.ssafy.tott.api.shinhan.service.searchamount.dto.request.SearchSavingAccountRequestShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.SearchNameRequestShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.service.transfer1.ShinhanBankTransfer1API;
@@ -27,6 +29,7 @@ public class ShinhanBankAPI {
     private final ObjectMapperConfig objectMapperConfig;
     private final ShinhanBankTransfer1API transfer1API;
     private final ShinhanBankSearchNameAPI searchNameAPI;
+    private final ShinhanBankSearchAmountAPI searchAmountAPI;
 
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
@@ -50,6 +53,17 @@ public class ShinhanBankAPI {
         logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);
         ShinhanBankAPIResponse response = transfer1API.fetchAPI(json);
+        validate(response);
+        return response;
+    }
+
+    public ShinhanBankAPIResponse searchSavingAccountAPI(String account) {
+        ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
+                key,
+                SearchSavingAccountRequestShinhanBankDataBody.from(account)
+        );
+        String json = convertRequestToJson(request);
+        ShinhanBankAPIResponse response = searchAmountAPI.fetchAPI(json);
         validate(response);
         return response;
     }
