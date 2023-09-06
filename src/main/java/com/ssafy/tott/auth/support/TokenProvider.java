@@ -3,10 +3,7 @@ package com.ssafy.tott.auth.support;
 import com.ssafy.tott.auth.dto.response.TokenResponse;
 import com.ssafy.tott.auth.exception.AuthErrorCode;
 import com.ssafy.tott.auth.exception.AuthException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,6 +81,21 @@ public class TokenProvider {
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            throw new AuthException(AuthErrorCode.ERROR_CLIENT_BY_JWT_SIGNATURE_INVALID);
+        } catch (ExpiredJwtException e) {
+            throw new AuthException(AuthErrorCode.ERROR_CLINET_BY_JWT_KEY_EXPIERD);
+        } catch (UnsupportedJwtException e) {
+            throw new AuthException(AuthErrorCode.ERROR_CLIENT_BY_JWT_NOT_SUPPORT);
+        } catch (IllegalArgumentException e) {
+            throw new AuthException(AuthErrorCode.ERROR_CLIENT_BY_JWT_KEY_INVALID);
+        }
     }
 
     private Claims paresClaims(String accessToken) {
