@@ -1,6 +1,8 @@
 package com.ssafy.tott.auth.support;
 
 import com.ssafy.tott.auth.dto.response.TokenResponse;
+import com.ssafy.tott.auth.exception.AuthErrorCode;
+import com.ssafy.tott.auth.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -69,7 +71,7 @@ public class TokenProvider {
         Claims claims = paresClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new RuntimeException();
+            throw new AuthException(AuthErrorCode.ERROR_CLIENT_BY_AUTHORIZATION_INFORMATION);
         }
 
         List<SimpleGrantedAuthority> authorities = Arrays.stream(
