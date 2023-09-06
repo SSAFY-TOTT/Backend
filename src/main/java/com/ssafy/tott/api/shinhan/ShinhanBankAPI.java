@@ -9,8 +9,8 @@ import com.ssafy.tott.api.exception.APIException;
 import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
-import com.ssafy.tott.api.shinhan.service.searchamount.ShinhanBankSearchAmountAPI;
-import com.ssafy.tott.api.shinhan.service.searchamount.dto.request.SearchSavingAccountRequestShinhanBankDataBody;
+import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.ShinhanBankSearchAccountsAPI;
+import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequestBody;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.SearchNameRequestShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.service.transfer1.ShinhanBankTransfer1API;
@@ -29,7 +29,7 @@ public class ShinhanBankAPI {
     private final ObjectMapperConfig objectMapperConfig;
     private final ShinhanBankTransfer1API transfer1API;
     private final ShinhanBankSearchNameAPI searchNameAPI;
-    private final ShinhanBankSearchAmountAPI searchAmountAPI;
+    private final ShinhanBankSearchAccountsAPI searchAccountsAPI;
 
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
@@ -57,13 +57,14 @@ public class ShinhanBankAPI {
         return response;
     }
 
-    public ShinhanBankAPIResponse searchSavingAccountAPI(String account) {
+    public ShinhanBankAPIResponse searchAccountsAPI(String encodedName) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                SearchSavingAccountRequestShinhanBankDataBody.from(account)
+                ShinhanBankSearchAccountsRequestBody.from("손현조")
         );
+        logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);
-        ShinhanBankAPIResponse response = searchAmountAPI.fetchAPI(json);
+        ShinhanBankAPIResponse response = searchAccountsAPI.fetchAPI(json);
         validate(response);
         return response;
     }
