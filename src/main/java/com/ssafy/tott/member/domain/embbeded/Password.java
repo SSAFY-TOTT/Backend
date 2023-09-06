@@ -3,6 +3,7 @@ package com.ssafy.tott.member.domain.embbeded;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,10 +25,10 @@ public class Password {
         value = password;
     }
 
-    public static Password from(String password) {
+    public static Password of(String password, PasswordEncoder passwordEncoder) {
         validatePasswordLength(password);
         validatePasswordPattern(password);
-        return new Password(password);
+        return new Password(passwordEncoder.encode(password));
     }
 
     private static void validatePasswordLength(String password) {

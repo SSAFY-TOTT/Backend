@@ -8,10 +8,15 @@ import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
 import com.ssafy.tott.member.dto.request.MemberSignupRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class MemberMapper {
+    private final PasswordEncoder passwordEncoder;
+
     public Member toMember(ShinhanBankSearchNameResponse response, MemberVerificationCache memberVerificationCache) {
         return Member.builder()
                 .name(response.getOwnerName())
@@ -24,11 +29,11 @@ public class MemberMapper {
 
     public MemberVerificationCache toMemberVerificationCache(MemberSignupRequest request, String memo) {
         Email email = Email.from(request.getEmail());
-        Password password = Password.from(request.getPassword());
+        Password password = Password.of(request.getPassword(), passwordEncoder);
         PhoneNumber phoneNumber = PhoneNumber.from(request.getPhoneNumber());
         AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
 
-        MemberVerificationCache cache = MemberVerificationCache.builder()
+        return MemberVerificationCache.builder()
                 .account(accountNumber.getValue())
                 .bankCode(request.getBankCode())
                 .email(email)
@@ -36,6 +41,5 @@ public class MemberMapper {
                 .phoneNumber(phoneNumber)
                 .memo(memo)
                 .build();
-        return cache;
     }
 }

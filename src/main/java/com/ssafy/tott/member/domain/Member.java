@@ -38,6 +38,9 @@ public class Member extends BaseEntity {
 
     private Long creditLine;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Account> accounts = new ArrayList<>();
 
@@ -51,6 +54,7 @@ public class Member extends BaseEntity {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.creditLine = creditLine;
+        role = Role.USER;
     }
 
     public String getEmail() {
