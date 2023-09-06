@@ -1,9 +1,11 @@
 package com.ssafy.tott.budget.service;
 
 import com.ssafy.tott.auth.vo.AuthMember;
+import com.ssafy.tott.budget.data.requset.BudgetsUpdateRequest;
+import com.ssafy.tott.budget.data.response.BudgetsResponse;
+import com.ssafy.tott.budget.data.vo.BudgetVO;
 import com.ssafy.tott.budget.domain.Budget;
 import com.ssafy.tott.budget.domain.BudgetRepository;
-import com.ssafy.tott.budget.dto.requset.BudgetsUpdateRequest;
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,19 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final MemberService memberService;
 
-    public void saveAll(AuthMember authMember, BudgetsUpdateRequest request) {
+    @Transactional
+    public BudgetsResponse saveAll(AuthMember authMember, BudgetsUpdateRequest request) {
         Member member = memberService.findById(authMember.getMemberId());
 
         member.removeBudgets();
         budgetRepository.deleteAllByMember(member);
 
         List<Budget> budgets = toBudgets(member, request);
-        budgetRepository.saveAll(budgets);
+
+        List<Budget> savedBudgets = budgetRepository.saveAll(budgets);
+        return new BudgetsResponse(savedBudgets.stream()
+                .map(BudgetVO::from)
+                .collect(Collectors.toList()));
     }
 
     private List<Budget> toBudgets(Member member, BudgetsUpdateRequest request) {
@@ -37,5 +44,15 @@ public class BudgetService {
                 .money(budgetSaveRequest.getMoney())
                 .member(member)
                 .build()).collect(Collectors.toList());
+    }
+
+    public BudgetsResponse findAll(AuthMember authMember) {
+        Member member = memberService.findById(authMember.getMemberId());
+
+        List<Budget> budgets = budgetRepository.findByMember(member);
+
+        return new BudgetsResponse(budgets.stream()
+                .map(BudgetVO::from)
+                .collect(Collectors.toList()));
     }
 }
