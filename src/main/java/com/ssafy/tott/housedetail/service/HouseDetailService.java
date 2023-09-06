@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 public class HouseDetailService {
     private final HouseDetailRepository houseDetailRepository;
 
+    /**
+     * HouseDetail 데이터를 저장한다.
+     * @param row row 참조
+     * @param houseGeo  houseGeo 참조
+     */
     public void saveHouseDetail(RentRow row, HouseGeo houseGeo){
         houseDetailRepository.save(HouseDetail.builder()
                 .houseGeo(houseGeo)

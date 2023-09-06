@@ -18,6 +18,12 @@ public class HouseAPI {
     @Value("${seouldata.tbLnOpendataRentV.key}")
     private String key;
 
+    /**
+     * 공공데이터에서 전세집 데이터를 추출한다.
+     * @param start 공공데이터 시작점
+     * @param end   공공데이터 마지막점
+     * @return
+     */
     public RentApiModel fetchAPI(int start, int end) {
         String urlBuilder = "http://openapi.seoul.go.kr:8088" + '/' + URLEncoder.encode(key, StandardCharsets.UTF_8) +
                 '/' + URLEncoder.encode("json", StandardCharsets.UTF_8) +
@@ -29,6 +35,11 @@ public class HouseAPI {
         return restTemplate.getForObject(urlBuilder, RentApiModel.class);
     }
 
+    /**
+     * 전세집 중 필요한 데이터만 추출하기 위한 필터링기능
+     * @param rentApiModel  공공데이터 API의 전세집 데이터
+     * @return @link  package.class#member  label
+     */
     public List<RentRow> filteringRentHouse(RentApiModel rentApiModel) {
         return rentApiModel.getTbLnOpendataRentV().getRow().stream()
                 .filter(row -> row.getRentGbn().equals("전세"))
