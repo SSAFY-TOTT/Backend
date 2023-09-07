@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,17 +39,11 @@ public class BudgetService {
     }
 
     private List<Budget> toBudgets(Member member, BudgetsUpdateRequest request) {
-        List<Budget> list = new ArrayList<>();
-        for (BudgetVO budgetSaveRequest : request.getBudgetSaveRequestList()) {
-            Budget budget = Budget.builder()
-                    .message(budgetSaveRequest.getMessage())
-                    .money(budgetSaveRequest.getMoney())
-                    .member(member)
-                    .build();
-            budget.addRelatedByMember(member);
-            list.add(budget);
-        }
-        return list;
+        return request.getBudgetSaveRequestList().stream().map(budgetSaveRequest -> Budget.builder()
+                .message(budgetSaveRequest.getMessage())
+                .money(budgetSaveRequest.getMoney())
+                .member(member)
+                .build()).collect(Collectors.toList());
     }
 
     public BudgetsResponse findAll(AuthMember authMember) {

@@ -28,10 +28,10 @@ public class Budget {
         this.id = id;
         this.message = message;
         this.money = money;
-        this.member = member;
+        addRelatedByMember(member);
     }
 
-    public void addRelatedByMember(Member member) {
+    private void addRelatedByMember(Member member) {
         this.member = member;
         member.getBudgets().add(this);
     }
