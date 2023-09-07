@@ -1,6 +1,7 @@
 package com.ssafy.tott.member.service;
 
 import com.ssafy.tott.account.domain.BankCode;
+import com.ssafy.tott.account.service.AccountService;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
@@ -27,6 +28,7 @@ public class MemberService {
     private final MemberVerificationService memberVerificationService;
     private final ShinhanBankAPI shinhanBankAPI;
     private final MemberMapper mapper;
+    private final AccountService accountService;
 
     @Transactional
     public MemberSignupResponse signup(MemberSignupRequest request) {
@@ -48,6 +50,8 @@ public class MemberService {
         ShinhanBankSearchNameResponse responseAPI = (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
         Member savedMember = memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
+
+        accountService.searchAccounts(savedMember);
         return MemberVerificationResponse.from(savedMember.getId());
     }
 
