@@ -1,8 +1,8 @@
 package com.ssafy.tott.budget.service;
 
 import com.ssafy.tott.auth.vo.AuthMember;
-import com.ssafy.tott.budget.data.requset.BudgetsUpdateRequest;
-import com.ssafy.tott.budget.data.response.BudgetsResponse;
+import com.ssafy.tott.budget.data.dto.requset.BudgetsUpdateRequest;
+import com.ssafy.tott.budget.data.dto.response.BudgetsResponse;
 import com.ssafy.tott.budget.data.vo.BudgetVO;
 import com.ssafy.tott.budget.domain.Budget;
 import com.ssafy.tott.budget.domain.BudgetRepository;

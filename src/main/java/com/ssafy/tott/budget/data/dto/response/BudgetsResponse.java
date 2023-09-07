@@ -1,4 +1,4 @@
-package com.ssafy.tott.budget.data.response;
+package com.ssafy.tott.budget.data.dto.response;
 
 import com.ssafy.tott.budget.data.vo.BudgetVO;
 import lombok.AccessLevel;

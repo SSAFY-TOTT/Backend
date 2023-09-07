@@ -1,4 +1,4 @@
-package com.ssafy.tott.budget.data.requset;
+package com.ssafy.tott.budget.data.dto.requset;
 
 import com.ssafy.tott.budget.data.vo.BudgetVO;
 import lombok.AccessLevel;
