@@ -32,13 +32,14 @@ public class HouseGeoServiceTest {
     private KakaoMapAPI kakaoMapAPI;
 
     private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0","");
+
     private final Region region = Region.builder()
             .legalDongCode(Integer.parseInt(row.getBjdongCd()))
             .legalDongName(row.getBjdongNm())
             .districtCode(Integer.parseInt(row.getSggCd()))
             .districtName(row.getSggNm())
             .build();
-    private final HouseGeo houseGeo =  HouseGeo.builder()
+    private final HouseGeo houseGeo = HouseGeo.builder()
             .latitude(0)
             .longitude(0)
             .constructionYear(Integer.parseInt(row.getBuildYear()))
@@ -55,30 +56,30 @@ public class HouseGeoServiceTest {
         @Test
         void getHouseGeoWhenExistedHouseGeoAndExistedPositionTest(){
             //given
-            given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()),Integer.parseInt(row.getBubn()))).willReturn(Optional.of(houseGeo));
+            given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()))).willReturn(Optional.of(houseGeo));
 
             //when,then
-            assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row,region));
+            assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row, region));
         }
 
         @DisplayName("존재하지않는 houseGeo & 존재하는 좌표")
         @Test
         void getHouseGeoWhenNotExistedHouseGeoAndExistedPositionTest(){
             //given
-            given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()),Integer.parseInt(row.getBubn()))).willReturn(Optional.empty());
+            given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()))).willReturn(Optional.empty());
             given(houseGeoRepository.save(any())).willReturn(HouseGeo.builder()
                     .latitude(0)
                     .longitude(0)
                     .constructionYear(Integer.parseInt(row.getBuildYear()))
                     .buildingName(row.getBldgNm())
-                    .mainNumber(Integer.parseInt(row.getBobn())+1)
-                    .subNumber(Integer.parseInt(row.getBubn())+1)
+                    .mainNumber(Integer.parseInt(row.getBobn()) + 1)
+                    .subNumber(Integer.parseInt(row.getBubn()) + 1)
                     .region(region)
                     .build());
 
             given(kakaoMapAPI.kakaoAddressSearch(any(),any(),any(),any())).willReturn(Documents.builder().x("127.23345523").y("45.231231234").build());
             //when, then
-            assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row,region));
+            assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row, region));
         }
 
         @DisplayName("존재하지않는 houseGeo & 존재하지 않는 좌표")

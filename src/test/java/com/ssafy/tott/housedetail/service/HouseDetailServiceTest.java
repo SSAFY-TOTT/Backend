@@ -19,16 +19,14 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class HouseDetailServiceTest {
 
+    private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0", "");
     @InjectMocks
     private HouseDetailService houseDetailService;
-
     @Mock
     private HouseDetailRepository houseDetailRepository;
 
-    private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0","");
-
     @Test
-    void test(){
+    void test() {
         //given
         Region region = Region.builder()
                 .legalDongCode(Integer.parseInt(row.getBjdongCd()))
@@ -49,7 +47,7 @@ public class HouseDetailServiceTest {
         given(houseDetailRepository.save(any())).willReturn(houseDetail);
 
         //when,then
-        assertDoesNotThrow(()->houseDetailService.saveHouseDetail(row,houseGeo));
+        assertDoesNotThrow(() -> houseDetailService.saveHouseDetail(row, houseGeo));
     }
 
 }
