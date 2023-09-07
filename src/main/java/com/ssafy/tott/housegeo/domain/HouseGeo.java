@@ -48,7 +48,7 @@ public class HouseGeo extends BaseEntity {
     private String buildingName;
 
     @Column(length = 30, nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private BuildingType buildingType;
 
     @ManyToOne(fetch = FetchType.LAZY)
