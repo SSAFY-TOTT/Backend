@@ -30,7 +30,7 @@ public class HouseDetailRepositoryTest {
     private HouseDetail houseDetail;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         region = regionRepository.save(Region.builder()
                 .legalDongCode(Integer.parseInt(row.getBjdongCd()))
                 .legalDongName(row.getBjdongNm())
@@ -51,10 +51,5 @@ public class HouseDetailRepositoryTest {
                 .price(Integer.parseInt(row.getRentGtn()))
                 .area(row.getRentArea())
                 .build());
-    }
-    @DisplayName("test")
-    @Test
-    void test(){
-
     }
 }
