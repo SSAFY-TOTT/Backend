@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum BudgetFixture {
     ONE_MILLION_WON(1_000_000L, "추가 예산 1"),
-    TEN_MILLION_WON(10_000_000L, "추가 예산 2");
+    TEN_MILLION_WON(10_000_000L, "추가 예산 2"),
+    ONE_HUNDRED_MILLION_WON(100_000_000L, "추가 예산 3");
 
     private Long money;
     private String message;
