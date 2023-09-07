@@ -36,32 +36,15 @@ public class TokenProvider {
     }
 
     public TokenResponse generateTokenResponse(Authentication auth) {
-        String authorities = auth.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+        String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         long now = (new Date().getTime());
 
-        String accessToken = Jwts.builder()
-                .setSubject(auth.getName())
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+        String accessToken = Jwts.builder().setSubject(auth.getName()).claim(AUTHORITIES_KEY, authorities).setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME)).signWith(key, SignatureAlgorithm.HS512).compact();
 
-        String refreshToken = Jwts.builder()
-                .setSubject(auth.getName())
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+        String refreshToken = Jwts.builder().setSubject(auth.getName()).claim(AUTHORITIES_KEY, authorities).setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME)).signWith(key, SignatureAlgorithm.HS512).compact();
 
-        return TokenResponse.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .accessTokenExpiresIn(new Date(now + ACCESS_TOKEN_EXPIRE_TIME).getTime())
-                .build();
+        return TokenResponse.builder().grantType(BEARER_TYPE).accessToken(accessToken).refreshToken(refreshToken).accessTokenExpiresIn(new Date(now + ACCESS_TOKEN_EXPIRE_TIME).getTime()).build();
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -71,12 +54,7 @@ public class TokenProvider {
             throw new AuthException(AuthErrorCode.ERROR_CLIENT_BY_AUTHORIZATION_INFORMATION);
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.stream(
-                        claims.get(AUTHORITIES_KEY)
-                                .toString()
-                                .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
@@ -100,21 +78,13 @@ public class TokenProvider {
 
     private Claims paresClaims(String accessToken) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(accessToken).getBody();
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }
 
     public int getPayload(String token) {
-        return Integer.valueOf(Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject());
+        return Integer.parseInt(Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject());
     }
 }

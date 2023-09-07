@@ -31,7 +31,6 @@ public class AuthService {
                 .build();
 
         authTokenRepository.save(token);
-
         return response;
     }
 }
