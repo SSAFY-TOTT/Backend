@@ -11,4 +11,8 @@ import java.util.List;
 @Getter
 public class BudgetsUpdateRequest {
     private List<BudgetVO> budgetSaveRequestList;
+
+    public BudgetsUpdateRequest(List<BudgetVO> budgetSaveRequestList) {
+        this.budgetSaveRequestList = budgetSaveRequestList;
+    }
 }

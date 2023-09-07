@@ -24,8 +24,7 @@ public class Budget {
     private Member member;
 
     @Builder
-    public Budget(int id, String message, Long money, Member member) {
-        this.id = id;
+    public Budget(String message, Long money, Member member) {
         this.message = message;
         this.money = money;
         addRelatedByMember(member);
