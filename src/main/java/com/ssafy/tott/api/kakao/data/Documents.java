@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.Getter;
 
 @Data
-@Builder
 public class Documents {
     @JsonProperty
     private String x;

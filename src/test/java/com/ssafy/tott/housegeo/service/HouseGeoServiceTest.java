@@ -76,8 +76,10 @@ public class HouseGeoServiceTest {
                     .subNumber(Integer.parseInt(row.getBubn()) + 1)
                     .region(region)
                     .build());
-
-            given(kakaoMapAPI.kakaoAddressSearch(any(),any(),any(),any())).willReturn(Documents.builder().x("127.23345523").y("45.231231234").build());
+            Documents documents = new Documents();
+            documents.setX("127.123123");
+            documents.setY("45.231231234");
+            given(kakaoMapAPI.kakaoAddressSearch(any(),any(),any(),any())).willReturn(documents);
             //when, then
             assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row, region));
         }
