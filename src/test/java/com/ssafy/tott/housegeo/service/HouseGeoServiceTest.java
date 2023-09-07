@@ -1,5 +1,7 @@
 package com.ssafy.tott.housegeo.service;
 
+import com.ssafy.tott.api.kakao.data.Documents;
+import com.ssafy.tott.api.kakao.module.KakaoMapAPI;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
@@ -15,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -25,6 +28,8 @@ public class HouseGeoServiceTest {
 
     @Mock
     private HouseGeoRepository houseGeoRepository;
+    @Mock
+    private KakaoMapAPI kakaoMapAPI;
 
     private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0","");
     private final Region region = Region.builder()
@@ -46,9 +51,9 @@ public class HouseGeoServiceTest {
     @DisplayName("houseGeo 가져오기")
     @Nested
     class getHouseGeoTest{
-        @DisplayName("존재하는 houseGeo")
+        @DisplayName("존재하는 houseGeo & 존재하는 좌표")
         @Test
-        void getHouseGeoWhenExistTest(){
+        void getHouseGeoWhenExistedHouseGeoAndExistedPositionTest(){
             //given
             given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()),Integer.parseInt(row.getBubn()))).willReturn(Optional.of(houseGeo));
 
@@ -56,9 +61,9 @@ public class HouseGeoServiceTest {
             assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row,region));
         }
 
-        @DisplayName("존재하지않는 houseGeo")
+        @DisplayName("존재하지않는 houseGeo & 존재하는 좌표")
         @Test
-        void getHouseGeoWhenNotExistTest(){
+        void getHouseGeoWhenNotExistedHouseGeoAndExistedPositionTest(){
             //given
             given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()),Integer.parseInt(row.getBubn()))).willReturn(Optional.empty());
             given(houseGeoRepository.save(any())).willReturn(HouseGeo.builder()
@@ -71,8 +76,20 @@ public class HouseGeoServiceTest {
                     .region(region)
                     .build());
 
+            given(kakaoMapAPI.kakaoAddressSearch(any(),any(),any(),any())).willReturn(Documents.builder().x("127.23345523").y("45.231231234").build());
             //when, then
             assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row,region));
+        }
+
+        @DisplayName("존재하지않는 houseGeo & 존재하지 않는 좌표")
+        @Test
+        void getHouseGeoWhenExistedHouseGeoAndNotExistedPositionTest(){
+            //given
+            given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()),Integer.parseInt(row.getBubn()))).willReturn(Optional.empty());
+            given(kakaoMapAPI.kakaoAddressSearch(any(),any(),any(),any())).willThrow(IndexOutOfBoundsException.class);
+
+            //when,then
+            assertThrows(IndexOutOfBoundsException.class,() -> houseGeoService.getHouseGeo(row,region));
         }
     }
 }
