@@ -110,7 +110,7 @@ public class TokenProvider {
     }
 
     public int getPayload(String token) {
-        return Integer.valueOf(Jwts.parserBuilder()
+        return Integer.parseInt(Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)

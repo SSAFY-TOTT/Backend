@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SchedulerService {
@@ -31,11 +32,14 @@ public class SchedulerService {
      */
     @Transactional
     public void fetchHouseData(int devide) {
-        int totalCount = houseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount();
-        for (int i = 1; i < totalCount / devide; i += 999) {
+        log.info("fetchHouseData method start");
+        int totalCount = houseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount()/devide;
+        for (int i = 1; i < totalCount; i += 999) {
             RentApiModel rentApiModel = houseAPI.fetchAPI(i, i + 999);
             saveHouseData(houseAPI.filteringRentHouse(rentApiModel));
+            log.info("data search {}%",(float)i/totalCount*100);
         }
+        log.info("fetchHouseData method end");
     }
 
     /**

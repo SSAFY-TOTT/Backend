@@ -47,6 +47,10 @@ public class HouseGeo extends BaseEntity {
     @Column(length = 30, nullable = false)
     private String buildingName;
 
+    @Column(length = 30, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BuildingType buildingType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
@@ -56,12 +60,13 @@ public class HouseGeo extends BaseEntity {
 
     @Builder
     public HouseGeo(double longitude, double latitude, int mainNumber, int subNumber,
-                    Region region,String buildingName,int constructionYear) {
+                    Region region,String buildingName,int constructionYear,BuildingType buildingType) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.mainNumber = mainNumber;
         this.subNumber = subNumber;
         this.buildingName = buildingName;
+        this.buildingType = buildingType;
         this.constructionYear = constructionYear;
         addRelatedByRegion(region);
     }
