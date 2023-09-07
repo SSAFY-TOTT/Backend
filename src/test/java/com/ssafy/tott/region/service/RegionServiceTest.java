@@ -4,12 +4,14 @@ package com.ssafy.tott.region.service;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
+import com.ssafy.tott.region.mapper.RegionMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,9 @@ public class RegionServiceTest {
     private RegionService regionService;
     @Mock
     private RegionRepository regionRepository;
+
+    @Spy
+    private RegionMapper regionMapper;
 
     @DisplayName("region 가져오기")
     @Nested

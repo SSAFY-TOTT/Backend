@@ -3,12 +3,15 @@ package com.ssafy.tott.housedetail.service;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.region.domain.Region;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -25,8 +28,12 @@ public class HouseDetailServiceTest {
     @Mock
     private HouseDetailRepository houseDetailRepository;
 
+    @Spy
+    private HouseDetailMapper houseDetailMapper;
+
+    @DisplayName("house detail 저장 테스트")
     @Test
-    void test() {
+    void houseDetailSaveTest() {
         //given
         Region region = Region.builder()
                 .legalDongCode(Integer.parseInt(row.getBjdongCd()))

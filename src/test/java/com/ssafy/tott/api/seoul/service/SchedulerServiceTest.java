@@ -1,6 +1,5 @@
-package com.ssafy.tott.api.seoul.batch.service;
+package com.ssafy.tott.api.seoul.service;
 
-import com.ssafy.tott.api.seoul.service.SchedulerService;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import lombok.extern.slf4j.Slf4j;
