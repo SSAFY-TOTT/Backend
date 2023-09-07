@@ -5,6 +5,7 @@ import com.ssafy.tott.api.kakao.module.KakaoMapAPI;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
+import com.ssafy.tott.housegeo.mapper.HouseGeoMapper;
 import com.ssafy.tott.region.domain.Region;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -30,6 +32,9 @@ public class HouseGeoServiceTest {
     private HouseGeoRepository houseGeoRepository;
     @Mock
     private KakaoMapAPI kakaoMapAPI;
+
+    @Spy
+    private HouseGeoMapper houseGeoMapper;
 
     private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0","");
 

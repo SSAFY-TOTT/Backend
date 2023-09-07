@@ -3,7 +3,9 @@ package com.ssafy.tott.housedetail.service;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
+import com.ssafy.tott.housegeo.mapper.HouseGeoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HouseDetailService {
     private final HouseDetailRepository houseDetailRepository;
+    private final HouseDetailMapper houseDetailMapper;
 
     /**
      * HouseDetail 데이터를 저장한다.
@@ -18,11 +21,6 @@ public class HouseDetailService {
      * @param houseGeo  houseGeo 참조
      */
     public void saveHouseDetail(RentRow row, HouseGeo houseGeo){
-        houseDetailRepository.save(HouseDetail.builder()
-                .houseGeo(houseGeo)
-                .price(Integer.parseInt(row.getRentGtn()))
-                .area(row.getRentArea())
-                .floor(row.getFlrNo())
-                .build());
+        houseDetailRepository.save(houseDetailMapper.toEntity(row,houseGeo));
     }
 }
