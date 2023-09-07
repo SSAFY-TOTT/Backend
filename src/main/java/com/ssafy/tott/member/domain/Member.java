@@ -52,7 +52,8 @@ public class Member extends BaseEntity {
     private List<Budget> budgets = new ArrayList<>();
 
     @Builder
-    public Member(String name, Email email, Password password, PhoneNumber phoneNumber, Long creditLine) {
+    public Member(int id, String name, Email email, Password password, PhoneNumber phoneNumber, Long creditLine) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

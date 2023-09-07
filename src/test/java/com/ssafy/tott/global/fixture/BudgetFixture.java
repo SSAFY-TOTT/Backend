@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public enum BudgetFixture {
-    일백만원(1_000_000L, "추가 예산 1"),
-    일천만원(10_000_000L, "추가 예산 2");
+    ONE_MILLION_WON(1_000_000L, "추가 예산 1"),
+    TEN_MILLION_WON(10_000_000L, "추가 예산 2");
 
     private Long money;
     private String message;
@@ -23,6 +23,15 @@ public enum BudgetFixture {
 
     public Budget toBudget(Member member) {
         return Budget.builder()
+                .money(money)
+                .message(message)
+                .member(member)
+                .build();
+    }
+
+    public Budget toBudgetWithId(int sequence, Member member) {
+        return Budget.builder()
+                .id(sequence)
                 .money(money)
                 .message(message)
                 .member(member)

@@ -4,13 +4,20 @@ import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.budget.data.requset.BudgetsUpdateRequest;
 import com.ssafy.tott.budget.data.response.BudgetsResponse;
 import com.ssafy.tott.budget.data.vo.BudgetVO;
-import com.ssafy.tott.global.config.ServiceTest;
+import com.ssafy.tott.budget.domain.Budget;
+import com.ssafy.tott.budget.domain.BudgetRepository;
 import com.ssafy.tott.global.fixture.BudgetFixture;
+import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.domain.Member;
+import com.ssafy.tott.member.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,24 +25,35 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.BDDMockito.given;
 
-class BudgetServiceTest extends ServiceTest {
-    @Autowired
+@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
+class BudgetServiceTest {
+
+    @InjectMocks
     private BudgetService budgetService;
-
-    private Member member;
+    @Mock
+    private MemberService memberService;
+    @Mock
+    private BudgetRepository budgetRepository;
+    private Member savedMember;
+    private AuthMember authMember;
 
     @BeforeEach
     void setUp() {
-        member = saveMember();
+        savedMember = MemberFixture.SHINHAN.toMemberWithId(1);
+        authMember = new AuthMember(savedMember.getId());
+        given(memberService.findById(savedMember.getId())).willReturn(savedMember);
     }
 
-    @DisplayName("예산 목록을 정상적으로 저장한다.")
+    @DisplayName("추가 예산을 정상적으로 수정한다.")
     @Test
-    void saveAllTest() {
+    void updateAllTest() {
         /* Given */
-        AuthMember authMember = new AuthMember(member.getId());
-        BudgetsUpdateRequest request = toRequest(member);
+        BudgetsUpdateRequest request = toRequest(savedMember);
+        given(budgetRepository.saveAll(anyCollection())).willReturn(toBudgets());
 
         /* When */
         BudgetsResponse response = budgetService.saveAll(authMember, request);
@@ -51,9 +69,7 @@ class BudgetServiceTest extends ServiceTest {
     @Test
     void findAllTest() {
         /* Given */
-        AuthMember authMember = new AuthMember(member.getId());
-        BudgetsUpdateRequest request = toRequest(member);
-        budgetService.saveAll(authMember, request);
+        given(budgetRepository.findByMember(savedMember)).willReturn(toBudgets());
 
         /* When */
         BudgetsResponse response = budgetService.findAll(authMember);
@@ -66,10 +82,19 @@ class BudgetServiceTest extends ServiceTest {
     }
 
     private BudgetsUpdateRequest toRequest(Member member) {
-        List<BudgetVO> vos = new ArrayList<>(List.of(
-                BudgetVO.from(BudgetFixture.일천만원.toBudget(member)),
-                BudgetVO.from(BudgetFixture.일백만원.toBudget(member)))
-        );
-        return new BudgetsUpdateRequest(vos);
+        return new BudgetsUpdateRequest(new ArrayList<>(List.of(
+                BudgetVO.from(BudgetFixture.TEN_MILLION_WON.toBudget(member)),
+                BudgetVO.from(BudgetFixture.ONE_MILLION_WON.toBudget(member)))));
+    }
+
+    private List<Budget> toBudgets() {
+        int sequence = 1;
+        return new ArrayList<>(List.of(
+                toBudget(sequence++, savedMember, BudgetFixture.ONE_MILLION_WON),
+                toBudget(sequence, savedMember, BudgetFixture.TEN_MILLION_WON)));
+    }
+
+    private Budget toBudget(int sequence, Member member, BudgetFixture budgetFixture) {
+        return budgetFixture.toBudgetWithId(sequence, member);
     }
 }
