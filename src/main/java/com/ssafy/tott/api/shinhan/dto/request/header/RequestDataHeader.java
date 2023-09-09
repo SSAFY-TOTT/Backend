@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 public class RequestDataHeader {
-    @JsonProperty
-    private String apikey;
+  @JsonProperty private String apikey;
 
-    private RequestDataHeader(String apiKey) {
-        this.apikey = apiKey;
-    }
+  private RequestDataHeader(String apiKey) {
+    this.apikey = apiKey;
+  }
 
-    public static RequestDataHeader from(String apiKey) {
-        return new RequestDataHeader(apiKey);
-    }
+  public static RequestDataHeader from(String apiKey) {
+    return new RequestDataHeader(apiKey);
+  }
 }

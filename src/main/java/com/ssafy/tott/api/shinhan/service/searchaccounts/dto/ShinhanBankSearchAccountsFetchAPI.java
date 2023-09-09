@@ -12,18 +12,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 @Component
 public class ShinhanBankSearchAccountsFetchAPI implements FetchAPICore {
-    private final ShinhanBankWebClientFactory shinhanBankWebClientFactory;
+  private final ShinhanBankWebClientFactory shinhanBankWebClientFactory;
 
-    @Value("${SHINHAN_BANK.API.URI.SEARCH_ACCOUNTS}")
-    private String uri;
+  @Value("${SHINHAN_BANK.API.URI.SEARCH_ACCOUNTS}")
+  private String uri;
 
-    @Override
-    public ShinhanBankAPIResponse fetchAPI(String json) {
-        WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
-        return webClient.post()
-                .bodyValue(json)
-                .retrieve()
-                .bodyToMono(ShinhanBankSearchAccountsResponse.class)
-                .block();
-    }
+  @Override
+  public ShinhanBankAPIResponse fetchAPI(String json) {
+    WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
+    return webClient
+        .post()
+        .bodyValue(json)
+        .retrieve()
+        .bodyToMono(ShinhanBankSearchAccountsResponse.class)
+        .block();
+  }
 }

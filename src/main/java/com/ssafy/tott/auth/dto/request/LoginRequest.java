@@ -9,16 +9,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class LoginRequest {
-    private String email;
-    private String password;
+  private String email;
+  private String password;
 
-    @Builder
-    public LoginRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+  @Builder
+  public LoginRequest(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, password);
-    }
+  public UsernamePasswordAuthenticationToken toAuthentication() {
+    return new UsernamePasswordAuthenticationToken(email, password);
+  }
 }

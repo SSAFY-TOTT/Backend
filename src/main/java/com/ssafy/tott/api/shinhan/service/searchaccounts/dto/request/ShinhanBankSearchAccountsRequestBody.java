@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankSearchAccountsRequestBody extends ShinhanBankDataBody {
-    @JsonProperty("실명번호")
-    private String encodedName;
+  @JsonProperty("실명번호")
+  private String encodedName;
 
-    private ShinhanBankSearchAccountsRequestBody(String encodedName) {
-        this.encodedName = encodedName;
-    }
+  private ShinhanBankSearchAccountsRequestBody(String encodedName) {
+    this.encodedName = encodedName;
+  }
 
-    public static ShinhanBankSearchAccountsRequestBody from(String encodedName) {
-        return new ShinhanBankSearchAccountsRequestBody(encodedName);
-    }
+  public static ShinhanBankSearchAccountsRequestBody from(String encodedName) {
+    return new ShinhanBankSearchAccountsRequestBody(encodedName);
+  }
 }

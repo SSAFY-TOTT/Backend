@@ -1,5 +1,7 @@
 package com.ssafy.tott.api.seoul;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataRentHouseFetchAPI;
 import org.assertj.core.api.Assertions;
@@ -9,34 +11,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @ActiveProfiles(profiles = {"test"})
 @SpringBootTest
 class HouseAPITest {
 
-    @Autowired
-    private SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
+  @Autowired private SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
-    @DisplayName("api 연동 test")
-    @Test
-    void connectAPI() {
-        //given, when
-        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
+  @DisplayName("api 연동 test")
+  @Test
+  void connectAPI() {
+    // given, when
+    RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
 
-        //then
-        assertEquals(5, model.getTbLnOpendataRentV().getRow().size());
-    }
+    // then
+    assertEquals(5, model.getTbLnOpendataRentV().getRow().size());
+  }
 
-    @DisplayName("filtering 테스트")
-    @Test
-    void filteringRentHouseTest() {
-        //given
-        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
+  @DisplayName("filtering 테스트")
+  @Test
+  void filteringRentHouseTest() {
+    // given
+    RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
 
-        //when
-        //then
-        Assertions.assertThatCode(() -> seoulOpenDataRentHouseAPI.filteringRentHouse(model))
-                .doesNotThrowAnyException();
-    }
+    // when
+    // then
+    Assertions.assertThatCode(() -> seoulOpenDataRentHouseAPI.filteringRentHouse(model))
+        .doesNotThrowAnyException();
+  }
 }

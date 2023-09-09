@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankSearchNameResponseDataBody extends ShinhanBankDataBody {
-    @JsonProperty("입금은행코드")
-    private String bankCode;
+  @JsonProperty("입금은행코드")
+  private String bankCode;
 
-    @JsonProperty("입금계좌번호")
-    private String account;
+  @JsonProperty("입금계좌번호")
+  private String account;
 
-    @JsonProperty("입금계좌성명")
-    private String accountOwnerName;
+  @JsonProperty("입금계좌성명")
+  private String accountOwnerName;
 }

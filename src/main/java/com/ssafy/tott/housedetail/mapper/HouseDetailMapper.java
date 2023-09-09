@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HouseDetailMapper {
-    public HouseDetail toEntity(RentRow row, HouseGeo houseGeo) {
-        return HouseDetail.builder()
-                .houseGeo(houseGeo)
-                .price(Integer.parseInt(row.getRentGtn()))
-                .area(row.getRentArea())
-                .floor(row.getFlrNo())
-                .build();
-    }
+  public HouseDetail toEntity(RentRow row, HouseGeo houseGeo) {
+    return HouseDetail.builder()
+        .houseGeo(houseGeo)
+        .price(Integer.parseInt(row.getRentGtn()))
+        .area(row.getRentArea())
+        .floor(row.getFlrNo())
+        .build();
+  }
 }

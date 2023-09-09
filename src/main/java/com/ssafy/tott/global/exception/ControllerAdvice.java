@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-    @ExceptionHandler(TOTTException.class)
-    public ResponseEntity<ExceptionResponse> handleException(TOTTException e) {
-        return ResponseEntity.status(e.getStatusCode()).body(ExceptionResponse.from(e));
-    }
+  @ExceptionHandler(TOTTException.class)
+  public ResponseEntity<ExceptionResponse> handleException(TOTTException e) {
+    return ResponseEntity.status(e.getStatusCode()).body(ExceptionResponse.from(e));
+  }
 }
