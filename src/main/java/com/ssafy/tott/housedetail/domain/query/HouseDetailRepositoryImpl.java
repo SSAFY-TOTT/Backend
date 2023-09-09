@@ -2,7 +2,7 @@ package com.ssafy.tott.housedetail.domain.query;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.tott.housedetail.data.cond.HouseDetailFilterCond;
+import com.ssafy.tott.housedetail.data.dto.request.HouseDetailFilterRequest;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housegeo.domain.BuildingType;
 import com.ssafy.tott.region.domain.Region;
@@ -23,7 +23,7 @@ public class HouseDetailRepositoryImpl implements HouseDetailRepositoryCustom {
     }
 
     @Override
-    public List<HouseDetail> findByFilterCond(HouseDetailFilterCond cond) {
+    public List<HouseDetail> findByFilterCond(HouseDetailFilterRequest cond) {
         /* TODO: 2023/09/09 지역 찾기 */
         Optional<Region> findRegion = Optional.ofNullable(query.selectFrom(region)
                 .where(region.districtName.eq(cond.getDistrictName()))
@@ -45,13 +45,13 @@ public class HouseDetailRepositoryImpl implements HouseDetailRepositoryCustom {
                 .fetch();
     }
 
-    private BooleanExpression getFilterArea(HouseDetailFilterCond cond) {
+    private BooleanExpression getFilterArea(HouseDetailFilterRequest cond) {
         /* TODO: 2023/09/09 3.3 곱하기 */
         /* TODO: 2023/09/09 MaxArea 가 60평이면 그 이상 전체 조회 */
         return houseDetail.area.between(cond.getMinArea(), cond.getMaxArea());
     }
 
-    private BooleanExpression getFilterPrice(HouseDetailFilterCond cond) {
+    private BooleanExpression getFilterPrice(HouseDetailFilterRequest cond) {
         /* TODO: 2023/09/09 천만원 단위 -> 만원 단위로*/
         /* TODO: 2023/09/09 MaxPrice 가 십억원이상이면 그 이상으로 조회 */
         return houseDetail.price.between(cond.getMinPrice(), cond.getMaxPrice());

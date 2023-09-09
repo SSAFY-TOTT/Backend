@@ -1,6 +1,7 @@
 package com.ssafy.tott.region.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.region.data.cond.RegionFilterCond;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.mapper.RegionMapper;
@@ -26,5 +27,10 @@ public class RegionService {
                 regionRepository.findByDistrictCodeAndLegalDongCode(
                         Integer.parseInt(row.getSggCd()), Integer.parseInt(row.getBjdongCd()));
         return region.orElseGet(() -> regionRepository.save(regionMapper.toEntity(row)));
+    }
+
+    public Region findByFilter(RegionFilterCond cond) {
+        return regionRepository.findByFilterCond(cond)
+                .orElseThrow();
     }
 }
