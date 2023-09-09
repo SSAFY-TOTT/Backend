@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-  private final AuthTokenRepository authTokenRepository;
-  private final TokenProvider tokenProvider;
-  private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AuthTokenRepository authTokenRepository;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-  public TokenResponse login(LoginRequest request) {
-    UsernamePasswordAuthenticationToken authentication = request.toAuthentication();
-    Authentication authenticate =
-        authenticationManagerBuilder.getObject().authenticate(authentication);
+    public TokenResponse login(LoginRequest request) {
+        UsernamePasswordAuthenticationToken authentication = request.toAuthentication();
+        Authentication authenticate =
+                authenticationManagerBuilder.getObject().authenticate(authentication);
 
-    TokenResponse response = tokenProvider.generateTokenResponse(authenticate);
-    int memberId = Integer.parseInt(authenticate.getName());
+        TokenResponse response = tokenProvider.generateTokenResponse(authenticate);
+        int memberId = Integer.parseInt(authenticate.getName());
 
-    AuthToken token = AuthToken.builder().id(memberId).value(response.getRefreshToken()).build();
+        AuthToken token = AuthToken.builder().id(memberId).value(response.getRefreshToken()).build();
 
-    authTokenRepository.save(token);
-    return response;
-  }
+        authTokenRepository.save(token);
+        return response;
+    }
 }

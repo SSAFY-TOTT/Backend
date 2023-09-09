@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class ShinhanBankAPIResponse implements APIResponse {
-  private static final String ERROR_CODE = "1";
+    private static final String ERROR_CODE = "1";
 
-  @JsonProperty("dataHeader")
-  private ResponseDataHeader dataHeader;
+    @JsonProperty("dataHeader")
+    private ResponseDataHeader dataHeader;
 
-  public boolean isFailed() {
-    return dataHeader.getSuccessCode().equals(ERROR_CODE);
-  }
+    public boolean isFailed() {
+        return dataHeader.getSuccessCode().equals(ERROR_CODE);
+    }
 }

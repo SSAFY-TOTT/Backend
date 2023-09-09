@@ -10,18 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankAPIRequest {
-  @JsonProperty("dataHeader")
-  private RequestDataHeader dataHeader;
+    @JsonProperty("dataHeader")
+    private RequestDataHeader dataHeader;
 
-  @JsonProperty("dataBody")
-  private ShinhanBankDataBody shinhanBankDataBody;
+    @JsonProperty("dataBody")
+    private ShinhanBankDataBody shinhanBankDataBody;
 
-  private ShinhanBankAPIRequest(String key, ShinhanBankDataBody shinhanBankDataBody) {
-    this.dataHeader = RequestDataHeader.from(key);
-    this.shinhanBankDataBody = shinhanBankDataBody;
-  }
+    private ShinhanBankAPIRequest(String key, ShinhanBankDataBody shinhanBankDataBody) {
+        this.dataHeader = RequestDataHeader.from(key);
+        this.shinhanBankDataBody = shinhanBankDataBody;
+    }
 
-  public static ShinhanBankAPIRequest of(String key, ShinhanBankDataBody shinhanBankDataBody) {
-    return new ShinhanBankAPIRequest(key, shinhanBankDataBody);
-  }
+    public static ShinhanBankAPIRequest of(String key, ShinhanBankDataBody shinhanBankDataBody) {
+        return new ShinhanBankAPIRequest(key, shinhanBankDataBody);
+    }
 }

@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 public class ExceptionResponse {
-  private String message;
+    private String message;
 
-  private ExceptionResponse(String message) {
-    this.message = message;
-  }
+    private ExceptionResponse(String message) {
+        this.message = message;
+    }
 
-  public static ExceptionResponse from(TOTTException e) {
-    return new ExceptionResponse(e.getMessage());
-  }
+    public static ExceptionResponse from(TOTTException e) {
+        return new ExceptionResponse(e.getMessage());
+    }
 }
