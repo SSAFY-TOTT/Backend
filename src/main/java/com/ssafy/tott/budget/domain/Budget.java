@@ -21,6 +21,7 @@ public class Budget {
     private Long money;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder

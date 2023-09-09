@@ -26,7 +26,7 @@ class SchedulerServiceTest {
 
     @DisplayName("전세집 자료 DB 저장 Test")
     @Test
-    void saveRentHouseToDB(){
+    void saveRentHouseToDB() {
         assertDoesNotThrow(() -> schedulerService.fetchHouseData(10000));
         List<HouseDetail> houseDetails = houseDetailRepository.findAll();
         assertTrue(houseDetails.size() >= 10);

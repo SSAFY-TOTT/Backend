@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Slf4j
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -26,5 +28,7 @@ class KakaoAPITest {
     void kakaoAPIConnectTest() {
         Documents response = kakaoMapAPI.kakaoAddressSearch(row.getSggNm(), row.getBjdongNm(), row.getBobn(), row.getBubn());
         log.info(String.valueOf(response));
+
+        assertThat(response).isNotNull();
     }
 }

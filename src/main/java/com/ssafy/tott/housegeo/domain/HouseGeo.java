@@ -19,8 +19,8 @@ import java.util.List;
         name = "geo",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name= "house_geo_identifier",
-                        columnNames={"main_number","sub_number"}
+                        name = "house_geo_identifier",
+                        columnNames = {"main_number", "sub_number"}
                 )
         })
 public class HouseGeo extends BaseEntity {
@@ -60,7 +60,7 @@ public class HouseGeo extends BaseEntity {
 
     @Builder
     public HouseGeo(double longitude, double latitude, int mainNumber, int subNumber,
-                    Region region,String buildingName,int constructionYear,BuildingType buildingType) {
+                    Region region, String buildingName, int constructionYear, BuildingType buildingType) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.mainNumber = mainNumber;

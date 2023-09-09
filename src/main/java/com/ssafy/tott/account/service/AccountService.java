@@ -31,11 +31,11 @@ public class AccountService {
         List<ShinhanBankSearchAccountsResponseAccount> responseAccounts = response.getShinhanBankSearchAccountsResponseDataBody().getAccounts();
         for (ShinhanBankSearchAccountsResponseAccount responseAccount : responseAccounts) {
             accountRepository.save(Account.builder()
-                .accountNumber(AccountNumber.from(responseAccount.getAccountNumber()))
-                .amount(Long.parseLong(responseAccount.getAmount()))
-                .member(member)
-                .bankCode(BankCode.SHINHAN)
-                .build()
+                    .accountNumber(AccountNumber.from(responseAccount.getAccountNumber()))
+                    .amount(Long.parseLong(responseAccount.getAmount()))
+                    .member(member)
+                    .bankCode(BankCode.SHINHAN)
+                    .build()
             );
         }
     }

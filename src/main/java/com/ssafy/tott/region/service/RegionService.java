@@ -17,11 +17,12 @@ public class RegionService {
 
     /**
      * Region 데이터를 가져온다. 만약 존재하지 않는다면 저장 후 해당 데이터를 가져온다.
+     *
      * @param row 공공데이터의 전세집 데이터
      * @return Region 참조
      */
-    public Region getRegion(RentRow row){
-        Optional<Region> region = regionRepository.findByDistrictCodeAndLegalDongCode(Integer.parseInt(row.getSggCd()),Integer.parseInt(row.getBjdongCd()));
+    public Region getRegion(RentRow row) {
+        Optional<Region> region = regionRepository.findByDistrictCodeAndLegalDongCode(Integer.parseInt(row.getSggCd()), Integer.parseInt(row.getBjdongCd()));
         return region.orElseGet(() -> regionRepository.save(regionMapper.toEntity(row)));
     }
 }

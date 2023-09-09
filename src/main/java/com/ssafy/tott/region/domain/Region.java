@@ -2,7 +2,10 @@ package com.ssafy.tott.region.domain;
 
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,8 +17,8 @@ import java.util.List;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name= "region_identifier",
-                        columnNames={"districtCode","legalDongCode"}
+                        name = "region_identifier",
+                        columnNames = {"districtCode", "legalDongCode"}
                 )
         }
 )

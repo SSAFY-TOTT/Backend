@@ -20,6 +20,7 @@ public class HouseAPI {
 
     /**
      * 공공데이터에서 전세집 데이터를 추출한다.
+     *
      * @param start 공공데이터 시작점
      * @param end   공공데이터 마지막점
      * @return
@@ -34,9 +35,11 @@ public class HouseAPI {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(urlBuilder, RentApiModel.class);
     }
+
     /**
      * 전세집 중 필요한 데이터만 추출하기 위한 필터링기능
-     * @param rentApiModel  공공데이터 API의 전세집 데이터
+     *
+     * @param rentApiModel 공공데이터 API의 전세집 데이터
      * @return @link  package.class#member  label
      */
     public List<RentRow> filteringRentHouse(RentApiModel rentApiModel) {

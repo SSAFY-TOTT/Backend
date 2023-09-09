@@ -18,14 +18,15 @@ public class KakaoMapAPI {
 
     /**
      * 파라미터에 맞는 주소의 좌표(위도, 경도)를 추출한다.
-     * @param sggNm 법정구 이름
+     *
+     * @param sggNm    법정구 이름
      * @param bjDongNm 법정동 이름
-     * @param bobn  본번
-     * @param bubn  부번
-     * @return  x(경도), y(위도)를 return
-     * @throws IndexOutOfBoundsException    해당 주소의 좌표를 찾을 수 없으면 던지는 Exception
+     * @param bobn     본번
+     * @param bubn     부번
+     * @return x(경도), y(위도)를 return
+     * @throws IndexOutOfBoundsException 해당 주소의 좌표를 찾을 수 없으면 던지는 Exception
      */
-    public Documents kakaoAddressSearch(String sggNm, String bjDongNm, String bobn, String bubn) throws IndexOutOfBoundsException{
+    public Documents kakaoAddressSearch(String sggNm, String bjDongNm, String bobn, String bubn) throws IndexOutOfBoundsException {
         /* roadAddress : 지번 ( 구 / 동 / 본번-부번 ) */
         StringBuilder sb = new StringBuilder()
                 .append(sggNm).append(" ")
@@ -41,7 +42,7 @@ public class KakaoMapAPI {
                 .retrieve()
                 .bodyToMono(KakaoAPIResponse.class)
                 .block();
-        if(kakaoAPIResponse.getDocuments().isEmpty()) {
+        if (kakaoAPIResponse.getDocuments().isEmpty()) {
             throw new IndexOutOfBoundsException();
         }
         return kakaoAPIResponse.getDocuments().get(0);

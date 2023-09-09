@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HouseGeoMapper {
-    public HouseGeo toEntity(RentRow row, Documents position, Region region){
+    public HouseGeo toEntity(RentRow row, Documents position, Region region) {
         return HouseGeo.builder()
                 .latitude(Double.parseDouble(position.getY()))
                 .longitude(Double.parseDouble(position.getX()))
