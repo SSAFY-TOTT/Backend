@@ -10,10 +10,10 @@ import lombok.ToString;
 @ToString
 @Getter
 public class RentAPIResponse implements APIResponse {
-  private final RentData tbLnOpendataRentV;
+    private final RentData tbLnOpendataRentV;
 
-  @JsonCreator
-  public RentAPIResponse(@JsonProperty("tbLnOpendataRentV") RentData tbLnOpendataRentV) {
-    this.tbLnOpendataRentV = tbLnOpendataRentV;
-  }
+    @JsonCreator
+    public RentAPIResponse(@JsonProperty("tbLnOpendataRentV") RentData tbLnOpendataRentV) {
+        this.tbLnOpendataRentV = tbLnOpendataRentV;
+    }
 }

@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 public class ResponseDataHeader {
-  @JsonProperty("successCode")
-  private String successCode;
+    @JsonProperty("successCode")
+    private String successCode;
 
-  @JsonProperty("resultCode")
-  private String resultCode;
+    @JsonProperty("resultCode")
+    private String resultCode;
 
-  @JsonProperty("resultMessage")
-  private String resultMessage;
+    @JsonProperty("resultMessage")
+    private String resultMessage;
 }

@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShinhanBankTransfer1Response extends ShinhanBankAPIResponse {
-  @JsonProperty("dataBody")
-  private Transfer1ResponseShinhanBankDataBody transfer1ResponseShinhanBankDataBody;
+    @JsonProperty("dataBody")
+    private Transfer1ResponseShinhanBankDataBody transfer1ResponseShinhanBankDataBody;
 
-  public Transfer1ResponseShinhanBankDataBody getDataBody() {
-    return transfer1ResponseShinhanBankDataBody;
-  }
+    public Transfer1ResponseShinhanBankDataBody getDataBody() {
+        return transfer1ResponseShinhanBankDataBody;
+    }
 }

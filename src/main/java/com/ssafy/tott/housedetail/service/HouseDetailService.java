@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class HouseDetailService {
-  private final HouseDetailRepository houseDetailRepository;
-  private final HouseDetailMapper houseDetailMapper;
+    private final HouseDetailRepository houseDetailRepository;
+    private final HouseDetailMapper houseDetailMapper;
 
-  /**
-   * HouseDetail 데이터를 저장한다.
-   *
-   * @param row row 참조
-   * @param houseGeo houseGeo 참조
-   */
-  public void saveHouseDetail(RentRow row, HouseGeo houseGeo) {
-    houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
-  }
+    /**
+     * HouseDetail 데이터를 저장한다.
+     *
+     * @param row      row 참조
+     * @param houseGeo houseGeo 참조
+     */
+    public void saveHouseDetail(RentRow row, HouseGeo houseGeo) {
+        houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
+    }
 }

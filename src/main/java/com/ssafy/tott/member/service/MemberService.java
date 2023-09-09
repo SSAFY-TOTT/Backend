@@ -24,48 +24,48 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class MemberService {
-  private final MemberRepository memberRepository;
-  private final MemberVerificationService memberVerificationService;
-  private final ShinhanBankAPI shinhanBankAPI;
-  private final MemberMapper mapper;
-  private final AccountService accountService;
+    private final MemberRepository memberRepository;
+    private final MemberVerificationService memberVerificationService;
+    private final ShinhanBankAPI shinhanBankAPI;
+    private final MemberMapper mapper;
+    private final AccountService accountService;
 
-  @Transactional
-  public MemberSignupResponse signup(MemberSignupRequest request) {
-    MemberVerificationCache cache = memberVerificationService.cachingBySignupRequest(request);
+    @Transactional
+    public MemberSignupResponse signup(MemberSignupRequest request) {
+        MemberVerificationCache cache = memberVerificationService.cachingBySignupRequest(request);
 
-    ShinhanBankTransfer1Response transfer1Response =
-        (ShinhanBankTransfer1Response)
-            shinhanBankAPI.fetchTransfer1API(
-                cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
-    Transfer1ResponseShinhanBankDataBody transfer1ResponseDataBody =
-        transfer1Response.getDataBody();
+        ShinhanBankTransfer1Response transfer1Response =
+                (ShinhanBankTransfer1Response)
+                        shinhanBankAPI.fetchTransfer1API(
+                                cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
+        Transfer1ResponseShinhanBankDataBody transfer1ResponseDataBody =
+                transfer1Response.getDataBody();
 
-    return MemberSignupResponse.of(
-        transfer1ResponseDataBody.getAccount(), transfer1ResponseDataBody.getBankCode());
-  }
+        return MemberSignupResponse.of(
+                transfer1ResponseDataBody.getAccount(), transfer1ResponseDataBody.getBankCode());
+    }
 
-  @Transactional
-  public MemberVerificationResponse verification(MemberVerificationRequest request) {
-    MemberVerificationCache memberVerificationCache =
-        memberVerificationService.verification(request);
+    @Transactional
+    public MemberVerificationResponse verification(MemberVerificationRequest request) {
+        MemberVerificationCache memberVerificationCache =
+                memberVerificationService.verification(request);
 
-    BankCode bankCode = memberVerificationCache.getBankCode();
-    String accountNumber = memberVerificationCache.getAccountNumber();
-    ShinhanBankSearchNameResponse responseAPI =
-        (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
+        BankCode bankCode = memberVerificationCache.getBankCode();
+        String accountNumber = memberVerificationCache.getAccountNumber();
+        ShinhanBankSearchNameResponse responseAPI =
+                (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
-    Member savedMember =
-        memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
+        Member savedMember =
+                memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
 
-    accountService.searchAccounts(savedMember);
-    return MemberVerificationResponse.from(savedMember.getId());
-  }
+        accountService.searchAccounts(savedMember);
+        return MemberVerificationResponse.from(savedMember.getId());
+    }
 
-  public Member findById(int id) {
-    return memberRepository
-        .findById(id)
-        .orElseThrow(
-            () -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
-  }
+    public Member findById(int id) {
+        return memberRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
+    }
 }

@@ -9,16 +9,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HouseGeoMapper {
-  public HouseGeo toEntity(RentRow row, Documents position, Region region) {
-    return HouseGeo.builder()
-        .latitude(Double.parseDouble(position.getY()))
-        .longitude(Double.parseDouble(position.getX()))
-        .mainNumber(Integer.parseInt(row.getBobn()))
-        .subNumber(Integer.parseInt(row.getBubn()))
-        .buildingName(row.getBldgNm())
-        .constructionYear(Integer.parseInt(row.getBuildYear()))
-        .buildingType(BuildingType.valueOf(row.getHouseGbnNm()))
-        .region(region)
-        .build();
-  }
+    public HouseGeo toEntity(RentRow row, Documents position, Region region) {
+        return HouseGeo.builder()
+                .latitude(Double.parseDouble(position.getY()))
+                .longitude(Double.parseDouble(position.getX()))
+                .mainNumber(Integer.parseInt(row.getBobn()))
+                .subNumber(Integer.parseInt(row.getBubn()))
+                .buildingName(row.getBldgNm())
+                .constructionYear(Integer.parseInt(row.getBuildYear()))
+                .buildingType(BuildingType.valueOf(row.getHouseGbnNm()))
+                .region(region)
+                .build();
+    }
 }

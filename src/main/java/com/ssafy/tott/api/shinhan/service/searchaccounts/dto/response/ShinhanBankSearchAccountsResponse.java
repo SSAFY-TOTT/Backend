@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankSearchAccountsResponse extends ShinhanBankAPIResponse {
-  @JsonProperty("dataBody")
-  ShinhanBankSearchAccountsResponseDataBody shinhanBankSearchAccountsResponseDataBody;
+    @JsonProperty("dataBody")
+    ShinhanBankSearchAccountsResponseDataBody shinhanBankSearchAccountsResponseDataBody;
 }

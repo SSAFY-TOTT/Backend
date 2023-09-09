@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class AuthMember {
-  private int memberId;
+    private int memberId;
 
-  public AuthMember(int memberId) {
-    this.memberId = memberId;
-  }
+    public AuthMember(int memberId) {
+        this.memberId = memberId;
+    }
 }

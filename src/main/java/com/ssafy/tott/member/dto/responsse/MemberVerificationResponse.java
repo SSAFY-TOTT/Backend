@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class MemberVerificationResponse {
-  private int memberId;
+    private int memberId;
 
-  private MemberVerificationResponse(int memberId) {
-    this.memberId = memberId;
-  }
+    private MemberVerificationResponse(int memberId) {
+        this.memberId = memberId;
+    }
 
-  public static MemberVerificationResponse from(int memberId) {
-    return new MemberVerificationResponse(memberId);
-  }
+    public static MemberVerificationResponse from(int memberId) {
+        return new MemberVerificationResponse(memberId);
+    }
 }
