@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.seoulopendata.service;
 
-import com.ssafy.tott.api.FetchAPICore;
+import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import lombok.RequiredArgsConstructor;

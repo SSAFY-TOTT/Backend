@@ -1,4 +1,4 @@
-package com.ssafy.tott.api;
+package com.ssafy.tott.api.core;
 
 public interface FetchAPICore {
     default APIResponse fetchAPI(String request) {

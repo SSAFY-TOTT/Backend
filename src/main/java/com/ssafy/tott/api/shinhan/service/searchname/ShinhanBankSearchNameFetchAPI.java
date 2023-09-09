@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.shinhan.service.searchname;
 
-import com.ssafy.tott.api.FetchAPICore;
+import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;

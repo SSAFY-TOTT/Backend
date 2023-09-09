@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.kakao.service;
 
-import com.ssafy.tott.api.FetchAPICore;
+import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.kakao.data.dto.response.KakaoAPIResponse;
 import com.ssafy.tott.api.kakao.data.vo.Documents;
 import com.ssafy.tott.api.kakao.property.KakaoAddressProperties;
