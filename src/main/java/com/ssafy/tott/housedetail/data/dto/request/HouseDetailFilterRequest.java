@@ -18,6 +18,6 @@ public class HouseDetailFilterRequest {
     private int maxPrice;
     private int minArea;
     private int maxArea;
-    private List<BuildingType> type;
+    private List<BuildingType> types;
     private int buildingYear;
 }

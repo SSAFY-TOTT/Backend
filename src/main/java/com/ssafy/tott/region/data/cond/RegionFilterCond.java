@@ -15,14 +15,14 @@ public class RegionFilterCond {
     private int legalDongCode;
 
     @Builder
-    public RegionFilterCond(String districtName, String legalDongName, int districtCode, int legalDongCode) {
+    private RegionFilterCond(String districtName, String legalDongName, int districtCode, int legalDongCode) {
         this.districtName = districtName;
         this.legalDongName = legalDongName;
         this.districtCode = districtCode;
         this.legalDongCode = legalDongCode;
     }
 
-    private static RegionFilterCond from(HouseDetailFilterRequest request) {
+    public static RegionFilterCond from(HouseDetailFilterRequest request) {
         return RegionFilterCond.builder()
                 .districtName(request.getDistrictName())
                 .districtCode(request.getDistrictCode())
