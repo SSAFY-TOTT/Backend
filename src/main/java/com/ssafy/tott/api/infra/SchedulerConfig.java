@@ -1,4 +1,4 @@
-package com.ssafy.tott.api.seoul.batch;
+package com.ssafy.tott.api.infra;
 
 import com.ssafy.tott.api.seoul.service.SchedulerService;
 import lombok.RequiredArgsConstructor;

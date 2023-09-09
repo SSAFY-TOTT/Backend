@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.seoul.service;
 
-import com.ssafy.tott.api.seoul.data.RentApiModel;
+import com.ssafy.tott.api.seoul.data.RentAPIResponse;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import com.ssafy.tott.api.seoul.module.HouseAPI;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
@@ -35,8 +35,8 @@ public class SchedulerService {
         log.info("fetchHouseData method start");
         int totalCount = houseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount() / devide;
         for (int i = 1; i < totalCount; i += 999) {
-            RentApiModel rentApiModel = houseAPI.fetchAPI(i, i + 999);
-            saveHouseData(houseAPI.filteringRentHouse(rentApiModel));
+            RentAPIResponse rentAPIResponse = houseAPI.fetchAPI(i, i + 999);
+            saveHouseData(houseAPI.filteringRentHouse(rentAPIResponse));
             log.info("data search {}%", (float) i / totalCount * 100);
         }
         log.info("fetchHouseData method end");

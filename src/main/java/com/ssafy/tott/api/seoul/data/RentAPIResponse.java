@@ -8,11 +8,11 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class RentApiModel implements APIResponse {
+public class RentAPIResponse implements APIResponse {
     private final RentData tbLnOpendataRentV;
 
     @JsonCreator
-    public RentApiModel(@JsonProperty("tbLnOpendataRentV") RentData tbLnOpendataRentV) {
+    public RentAPIResponse(@JsonProperty("tbLnOpendataRentV") RentData tbLnOpendataRentV) {
         this.tbLnOpendataRentV = tbLnOpendataRentV;
     }
 }

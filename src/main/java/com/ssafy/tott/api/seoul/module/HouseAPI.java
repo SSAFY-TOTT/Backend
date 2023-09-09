@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.seoul.module;
 
-import com.ssafy.tott.api.seoul.data.RentApiModel;
+import com.ssafy.tott.api.seoul.data.RentAPIResponse;
 import com.ssafy.tott.api.seoul.data.RentRow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,7 @@ public class HouseAPI {
      * @param end   공공데이터 마지막점
      * @return
      */
-    public RentApiModel fetchAPI(int start, int end) {
+    public RentAPIResponse fetchAPI(int start, int end) {
         String urlBuilder = "http://openapi.seoul.go.kr:8088" + '/' + URLEncoder.encode(key, StandardCharsets.UTF_8) +
                 '/' + URLEncoder.encode("json", StandardCharsets.UTF_8) +
                 '/' + URLEncoder.encode("tbLnOpendataRentV", StandardCharsets.UTF_8) +
@@ -33,17 +33,18 @@ public class HouseAPI {
                 '/' + URLEncoder.encode(String.valueOf(end), StandardCharsets.UTF_8);
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(urlBuilder, RentApiModel.class);
+        return restTemplate.getForObject(urlBuilder, RentAPIResponse.class);
     }
 
     /**
      * 전세집 중 필요한 데이터만 추출하기 위한 필터링기능
      *
-     * @param rentApiModel 공공데이터 API의 전세집 데이터
+     * @param rentAPIResponse 공공데이터 API의 전세집 데이터
      * @return @link  package.class#member  label
      */
-    public List<RentRow> filteringRentHouse(RentApiModel rentApiModel) {
-        return rentApiModel.getTbLnOpendataRentV().getRow().stream()
+    public List<RentRow> filteringRentHouse(RentAPIResponse rentAPIResponse) {
+        /* TODO: 2023/09/09 equals => `Empty`로 수정 */
+        return rentAPIResponse.getTbLnOpendataRentV().getRow().stream()
                 .filter(row -> row.getRentGbn().equals("전세"))
                 .filter(row -> row.getCntrctPrd().equals(""))
                 .filter(row -> row.getBobn() != null && !row.getBobn().equals(""))
