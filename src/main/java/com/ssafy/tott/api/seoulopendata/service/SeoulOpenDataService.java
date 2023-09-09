@@ -25,7 +25,7 @@ public class SeoulOpenDataService {
     private final SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
     /**
-     * 전세집 데이터를 추출 및 DB에 저장한다.
+     * 전세집 데이터를 추출 및 DB에 저장한다   .
      *
      * @param devide HouseData를 어느 정도로 줄인건지에 대한 param
      */

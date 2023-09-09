@@ -12,9 +12,9 @@ import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.ShinhanBankSearchAccountsFetchAPI;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequestBody;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameFetchAPI;
-import com.ssafy.tott.api.shinhan.service.searchname.dto.request.SearchNameRequestShinhanBankDataBody;
+import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequestDataBody;
 import com.ssafy.tott.api.shinhan.service.transfer1.ShinhanBankTransfer1FetchAPI;
-import com.ssafy.tott.api.shinhan.service.transfer1.dto.request.Transfer1RequestShinhanBankDataBody;
+import com.ssafy.tott.api.shinhan.service.transfer1.dto.request.ShinhanBankTransfer1RequestDataBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class ShinhanBankAPI {
     public ShinhanBankAPIResponse fetchSearchNameAPI(BankCode bankCode, String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                SearchNameRequestShinhanBankDataBody.of(bankCode.getCode(), account)
+                ShinhanBankSearchNameRequestDataBody.of(bankCode.getCode(), account)
         );
         String json = convertRequestToJson(request);
         ShinhanBankAPIResponse response = searchNameAPI.fetchAPI(json);
@@ -48,7 +48,7 @@ public class ShinhanBankAPI {
     public ShinhanBankAPIResponse fetchTransfer1API(BankCode bankCode, String accountNumber, String memo) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key,
-                Transfer1RequestShinhanBankDataBody.of(bankCode, accountNumber, memo)
+                ShinhanBankTransfer1RequestDataBody.of(bankCode, accountNumber, memo)
         );
         logging(request.getShinhanBankDataBody());
         String json = convertRequestToJson(request);

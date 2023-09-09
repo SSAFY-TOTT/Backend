@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Getter
-public class Transfer1RequestShinhanBankDataBody extends ShinhanBankDataBody {
+public class ShinhanBankTransfer1RequestDataBody extends ShinhanBankDataBody {
     @JsonProperty("입금은행코드")
     private String bankCode;
     @JsonProperty("입금계좌번호")
@@ -20,13 +20,13 @@ public class Transfer1RequestShinhanBankDataBody extends ShinhanBankDataBody {
     @JsonProperty("입금통장메모")
     private String memo;
 
-    private Transfer1RequestShinhanBankDataBody(String bankCode, String account, String memo) {
+    private ShinhanBankTransfer1RequestDataBody(String bankCode, String account, String memo) {
         this.bankCode = bankCode;
         this.account = account;
         this.memo = memo;
     }
 
-    public static Transfer1RequestShinhanBankDataBody of(BankCode bankCode, String account, String memo) {
-        return new Transfer1RequestShinhanBankDataBody(bankCode.getCode(), account, memo);
+    public static ShinhanBankTransfer1RequestDataBody of(BankCode bankCode, String account, String memo) {
+        return new ShinhanBankTransfer1RequestDataBody(bankCode.getCode(), account, memo);
     }
 }
