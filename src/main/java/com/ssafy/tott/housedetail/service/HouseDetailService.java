@@ -1,7 +1,10 @@
 package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.exception.HouseDetailErrorCode;
+import com.ssafy.tott.housedetail.exception.HouseDetailException;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +24,13 @@ public class HouseDetailService {
      */
     public void saveHouseDetail(RentRow row, HouseGeo houseGeo) {
         houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
+    }
+
+    public HouseDetail findById(int id) {
+        return houseDetailRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new HouseDetailException(HouseDetailErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED)
+        );
     }
 }
