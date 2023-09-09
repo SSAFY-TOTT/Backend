@@ -4,6 +4,8 @@ import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
+import com.ssafy.tott.region.exception.RegionErrorCode;
+import com.ssafy.tott.region.exception.RegionException;
 import com.ssafy.tott.region.mapper.RegionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,6 @@ public class RegionService {
 
     public Region findByFilter(RegionFilterCond cond) {
         return regionRepository.findByFilterCond(cond)
-                .orElseThrow();
+                .orElseThrow(() -> new RegionException(RegionErrorCode.ERROR_CLIENT_BY_IS_NOT_EXISTED_REGION));
     }
 }
