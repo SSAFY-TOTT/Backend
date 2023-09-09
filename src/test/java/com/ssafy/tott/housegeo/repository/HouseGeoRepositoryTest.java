@@ -1,7 +1,7 @@
 package com.ssafy.tott.housegeo.repository;
 
-import com.ssafy.tott.api.seoul.data.RentRow;
-import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.housegeo.domain.BuildingType;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
 import com.ssafy.tott.region.domain.Region;
@@ -12,15 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles(profiles = {"test"})
+@Transactional
 @DataJpaTest
-public class HouseGeoRepositoryTest {
+class HouseGeoRepositoryTest {
     private final RentRow row = new RentRow("2023", "11380", "은평구", "10300", "불광동", "1", "대지", "0105", "0076", 3.0, "20230901", "전세", 57.76, "23000", "0", "105-76", "2018", "연립다세대", "", "신규", "", "0", "");
     @Autowired
     private HouseGeoRepository houseGeoRepository;
@@ -39,6 +40,7 @@ public class HouseGeoRepositoryTest {
                 .build());
         houseGeo = houseGeoRepository.save(HouseGeo.builder()
                 .mainNumber(Integer.parseInt(row.getBobn()))
+                .buildingType(BuildingType.연립다세대)
                 .subNumber(Integer.parseInt(row.getBubn()))
                 .longitude(0)
                 .latitude(0)
@@ -52,6 +54,9 @@ public class HouseGeoRepositoryTest {
     void findHouseGeoWhenExist() {
         Optional<HouseGeo> findHouseGeo = houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()));
         assertTrue(findHouseGeo.isPresent());
-        assertEquals(houseGeo.getId(), houseGeo.getId());
+        assertAll(
+                () -> assertEquals(houseGeo.getLatitude(), findHouseGeo.get().getLatitude()),
+                () -> assertEquals(houseGeo.getLongitude(), findHouseGeo.get().getLongitude())
+        );
     }
 }

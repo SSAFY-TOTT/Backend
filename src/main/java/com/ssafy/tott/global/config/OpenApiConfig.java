@@ -6,7 +6,9 @@ import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/** Swagger springdoc-ui 구성 파일 */
+/**
+ * Swagger springdoc-ui 구성 파일
+ */
 @OpenAPIDefinition(
         info =
         @Info(

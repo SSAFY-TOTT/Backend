@@ -8,7 +8,7 @@ public enum BuildingType {
 
     private final String buildingType;
 
-    BuildingType(String buildingType){
+    BuildingType(String buildingType) {
         this.buildingType = buildingType;
     }
 

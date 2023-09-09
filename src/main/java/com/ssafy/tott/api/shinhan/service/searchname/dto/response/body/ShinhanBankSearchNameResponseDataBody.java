@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class SearchNameResponseShinhanBankDataBody extends ShinhanBankDataBody {
+public class ShinhanBankSearchNameResponseDataBody extends ShinhanBankDataBody {
     @JsonProperty("입금은행코드")
     private String bankCode;
 

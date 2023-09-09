@@ -1,5 +1,6 @@
 package com.ssafy.tott.api.seoul.service;
 
+import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataService;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @ActiveProfiles(profiles = {"test"})
 @Slf4j
-class SchedulerServiceTest {
+class SeoulOpenDataServiceTest {
     @Autowired
     private HouseDetailRepository houseDetailRepository;
 
     @Autowired
-    private SchedulerService schedulerService;
+    private SeoulOpenDataService seoulOpenDataService;
 
     @DisplayName("전세집 자료 DB 저장 Test")
     @Test
-    void saveRentHouseToDB(){
-        assertDoesNotThrow(() -> schedulerService.fetchHouseData(10000));
+    void saveRentHouseToDB() {
+        assertDoesNotThrow(() -> seoulOpenDataService.fetchHouseData(10000));
+
         List<HouseDetail> houseDetails = houseDetailRepository.findAll();
         assertTrue(houseDetails.size() >= 10);
-        log.info(houseDetails.toString());
     }
 }

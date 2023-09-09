@@ -1,9 +1,7 @@
-package com.ssafy.tott.api.kakao.data;
+package com.ssafy.tott.api.kakao.data.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class Documents {
