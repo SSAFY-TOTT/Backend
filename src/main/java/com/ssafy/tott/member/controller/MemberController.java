@@ -17,17 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
-    private final MemberService memberService;
+  private final MemberService memberService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<MemberSignupResponse> signup(@RequestBody MemberSignupRequest request) {
-        MemberSignupResponse response = memberService.signup(request);
-        return ResponseEntity.ok(response);
-    }
+  @PostMapping("/signup")
+  public ResponseEntity<MemberSignupResponse> signup(@RequestBody MemberSignupRequest request) {
+    MemberSignupResponse response = memberService.signup(request);
+    return ResponseEntity.ok(response);
+  }
 
-    @PostMapping("/verification")
-    public ResponseEntity<MemberVerificationResponse> verification(@RequestBody MemberVerificationRequest request) {
-        MemberVerificationResponse response = memberService.verification(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+  @PostMapping("/verification")
+  public ResponseEntity<MemberVerificationResponse> verification(
+      @RequestBody MemberVerificationRequest request) {
+    MemberVerificationResponse response = memberService.verification(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
 }

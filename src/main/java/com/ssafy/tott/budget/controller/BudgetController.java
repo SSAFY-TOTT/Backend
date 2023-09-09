@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/budget")
 @RestController
 public class BudgetController {
-    private final BudgetService budgetService;
+  private final BudgetService budgetService;
 
-    @PostMapping("/save")
-    public ResponseEntity<BudgetsResponse> saveAll(@Authenticated AuthMember authMember,
-                                                   @RequestBody BudgetsUpdateRequest budgetsUpdateRequest) {
-        BudgetsResponse response = budgetService.saveAll(authMember, budgetsUpdateRequest);
-        return ResponseEntity.ok(response);
-    }
+  @PostMapping("/save")
+  public ResponseEntity<BudgetsResponse> saveAll(
+      @Authenticated AuthMember authMember,
+      @RequestBody BudgetsUpdateRequest budgetsUpdateRequest) {
+    BudgetsResponse response = budgetService.saveAll(authMember, budgetsUpdateRequest);
+    return ResponseEntity.ok(response);
+  }
 
-    @GetMapping("/find")
-    public ResponseEntity<BudgetsResponse> findAll(@Authenticated AuthMember authMember) {
-        BudgetsResponse response = budgetService.findAll(authMember);
-        return ResponseEntity.ok(response);
-    }
+  @GetMapping("/find")
+  public ResponseEntity<BudgetsResponse> findAll(@Authenticated AuthMember authMember) {
+    BudgetsResponse response = budgetService.findAll(authMember);
+    return ResponseEntity.ok(response);
+  }
 }

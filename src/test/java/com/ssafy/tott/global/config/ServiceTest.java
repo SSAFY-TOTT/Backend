@@ -12,10 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @SpringBootTest
 public abstract class ServiceTest {
-    @Autowired
-    MemberRepository memberRepository;
+  @Autowired MemberRepository memberRepository;
 
-    public Member saveMember() {
-        return memberRepository.save(MemberFixture.JEONGUK.toMember());
-    }
+  public Member saveMember() {
+    return memberRepository.save(MemberFixture.JEONGUK.toMember());
+  }
 }
