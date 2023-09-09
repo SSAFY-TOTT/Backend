@@ -1,7 +1,8 @@
-package com.ssafy.tott.api.kakao.module;
+package com.ssafy.tott.api.kakao.service;
 
-import com.ssafy.tott.api.kakao.data.Documents;
-import com.ssafy.tott.api.kakao.data.KakaoAPIResponse;
+import com.ssafy.tott.api.FetchAPICore;
+import com.ssafy.tott.api.kakao.data.dto.response.KakaoAPIResponse;
+import com.ssafy.tott.api.kakao.data.vo.Documents;
 import com.ssafy.tott.api.kakao.property.KakaoAddressProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class KakaoMapAPI {
+public class KakaoMapFetchAPI implements FetchAPICore {
     private final WebClient kakaoWebClient;
     private final KakaoAddressProperties kakaoAddressProperties;
 
@@ -28,23 +29,36 @@ public class KakaoMapAPI {
      */
     public Documents kakaoAddressSearch(String sggNm, String bjDongNm, String bobn, String bubn) throws IndexOutOfBoundsException {
         /* roadAddress : 지번 ( 구 / 동 / 본번-부번 ) */
-        StringBuilder sb = new StringBuilder()
+        StringBuilder roadAddress = makeRoadAddress(sggNm, bjDongNm, bobn, bubn);
+        KakaoAPIResponse kakaoAPIResponse = fetchAPI(roadAddress.toString());
+        validateToAPIResponse(kakaoAPIResponse);
+        return kakaoAPIResponse.getDocuments().get(0);
+    }
+
+    private StringBuilder makeRoadAddress(String sggNm, String bjDongNm, String bobn, String bubn) {
+        return new StringBuilder()
                 .append(sggNm).append(" ")
                 .append(bjDongNm).append(" ")
                 .append(bobn).append("-")
                 .append(bubn);
-        KakaoAPIResponse kakaoAPIResponse = kakaoWebClient.method(kakaoAddressProperties.getMethod())
+    }
+
+    @Override
+    public KakaoAPIResponse fetchAPI(String roadAddress) {
+        return kakaoWebClient.method(kakaoAddressProperties.getMethod())
                 .uri(builder -> builder.path(kakaoAddressProperties.getPath())
-                        .queryParam("query", sb.toString())
+                        .queryParam("query", roadAddress)
                         .build()
                 )
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(KakaoAPIResponse.class)
                 .block();
+    }
+
+    private void validateToAPIResponse(KakaoAPIResponse kakaoAPIResponse) {
         if (kakaoAPIResponse.getDocuments().isEmpty()) {
             throw new IndexOutOfBoundsException();
         }
-        return kakaoAPIResponse.getDocuments().get(0);
     }
 }

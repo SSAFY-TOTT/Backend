@@ -1,7 +1,7 @@
 package com.ssafy.tott.housegeo.service;
 
-import com.ssafy.tott.api.kakao.data.Documents;
-import com.ssafy.tott.api.kakao.module.KakaoMapAPI;
+import com.ssafy.tott.api.kakao.data.vo.Documents;
+import com.ssafy.tott.api.kakao.service.KakaoMapFetchAPI;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
@@ -46,7 +46,7 @@ public class HouseGeoServiceTest {
     @Mock
     private HouseGeoRepository houseGeoRepository;
     @Mock
-    private KakaoMapAPI kakaoMapAPI;
+    private KakaoMapFetchAPI kakaoMapFetchAPI;
     @Spy
     private HouseGeoMapper houseGeoMapper;
 
@@ -80,7 +80,7 @@ public class HouseGeoServiceTest {
             Documents documents = new Documents();
             documents.setX("127.123123");
             documents.setY("45.231231234");
-            given(kakaoMapAPI.kakaoAddressSearch(any(), any(), any(), any())).willReturn(documents);
+            given(kakaoMapFetchAPI.kakaoAddressSearch(any(), any(), any(), any())).willReturn(documents);
             //when, then
             assertDoesNotThrow(() -> houseGeoService.getHouseGeo(row, region));
         }
@@ -90,7 +90,7 @@ public class HouseGeoServiceTest {
         void getHouseGeoWhenExistedHouseGeoAndNotExistedPositionTest() {
             //given
             given(houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()))).willReturn(Optional.empty());
-            given(kakaoMapAPI.kakaoAddressSearch(any(), any(), any(), any())).willThrow(IndexOutOfBoundsException.class);
+            given(kakaoMapFetchAPI.kakaoAddressSearch(any(), any(), any(), any())).willThrow(IndexOutOfBoundsException.class);
 
             //when,then
             assertThrows(IndexOutOfBoundsException.class, () -> houseGeoService.getHouseGeo(row, region));

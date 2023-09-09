@@ -1,7 +1,7 @@
 package com.ssafy.tott.housegeo.service;
 
-import com.ssafy.tott.api.kakao.data.Documents;
-import com.ssafy.tott.api.kakao.module.KakaoMapAPI;
+import com.ssafy.tott.api.kakao.data.vo.Documents;
+import com.ssafy.tott.api.kakao.service.KakaoMapFetchAPI;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class HouseGeoService {
     private final HouseGeoRepository houseGeoRepository;
-    private final KakaoMapAPI kakaoMapAPI;
+    private final KakaoMapFetchAPI kakaoMapFetchAPI;
     private final HouseGeoMapper houseGeoMapper;
 
     /**
@@ -29,7 +29,7 @@ public class HouseGeoService {
     public HouseGeo getHouseGeo(RentRow row, Region region) {
         Optional<HouseGeo> houseGeo = houseGeoRepository.findByMainNumberAndSubNumber(Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()));
         return houseGeo.orElseGet(() -> {
-            Documents position = kakaoMapAPI.kakaoAddressSearch(row.getSggNm(), row.getBjdongNm(), row.getBobn(), row.getBubn());
+            Documents position = kakaoMapFetchAPI.kakaoAddressSearch(row.getSggNm(), row.getBjdongNm(), row.getBobn(), row.getBubn());
             return houseGeoRepository.save(houseGeoMapper.toEntity(row, position, region));
         });
     }
