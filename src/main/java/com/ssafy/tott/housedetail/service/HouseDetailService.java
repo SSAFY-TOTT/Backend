@@ -1,6 +1,6 @@
 package com.ssafy.tott.housedetail.service;
 
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;

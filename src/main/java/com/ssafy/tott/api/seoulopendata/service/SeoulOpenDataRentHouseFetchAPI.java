@@ -1,7 +1,8 @@
-package com.ssafy.tott.api.seoul.module;
+package com.ssafy.tott.api.seoulopendata.service;
 
-import com.ssafy.tott.api.seoul.data.RentAPIResponse;
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.FetchAPICore;
+import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
-public class HouseAPI {
+public class SeoulOpenDataRentHouseFetchAPI implements FetchAPICore {
     @Value("${seouldata.tbLnOpendataRentV.key}")
     private String key;
 
@@ -25,6 +26,7 @@ public class HouseAPI {
      * @param end   공공데이터 마지막점
      * @return
      */
+    @Override
     public RentAPIResponse fetchAPI(int start, int end) {
         String urlBuilder = "http://openapi.seoul.go.kr:8088" + '/' + URLEncoder.encode(key, StandardCharsets.UTF_8) +
                 '/' + URLEncoder.encode("json", StandardCharsets.UTF_8) +

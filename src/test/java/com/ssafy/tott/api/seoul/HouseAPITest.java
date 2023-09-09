@@ -1,7 +1,7 @@
 package com.ssafy.tott.api.seoul;
 
-import com.ssafy.tott.api.seoul.data.RentAPIResponse;
-import com.ssafy.tott.api.seoul.module.HouseAPI;
+import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
+import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataRentHouseFetchAPI;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class HouseAPITest {
 
     @Autowired
-    private HouseAPI houseAPI;
+    private SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
     @DisplayName("api 연동 test")
     @Test
     void connectAPI() {
         //given, when
-        RentAPIResponse model = houseAPI.fetchAPI(1, 5);
+        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
 
         //then
         assertEquals(5, model.getTbLnOpendataRentV().getRow().size());
@@ -32,11 +32,11 @@ class HouseAPITest {
     @Test
     void filteringRentHouseTest() {
         //given
-        RentAPIResponse model = houseAPI.fetchAPI(1, 5);
+        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
 
         //when
         //then
-        Assertions.assertThatCode(() -> houseAPI.filteringRentHouse(model))
+        Assertions.assertThatCode(() -> seoulOpenDataRentHouseAPI.filteringRentHouse(model))
                 .doesNotThrowAnyException();
     }
 }

@@ -1,6 +1,6 @@
 package com.ssafy.tott.region.service;
 
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.mapper.RegionMapper;

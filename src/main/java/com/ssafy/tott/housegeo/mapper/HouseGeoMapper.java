@@ -1,7 +1,7 @@
 package com.ssafy.tott.housegeo.mapper;
 
 import com.ssafy.tott.api.kakao.data.Documents;
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housegeo.domain.BuildingType;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.region.domain.Region;

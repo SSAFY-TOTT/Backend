@@ -1,8 +1,9 @@
-package com.ssafy.tott.api.seoul.data;
+package com.ssafy.tott.api.seoulopendata.data.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.tott.api.APIResponse;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentData;
 import lombok.Getter;
 import lombok.ToString;
 

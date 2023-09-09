@@ -1,4 +1,4 @@
-package com.ssafy.tott.api.seoul.data;
+package com.ssafy.tott.api.seoulopendata.data.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

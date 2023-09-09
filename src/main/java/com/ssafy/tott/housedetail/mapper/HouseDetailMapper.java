@@ -1,6 +1,6 @@
 package com.ssafy.tott.housedetail.mapper;
 
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.ssafy.tott.region.mapper;
 
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.domain.Region;
 import org.springframework.stereotype.Component;
 

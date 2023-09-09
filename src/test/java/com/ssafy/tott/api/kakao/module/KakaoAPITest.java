@@ -1,7 +1,7 @@
 package com.ssafy.tott.api.kakao.module;
 
 import com.ssafy.tott.api.kakao.data.Documents;
-import com.ssafy.tott.api.seoul.data.RentRow;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,7 @@
-package com.ssafy.tott.api.seoul.service;
+package com.ssafy.tott.api.seoulopendata.service;
 
-import com.ssafy.tott.api.seoul.data.RentAPIResponse;
-import com.ssafy.tott.api.seoul.data.RentRow;
-import com.ssafy.tott.api.seoul.module.HouseAPI;
+import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.service.HouseGeoService;
@@ -18,12 +17,12 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SchedulerService {
+public class SeoulOpenDataService {
 
     private final RegionService regionService;
     private final HouseGeoService houseGeoService;
     private final HouseDetailService houseDetailService;
-    private final HouseAPI houseAPI;
+    private final SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
     /**
      * 전세집 데이터를 추출 및 DB에 저장한다.
@@ -33,10 +32,10 @@ public class SchedulerService {
     @Transactional
     public void fetchHouseData(int devide) {
         log.info("fetchHouseData method start");
-        int totalCount = houseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount() / devide;
+        int totalCount = seoulOpenDataRentHouseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount() / devide;
         for (int i = 1; i < totalCount; i += 999) {
-            RentAPIResponse rentAPIResponse = houseAPI.fetchAPI(i, i + 999);
-            saveHouseData(houseAPI.filteringRentHouse(rentAPIResponse));
+            RentAPIResponse rentAPIResponse = seoulOpenDataRentHouseAPI.fetchAPI(i, i + 999);
+            saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouse(rentAPIResponse));
             log.info("data search {}%", (float) i / totalCount * 100);
         }
         log.info("fetchHouseData method end");
