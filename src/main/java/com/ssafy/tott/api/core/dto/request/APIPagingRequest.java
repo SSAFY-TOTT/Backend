@@ -1,6 +1,6 @@
 package com.ssafy.tott.api.core.dto.request;
 
-public interface APIPagingRequest {
+public interface APIPagingRequest extends APIJsonRequest {
     int getStart();
 
     int getEnd();
