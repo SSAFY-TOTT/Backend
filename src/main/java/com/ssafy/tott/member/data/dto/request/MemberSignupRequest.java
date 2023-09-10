@@ -1,4 +1,4 @@
-package com.ssafy.tott.member.dto.request;
+package com.ssafy.tott.member.data.dto.request;
 
 import com.ssafy.tott.account.domain.BankCode;
 import lombok.AccessLevel;

@@ -1,9 +1,9 @@
 package com.ssafy.tott.member.controller;
 
-import com.ssafy.tott.member.dto.request.MemberSignupRequest;
-import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
-import com.ssafy.tott.member.dto.responsse.MemberSignupResponse;
-import com.ssafy.tott.member.dto.responsse.MemberVerificationResponse;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.data.dto.request.MemberVerificationRequest;
+import com.ssafy.tott.member.data.dto.responsse.MemberSignupResponse;
+import com.ssafy.tott.member.data.dto.responsse.MemberVerificationResponse;
 import com.ssafy.tott.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
