@@ -13,6 +13,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class HouseGeoFilterCond {
+    private static final Double AREA_UNITS = 3.3D;
+    private static final int MONEY_UNITS = 1000;
+
     private int regionId;
     private int minPrice;
     private int maxPrice;
@@ -37,10 +40,10 @@ public class HouseGeoFilterCond {
     public static HouseGeoFilterCond of(int regionId, GeoSearchRequest request) {
         return HouseGeoFilterCond.builder()
                 .regionId(regionId)
-                .minArea(request.getMinArea() * 3.3D)
-                .maxArea(request.getMaxArea() * 3.3D)
-                .minPrice(request.getMinPrice() * 1000)
-                .maxPrice(request.getMaxPrice() * 1000)
+                .minArea(request.getMinArea() * AREA_UNITS)
+                .maxArea(request.getMaxArea() * AREA_UNITS)
+                .minPrice(request.getMinPrice() * MONEY_UNITS)
+                .maxPrice(request.getMaxPrice() * MONEY_UNITS)
                 .buildingYear(LocalDate.now().getYear() - request.getBuildingYear())
                 .types(request.getTypes())
                 .build();
