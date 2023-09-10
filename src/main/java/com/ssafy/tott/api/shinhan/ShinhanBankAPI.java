@@ -10,6 +10,7 @@ import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.ShinhanBankSearchAccountsFetchAPI;
+import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequest;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequestBody;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameFetchAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequestDataBody;
@@ -57,11 +58,16 @@ public class ShinhanBankAPI {
     }
 
     public ShinhanBankAPIResponse fetchSearchAccountsAPI(String encodedName) {
-        ShinhanBankAPIRequest request =
+        ShinhanBankAPIRequest shinhanBankAPIRequest =
                 ShinhanBankAPIRequest.of(key, ShinhanBankSearchAccountsRequestBody.from(encodedName));
-        logging(request.getShinhanBankDataBody());
-        String json = convertRequestToJson(request);
-        ShinhanBankAPIResponse response = searchAccountsAPI.fetchAPI(json);
+
+        logging(shinhanBankAPIRequest.getShinhanBankDataBody());
+
+        ShinhanBankSearchAccountsRequest shinhanBankSearchAccountsRequest =
+                new ShinhanBankSearchAccountsRequest(convertRequestToJson(shinhanBankAPIRequest));
+        ShinhanBankAPIResponse response =
+                (ShinhanBankAPIResponse) searchAccountsAPI.fetchAPI(shinhanBankSearchAccountsRequest);
+
         validate(response);
         return response;
     }
