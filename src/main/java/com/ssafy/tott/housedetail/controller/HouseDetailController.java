@@ -1,6 +1,7 @@
 package com.ssafy.tott.housedetail.controller;
 
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailFilterRequest;
+import com.ssafy.tott.housedetail.data.dto.response.HouseSearchResponse;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class HouseDetailController {
     private final HouseDetailService houseDetailService;
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestBody HouseDetailFilterRequest request) {
-        int response = houseDetailService.search(request);
+    public ResponseEntity<HouseSearchResponse> search(@RequestBody HouseDetailFilterRequest request) {
+        HouseSearchResponse response = houseDetailService.search(request);
         return ResponseEntity.ok(response);
     }
 }

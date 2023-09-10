@@ -3,6 +3,9 @@ package com.ssafy.tott.housedetail.service;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housedetail.data.cond.HouseDetailFilterCond;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailFilterRequest;
+import com.ssafy.tott.housedetail.data.dto.response.HouseSearchResponse;
+import com.ssafy.tott.housedetail.data.vo.HouseSearchDetailVO;
+import com.ssafy.tott.housedetail.data.vo.HouseSearchGeoVO;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
@@ -13,6 +16,7 @@ import com.ssafy.tott.region.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,11 +37,24 @@ public class HouseDetailService {
         houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
     }
 
-    public int search(HouseDetailFilterRequest request) {
+    public HouseSearchResponse search(HouseDetailFilterRequest request) {
         Region region = regionService.findByFilter(RegionFilterCond.from(request));
 
         HouseDetailFilterCond cond = HouseDetailFilterCond.of(region.getId(), request);
         List<HouseDetail> findHouseDetails = houseDetailRepository.findByFilterCond(cond);
-        return findHouseDetails.size();
+
+        for (HouseDetail findHouseDetail : findHouseDetails) {
+
+        }
+        return null;
+    }
+
+    private HouseSearchResponse toSearchResponse(List<HouseDetail> list) {
+        List<HouseSearchGeoVO> geoList = new ArrayList<>();
+        for (HouseDetail houseDetail : list) {
+            List<HouseSearchDetailVO> detailList = new ArrayList<>();
+
+        }
+        return null;
     }
 }

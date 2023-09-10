@@ -24,7 +24,7 @@ public class HouseDetailRepositoryImpl implements HouseDetailRepositoryCustom {
     public List<HouseDetail> findByFilterCond(HouseDetailFilterCond cond) {
         return query.selectFrom(houseDetail)
                 .join(houseDetail.houseGeo, houseGeo).fetchJoin()
-                .join(houseGeo.region, region)
+                .join(houseGeo.region, region).fetchJoin()
                 .where(houseDetail.houseGeo.region.id.eq(cond.getRegionId()))
                 .where(getFilterPrice(cond.getMinPrice(), cond.getMaxPrice()))
                 .where(getFilterArea(cond.getMinArea(), cond.getMaxArea()))
