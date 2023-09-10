@@ -1,31 +1,17 @@
 package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
-import com.ssafy.tott.housedetail.data.cond.HouseDetailFilterCond;
-import com.ssafy.tott.housedetail.data.dto.request.HouseDetailFilterRequest;
-import com.ssafy.tott.housedetail.data.dto.response.HouseSearchResponse;
-import com.ssafy.tott.housedetail.data.vo.HouseSearchDetailVO;
-import com.ssafy.tott.housedetail.data.vo.HouseSearchGeoVO;
-import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
-import com.ssafy.tott.region.data.cond.RegionFilterCond;
-import com.ssafy.tott.region.domain.Region;
-import com.ssafy.tott.region.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class HouseDetailService {
     private final HouseDetailRepository houseDetailRepository;
     private final HouseDetailMapper houseDetailMapper;
-
-    private final RegionService regionService;
 
     /**
      * HouseDetail 데이터를 저장한다.
@@ -35,26 +21,5 @@ public class HouseDetailService {
      */
     public void saveHouseDetail(RentRow row, HouseGeo houseGeo) {
         houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
-    }
-
-    public HouseSearchResponse search(HouseDetailFilterRequest request) {
-        Region region = regionService.findByFilter(RegionFilterCond.from(request));
-
-        HouseDetailFilterCond cond = HouseDetailFilterCond.of(region.getId(), request);
-        List<HouseDetail> findHouseDetails = houseDetailRepository.findByFilterCond(cond);
-
-        for (HouseDetail findHouseDetail : findHouseDetails) {
-
-        }
-        return null;
-    }
-
-    private HouseSearchResponse toSearchResponse(List<HouseDetail> list) {
-        List<HouseSearchGeoVO> geoList = new ArrayList<>();
-        for (HouseDetail houseDetail : list) {
-            List<HouseSearchDetailVO> detailList = new ArrayList<>();
-
-        }
-        return null;
     }
 }

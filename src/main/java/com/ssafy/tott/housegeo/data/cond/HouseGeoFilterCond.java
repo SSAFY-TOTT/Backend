@@ -1,6 +1,6 @@
-package com.ssafy.tott.housedetail.data.cond;
+package com.ssafy.tott.housegeo.data.cond;
 
-import com.ssafy.tott.housedetail.data.dto.request.HouseDetailFilterRequest;
+import com.ssafy.tott.housegeo.data.dto.request.GeoSearchRequest;
 import com.ssafy.tott.housegeo.domain.BuildingType;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,8 +12,7 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class HouseDetailFilterCond {
-    private String code;
+public class HouseGeoFilterCond {
     private int regionId;
     private int minPrice;
     private int maxPrice;
@@ -23,7 +22,7 @@ public class HouseDetailFilterCond {
     private int buildingYear;
 
     @Builder
-    public HouseDetailFilterCond(
+    public HouseGeoFilterCond(
             int regionId, int minPrice, int maxPrice, double minArea, double maxArea,
             List<BuildingType> types, int buildingYear) {
         this.regionId = regionId;
@@ -35,8 +34,8 @@ public class HouseDetailFilterCond {
         this.buildingYear = buildingYear;
     }
 
-    public static HouseDetailFilterCond of(int regionId, HouseDetailFilterRequest request) {
-        return HouseDetailFilterCond.builder()
+    public static HouseGeoFilterCond of(int regionId, GeoSearchRequest request) {
+        return HouseGeoFilterCond.builder()
                 .regionId(regionId)
                 .minArea(request.getMinArea() * 3.3D)
                 .maxArea(request.getMaxArea() * 3.3D)

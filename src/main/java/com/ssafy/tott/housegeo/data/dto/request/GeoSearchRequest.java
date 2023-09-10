@@ -1,4 +1,4 @@
-package com.ssafy.tott.housedetail.data.dto.request;
+package com.ssafy.tott.housegeo.data.dto.request;
 
 import com.ssafy.tott.housegeo.domain.BuildingType;
 import lombok.AccessLevel;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class HouseDetailFilterRequest {
+public class GeoSearchRequest {
     private String districtName;
     private String legalDongName;
     private int districtCode;

@@ -21,10 +21,9 @@ public class HouseDetail extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_detail_id")
     private int id;
-
-    private long price;
+    private int price; // 만원 단위
     private double area;
-    private double floor;
+    private int floor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "geo_id")
@@ -34,7 +33,7 @@ public class HouseDetail extends BaseEntity {
     private List<Wishlist> wishlists = new ArrayList<>();
 
     @Builder
-    public HouseDetail(long price, double area, double floor, HouseGeo houseGeo) {
+    public HouseDetail(int price, double area, int floor, HouseGeo houseGeo) {
         this.price = price;
         this.area = area;
         this.floor = floor;
