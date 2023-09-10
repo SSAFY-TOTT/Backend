@@ -2,8 +2,8 @@ package com.ssafy.tott.member.service;
 
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.domain.MemberVerificationCache;
-import com.ssafy.tott.member.dto.request.MemberSignupRequest;
-import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.data.dto.request.MemberVerificationRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

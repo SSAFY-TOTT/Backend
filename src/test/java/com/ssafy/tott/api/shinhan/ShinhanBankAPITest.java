@@ -2,7 +2,7 @@ package com.ssafy.tott.api.shinhan;
 
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.global.fixture.MemberFixture;
-import com.ssafy.tott.member.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

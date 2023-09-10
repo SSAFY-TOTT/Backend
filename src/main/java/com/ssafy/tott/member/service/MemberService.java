@@ -9,10 +9,10 @@ import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.body.Transfer1R
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.domain.MemberRepository;
 import com.ssafy.tott.member.domain.MemberVerificationCache;
-import com.ssafy.tott.member.dto.request.MemberSignupRequest;
-import com.ssafy.tott.member.dto.request.MemberVerificationRequest;
-import com.ssafy.tott.member.dto.responsse.MemberSignupResponse;
-import com.ssafy.tott.member.dto.responsse.MemberVerificationResponse;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.data.dto.request.MemberVerificationRequest;
+import com.ssafy.tott.member.data.dto.responsse.MemberSignupResponse;
+import com.ssafy.tott.member.data.dto.responsse.MemberVerificationResponse;
 import com.ssafy.tott.member.exception.MemberErrorCode;
 import com.ssafy.tott.member.exception.MemberException;
 import com.ssafy.tott.member.mapper.MemberMapper;
@@ -35,37 +35,34 @@ public class MemberService {
         MemberVerificationCache cache = memberVerificationService.cachingBySignupRequest(request);
 
         ShinhanBankTransfer1Response transfer1Response =
-                (ShinhanBankTransfer1Response)
-                        shinhanBankAPI.fetchTransfer1API(
-                                cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
-        Transfer1ResponseShinhanBankDataBody transfer1ResponseDataBody =
-                transfer1Response.getDataBody();
+                (ShinhanBankTransfer1Response) shinhanBankAPI.fetchTransfer1API(
+                        cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
+        Transfer1ResponseShinhanBankDataBody transfer1ResponseDataBody = transfer1Response.getDataBody();
 
-        return MemberSignupResponse.of(
-                transfer1ResponseDataBody.getAccount(), transfer1ResponseDataBody.getBankCode());
+        return MemberSignupResponse.of(transfer1ResponseDataBody.getAccount(), transfer1ResponseDataBody.getBankCode());
     }
 
     @Transactional
     public MemberVerificationResponse verification(MemberVerificationRequest request) {
-        MemberVerificationCache memberVerificationCache =
-                memberVerificationService.verification(request);
+        MemberVerificationCache memberVerificationCache = memberVerificationService.verification(request);
 
         BankCode bankCode = memberVerificationCache.getBankCode();
         String accountNumber = memberVerificationCache.getAccountNumber();
         ShinhanBankSearchNameResponse responseAPI =
                 (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
-        Member savedMember =
-                memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
+        Member savedMember = memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
 
         accountService.searchAccounts(savedMember);
         return MemberVerificationResponse.from(savedMember.getId());
     }
 
     public Member findById(int id) {
-        return memberRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
+    }
+
+    private void validateByExistedMember() {
+
     }
 }

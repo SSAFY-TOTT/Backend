@@ -7,7 +7,7 @@ import com.ssafy.tott.member.domain.MemberVerificationCache;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
-import com.ssafy.tott.member.dto.request.MemberSignupRequest;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
