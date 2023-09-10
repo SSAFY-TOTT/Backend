@@ -2,7 +2,6 @@ package com.ssafy.tott.api.shinhan.service.searchaccounts.dto;
 
 import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.core.dto.APIRequest;
-import com.ssafy.tott.api.core.dto.APIResponse;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequest;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.response.ShinhanBankSearchAccountsResponse;
@@ -20,13 +19,13 @@ public class ShinhanBankSearchAccountsFetchAPI implements FetchAPICore {
     private String uri;
 
     @Override
-    public APIResponse fetchAPI(APIRequest request) {
+    public ShinhanBankSearchAccountsResponse fetchAPI(APIRequest request) {
         ShinhanBankSearchAccountsRequest shinhanBankSearchAccountsRequest =
                 (ShinhanBankSearchAccountsRequest) request;
         WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
         return webClient
                 .post()
-                .bodyValue(shinhanBankSearchAccountsRequest)
+                .bodyValue(shinhanBankSearchAccountsRequest.getJson())
                 .retrieve()
                 .bodyToMono(ShinhanBankSearchAccountsResponse.class)
                 .block();

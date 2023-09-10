@@ -1,8 +1,10 @@
 package com.ssafy.tott.api.shinhan.service.transfer1;
 
 import com.ssafy.tott.api.core.FetchAPICore;
+import com.ssafy.tott.api.core.dto.APIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
+import com.ssafy.tott.api.shinhan.service.transfer1.dto.request.ShinhanBankTransfer1Request;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +21,12 @@ public class ShinhanBankTransfer1FetchAPI implements FetchAPICore {
     private String uri;
 
     @Override
-    public ShinhanBankAPIResponse fetchAPI(String json) {
+    public ShinhanBankTransfer1Response fetchAPI(APIRequest request) {
+        ShinhanBankTransfer1Request shinhanBankTransfer1Request = (ShinhanBankTransfer1Request) request;
         WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
         return webClient
                 .post()
-                .bodyValue(json)
+                .bodyValue(shinhanBankTransfer1Request.getJson())
                 .retrieve()
                 .bodyToMono(ShinhanBankTransfer1Response.class)
                 .block();
