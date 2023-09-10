@@ -6,13 +6,13 @@ import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.body.Transfer1ResponseShinhanBankDataBody;
-import com.ssafy.tott.member.domain.Member;
-import com.ssafy.tott.member.domain.MemberRepository;
-import com.ssafy.tott.member.domain.MemberVerificationCache;
 import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import com.ssafy.tott.member.data.dto.request.MemberVerificationRequest;
 import com.ssafy.tott.member.data.dto.responsse.MemberSignupResponse;
 import com.ssafy.tott.member.data.dto.responsse.MemberVerificationResponse;
+import com.ssafy.tott.member.domain.Member;
+import com.ssafy.tott.member.domain.MemberRepository;
+import com.ssafy.tott.member.domain.MemberVerificationCache;
 import com.ssafy.tott.member.exception.MemberErrorCode;
 import com.ssafy.tott.member.exception.MemberException;
 import com.ssafy.tott.member.mapper.MemberMapper;
@@ -25,10 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+
     private final MemberVerificationService memberVerificationService;
-    private final ShinhanBankAPI shinhanBankAPI;
     private final MemberMapper mapper;
+
     private final AccountService accountService;
+
+    private final ShinhanBankAPI shinhanBankAPI;
 
     @Transactional
     public MemberSignupResponse signup(MemberSignupRequest request) {
@@ -60,9 +63,5 @@ public class MemberService {
     public Member findById(int id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));
-    }
-
-    private void validateByExistedMember() {
-
     }
 }
