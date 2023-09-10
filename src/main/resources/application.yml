@@ -1,8 +1,10 @@
 spring:
-  jpa:
-    open-in-view: true
   config:
+    activate:
+      on-profile: prod
     import:
       - security/application-api.yml
       - security/application-database.yml
       - security/application-security.yml
+  jpa:
+    open-in-view: true

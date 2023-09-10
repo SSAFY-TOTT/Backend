@@ -26,7 +26,7 @@ public class HouseDetailRepositoryTest {
                     "대지",
                     "0105",
                     "0076",
-                    3.0,
+                    3,
                     "20230901",
                     "전세",
                     57.76,
