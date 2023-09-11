@@ -11,4 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HouseDetailController {
 
     private final HouseDetailService houseDetailService;
+    /* TODO: 2023/09/12 최근 본 목록으로 조회 (HouseDetail ID) */
+
+    /* TODO: 2023/09/12 GeoId로 조회 */
 }
