@@ -8,6 +8,6 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class HouseDetailIdRequest {
+public class HouseDetailRecentViewRequest {
     private List<Integer> houseDetailIdList;
 }
