@@ -1,11 +1,8 @@
 package com.ssafy.tott.api.core;
 
-public interface FetchAPICore {
-    default APIResponse fetchAPI(String request) {
-        return null;
-    }
+import com.ssafy.tott.api.core.dto.APIRequest;
+import com.ssafy.tott.api.core.dto.APIResponse;
 
-    default APIResponse fetchAPI(int arg1, int arg2) {
-        return null;
-    }
+public interface FetchAPICore {
+    APIResponse fetchAPI(APIRequest request);
 }

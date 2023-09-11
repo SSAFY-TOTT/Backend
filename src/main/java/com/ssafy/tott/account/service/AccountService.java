@@ -27,8 +27,7 @@ public class AccountService {
         // 이름 암호화
         String encodedName = passwordEncoder.encode(member.getId() + member.getName());
 
-        ShinhanBankSearchAccountsResponse response =
-                (ShinhanBankSearchAccountsResponse) shinhanBankAPI.fetchSearchAccountsAPI(encodedName);
+        ShinhanBankSearchAccountsResponse response = shinhanBankAPI.fetchSearchAccountsAPI(encodedName);
         List<ShinhanBankSearchAccountsResponseAccount> responseAccounts =
                 response.getShinhanBankSearchAccountsResponseDataBody().getAccounts();
         for (ShinhanBankSearchAccountsResponseAccount responseAccount : responseAccounts) {

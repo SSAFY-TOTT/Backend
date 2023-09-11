@@ -37,9 +37,8 @@ public class MemberService {
     public MemberSignupResponse signup(MemberSignupRequest request) {
         MemberVerificationCache cache = memberVerificationService.cachingBySignupRequest(request);
 
-        ShinhanBankTransfer1Response transfer1Response =
-                (ShinhanBankTransfer1Response) shinhanBankAPI.fetchTransfer1API(
-                        cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
+        ShinhanBankTransfer1Response transfer1Response = shinhanBankAPI.fetchTransfer1API(
+                cache.getBankCode(), cache.getAccountNumber(), cache.getMemo());
         Transfer1ResponseShinhanBankDataBody transfer1ResponseDataBody = transfer1Response.getDataBody();
 
         return MemberSignupResponse.of(transfer1ResponseDataBody.getAccount(), transfer1ResponseDataBody.getBankCode());
@@ -51,8 +50,7 @@ public class MemberService {
 
         BankCode bankCode = memberVerificationCache.getBankCode();
         String accountNumber = memberVerificationCache.getAccountNumber();
-        ShinhanBankSearchNameResponse responseAPI =
-                (ShinhanBankSearchNameResponse) shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
+        ShinhanBankSearchNameResponse responseAPI = shinhanBankAPI.fetchSearchNameAPI(bankCode, accountNumber);
 
         Member savedMember = memberRepository.save(mapper.toMember(responseAPI, memberVerificationCache));
 

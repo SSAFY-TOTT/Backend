@@ -1,6 +1,7 @@
 package com.ssafy.tott.api.shinhan;
 
-import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
+import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
+import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -25,9 +26,8 @@ class ShinhanBankAPITest {
         MemberSignupRequest request = MemberFixture.SHINHAN.toMemberSignupRequest();
 
         /* When */
-        ShinhanBankAPIResponse response =
-                shinhanBankAPI.fetchTransfer1API(
-                        request.getBankCode(), request.getAccountNumber(), "1234 전세역전");
+        ShinhanBankTransfer1Response response = shinhanBankAPI.fetchTransfer1API(
+                request.getBankCode(), request.getAccountNumber(), "1234 전세역전");
 
         /* Then */
         assertThat(response.isFailed()).isFalse();
@@ -40,7 +40,7 @@ class ShinhanBankAPITest {
         MemberSignupRequest request = MemberFixture.SHINHAN.toMemberSignupRequest();
 
         /* When */
-        ShinhanBankAPIResponse response =
+        ShinhanBankSearchNameResponse response =
                 shinhanBankAPI.fetchSearchNameAPI(request.getBankCode(), request.getAccountNumber());
 
         /* Then */
