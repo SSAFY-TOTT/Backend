@@ -1,9 +1,9 @@
 package com.ssafy.tott.housedetail.data.vo;
 
 import com.ssafy.tott.housedetail.domain.HouseDetail;
+import com.ssafy.tott.housegeo.domain.HouseGeo;
+import com.ssafy.tott.region.domain.Region;
 import lombok.*;
-
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
@@ -19,10 +19,21 @@ public class HouseDetailRecentViewVO {
     private int area;
     private int price;
     private int builtYear;
+    /* TODO: 2023/09/12 찜 목록 조회 여부 query 구현 */
     private boolean isWishlist; // 찜 목록 여부
 
     public static HouseDetailRecentViewVO from(HouseDetail detail) {
+        HouseGeo geo = detail.getHouseGeo();
+        Region region = geo.getRegion();
         return HouseDetailRecentViewVO.builder()
+                .houseDetailId(detail.getId())
+                .address(region.getDistrictName() + " " + region.getLegalDongName())
+                .lat(geo.getLatitude())
+                .lng(geo.getLongitude())
+                .buildingName(geo.getBuildingName())
+                .builtYear(geo.getConstructionYear())
+                .area((int) (detail.getArea() / 3.3D))
+                .price(detail.getPrice())
                 .build();
     }
 }

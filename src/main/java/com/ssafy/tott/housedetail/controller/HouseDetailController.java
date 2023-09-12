@@ -19,13 +19,12 @@ public class HouseDetailController {
 
     private final HouseDetailService houseDetailService;
 
-    /* TODO: 2023/09/12 최근 본 목록으로 조회 (HouseDetail ID) */
     @GetMapping("/auth/recent")
     public ResponseEntity<HouseDetailRecentViewResponse> recentView(
             @Authenticated AuthMember authMember,
             @RequestBody HouseDetailRecentViewRequest request) {
-
-        return ResponseEntity.ok().build();
+        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(authMember, request);
+        return ResponseEntity.ok(response);
     }
     /* TODO: 2023/09/12 GeoId로 조회 */
 }
