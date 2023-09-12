@@ -1,4 +1,4 @@
-package com.ssafy.tott.api.shinhan.service.searchaccounts.dto;
+package com.ssafy.tott.api.shinhan.service.searchaccounts;
 
 import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.core.dto.APIRequest;

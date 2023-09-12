@@ -9,7 +9,7 @@ import com.ssafy.tott.api.exception.APIException;
 import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
 import com.ssafy.tott.api.shinhan.dto.response.ShinhanBankAPIResponse;
-import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.ShinhanBankSearchAccountsFetchAPI;
+import com.ssafy.tott.api.shinhan.service.searchaccounts.ShinhanBankSearchAccountsFetchAPI;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequest;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequestBody;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.response.ShinhanBankSearchAccountsResponse;
