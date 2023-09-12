@@ -1,5 +1,7 @@
 package com.ssafy.tott.member.domain.embbeded;
 
+import com.ssafy.tott.member.exception.MemberErrorCode;
+import com.ssafy.tott.member.exception.MemberException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,22 +28,29 @@ public class Password {
         value = password;
     }
 
-    public static Password of(String password, PasswordEncoder passwordEncoder) {
+    public static Password of(String password, String validPassword, PasswordEncoder passwordEncoder) {
+        validateSamePassword(password, validPassword);
         validatePasswordLength(password);
         validatePasswordPattern(password);
         return new Password(passwordEncoder.encode(password));
     }
 
+    private static void validateSamePassword(String password, String validPassword) {
+        if (!password.equals(validPassword)) {
+            throw new MemberException(MemberErrorCode.ERROR_CLIENT_BY_PASSWORD_IS_NOT_SAME_VALID_PASSWORD);
+        }
+    }
+
     private static void validatePasswordLength(String password) {
         int length = password.length();
         if (length < MIN_LENGTH || MAX_LENGTH < length) {
-            throw new RuntimeException();
+            throw new MemberException(MemberErrorCode.ERROR_CLIENT_BY_PASSWORD_IS_NOT_VALID);
         }
     }
 
     private static void validatePasswordPattern(String password) {
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            throw new RuntimeException();
+            throw new MemberException(MemberErrorCode.ERROR_CLIENT_BY_PASSWORD_IS_NOT_VALID);
         }
     }
 }
