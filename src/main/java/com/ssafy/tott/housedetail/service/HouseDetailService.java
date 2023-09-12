@@ -1,12 +1,12 @@
 package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
-import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.housedetail.data.cond.HouseDetailRecentViewCond;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.tott.housedetail.data.dto.response.HouseDetailRecentViewResponse;
 import com.ssafy.tott.housedetail.data.vo.HouseDetailRecentViewVO;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.exception.HouseDetailErrorCode;
 import com.ssafy.tott.housedetail.exception.HouseDetailException;
@@ -43,10 +43,11 @@ public class HouseDetailService {
                 .findById(id)
                 .orElseThrow(
                         () -> new HouseDetailException(HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED)
-        );
+                );
+    }
 
-    public HouseDetailRecentViewResponse findByRecentView(
-            AuthMember authMember, HouseDetailRecentViewRequest request) {
+    public HouseDetailRecentViewResponse findByRecentView(AuthMember authMember, HouseDetailRecentViewRequest
+            request) {
         Member findMember = memberService.findById(authMember.getMemberId());
         List<HouseDetailRecentViewVO> list = houseDetailRepository.findByRecentViewCond(
                         HouseDetailRecentViewCond.toCond(request))

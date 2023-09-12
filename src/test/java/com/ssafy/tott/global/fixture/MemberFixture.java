@@ -43,14 +43,14 @@ public enum MemberFixture {
     }
 
     public MemberSignupRequest toMemberSignupRequest() {
-        return new MemberSignupRequest(email, password, phoneNumber, bankCode, accountNumber);
+        return new MemberSignupRequest(email, password, password, phoneNumber, bankCode, accountNumber);
     }
 
     public Member toMember() {
         return Member.builder()
                 .name(name)
                 .email(Email.from(email))
-                .password(Password.of(password, new BCryptPasswordEncoder()))
+                .password(Password.of(password, password, new BCryptPasswordEncoder()))
                 .creditLine(0L)
                 .phoneNumber(PhoneNumber.from(phoneNumber))
                 .build();
@@ -61,7 +61,7 @@ public enum MemberFixture {
                 .id(id)
                 .name(name)
                 .email(Email.from(email))
-                .password(Password.of(password, new BCryptPasswordEncoder()))
+                .password(Password.of(password, password, new BCryptPasswordEncoder()))
                 .creditLine(0L)
                 .phoneNumber(PhoneNumber.from(phoneNumber))
                 .build();

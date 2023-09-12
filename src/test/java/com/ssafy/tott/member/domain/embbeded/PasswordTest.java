@@ -18,7 +18,7 @@ class PasswordTest {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         /* When */
-        Password password = Password.of(validPasswordString, encoder);
+        Password password = Password.of(validPasswordString, validPasswordString, encoder);
 
         /* Then */
         assertThat(password).isNotNull();
@@ -41,7 +41,7 @@ class PasswordTest {
 
         /* When */
         /* Then */
-        assertThatThrownBy(() -> Password.of(invalidPassword, encoder))
+        assertThatThrownBy(() -> Password.of(invalidPassword, invalidPassword, encoder))
                 .isInstanceOf(RuntimeException.class);
     }
 }

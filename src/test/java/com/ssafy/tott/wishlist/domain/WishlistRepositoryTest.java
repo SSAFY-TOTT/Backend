@@ -19,26 +19,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
+@Transactional
 @DataJpaTest
 class WishlistRepositoryTest {
-
-    @Autowired
-    private WishlistRepository wishlistRepository;
-    @Autowired
-    private HouseDetailRepository houseDetailRepository;
-    @Autowired
-    private HouseGeoRepository houseGeoRepository;
-    @Autowired
-    private RegionRepository regionRepository;
-    @Autowired
-    private MemberRepository memberRepository;
 
     private final RentRow row =
             new RentRow(
@@ -51,7 +43,7 @@ class WishlistRepositoryTest {
                     "대지",
                     "0105",
                     "0076",
-                    3.0,
+                    3,
                     "20230901",
                     "전세",
                     57.76,
@@ -65,7 +57,16 @@ class WishlistRepositoryTest {
                     "",
                     "0",
                     "");
-
+    @Autowired
+    private WishlistRepository wishlistRepository;
+    @Autowired
+    private HouseDetailRepository houseDetailRepository;
+    @Autowired
+    private HouseGeoRepository houseGeoRepository;
+    @Autowired
+    private RegionRepository regionRepository;
+    @Autowired
+    private MemberRepository memberRepository;
     private Region region;
     private HouseGeo houseGeo;
     private HouseDetail houseDetail;
@@ -115,19 +116,19 @@ class WishlistRepositoryTest {
         List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(1);
 
         /* Then */
-        assertEquals(1,wishlistVOList.size());
+        assertEquals(1, wishlistVOList.size());
     }
 
     @DisplayName("wishlist 삭제")
     @Nested
-    class deleteWishList{
+    class deleteWishList {
         @DisplayName("wishlsit의 memberid와 요청자의 member id가 같을 때")
         @Test
-        void deleteWishListWhenSuccess(){
+        void deleteWishListWhenSuccess() {
             /* Given */
             Wishlist wishlist = wishlistRepository.save(Wishlist.builder().member(member).houseDetail(houseDetail).build());
             List<Wishlist> originWishList = wishlistRepository.findAll();
-            assertEquals(1,originWishList.size());
+            assertEquals(1, originWishList.size());
             /* When */
             Wishlist findWishList = wishlistRepository.findByIdAndMemberId(wishlist.getId(), member.getId()).orElseThrow();
             findWishList.removeRelated();
@@ -135,18 +136,18 @@ class WishlistRepositoryTest {
 
             /* Then */
             List<Wishlist> afterWishList = wishlistRepository.findAll();
-            assertEquals(0,afterWishList.size());
+            assertEquals(0, afterWishList.size());
         }
 
         @DisplayName("wishlsit의 memberid와 요청자의 member id가 다를 때")
         @Test
-        void deleteWishListWhenFail(){
+        void deleteWishListWhenFail() {
             /* Given */
             Wishlist wishlist = wishlistRepository.save(Wishlist.builder().member(member).houseDetail(houseDetail).build());
             List<Wishlist> originWishList = wishlistRepository.findAll();
-            assertEquals(1,originWishList.size());
+            assertEquals(1, originWishList.size());
             /* When */
-            assertThrows(NoSuchElementException.class, () ->{
+            assertThrows(NoSuchElementException.class, () -> {
                 wishlistRepository.findByIdAndMemberId(wishlist.getId(), 200).orElseThrow();
             });
         }

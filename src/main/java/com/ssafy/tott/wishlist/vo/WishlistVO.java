@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 public class WishlistVO {
     private int id;
-    private long price;
+    private int price;
     private double area;
     private String buildingName;
     private String legalDongName;
@@ -15,7 +15,7 @@ public class WishlistVO {
 
     @Builder
     @QueryProjection
-    public WishlistVO(int id, long price, double area, String buildingName, String legalDongName, String districtName) {
+    public WishlistVO(int id, int price, double area, String buildingName, String legalDongName, String districtName) {
         this.id = id;
         this.price = price;
         this.area = area;
