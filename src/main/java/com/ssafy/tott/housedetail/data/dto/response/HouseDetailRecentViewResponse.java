@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 public class HouseDetailRecentViewResponse {
+    private int memberId;
     private List<HouseDetailRecentViewVO> houseDetailList;
     private int resultCount;
 }

@@ -2,8 +2,10 @@ package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.auth.vo.AuthMember;
+import com.ssafy.tott.housedetail.data.cond.HouseDetailRecentViewCond;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.tott.housedetail.data.vo.HouseDetailRecentViewVO;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
@@ -37,7 +39,7 @@ public class HouseDetailService {
             AuthMember authMember, HouseDetailRecentViewRequest request) {
         Member findMember = memberService.findById(authMember.getMemberId());
         List<HouseDetailRecentViewVO> list = new ArrayList<>();
-
+        houseDetailRepository.findByRecentViewCond(HouseDetailRecentViewCond.toCond(request))
         return list;
     }
 }
