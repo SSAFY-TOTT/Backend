@@ -29,7 +29,7 @@ public class MemberMapper {
 
     public MemberVerificationCache toMemberVerificationCache(MemberSignupRequest request, String memo) {
         Email email = Email.from(request.getEmail());
-        Password password = Password.of(request.getPassword(), passwordEncoder);
+        Password password = Password.of(request.getPassword(), request.getValidPassword(), passwordEncoder);
         PhoneNumber phoneNumber = PhoneNumber.from(request.getPhoneNumber());
         AccountNumber accountNumber = AccountNumber.from(request.getAccountNumber());
 
