@@ -17,7 +17,7 @@ public class RentRow {
     private final String landGbnNm;
     private final String bobn;
     private final String bubn;
-    private final Double flrNo;
+    private final Integer flrNo;
     private final String cntrctDe;
     private final String rentGbn;
     private final Double rentArea;
@@ -43,7 +43,7 @@ public class RentRow {
             @JsonProperty("LAND_GBN_NM") String landGbnNm,
             @JsonProperty("BOBN") String bobn,
             @JsonProperty("BUBN") String bubn,
-            @JsonProperty("FLR_NO") Double flrNo,
+            @JsonProperty("FLR_NO") Integer flrNo,
             @JsonProperty("CNTRCT_DE") String cntrctDe,
             @JsonProperty("RENT_GBN") String rentGbn,
             @JsonProperty("RENT_AREA") Double rentArea,

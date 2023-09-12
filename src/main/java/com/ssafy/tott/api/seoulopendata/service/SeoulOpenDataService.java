@@ -1,5 +1,6 @@
 package com.ssafy.tott.api.seoulopendata.service;
 
+import com.ssafy.tott.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
@@ -32,11 +33,13 @@ public class SeoulOpenDataService {
     @Transactional
     public void fetchHouseData(int devide) {
         log.info("fetchHouseData method start");
-        int totalCount =
-                seoulOpenDataRentHouseAPI.fetchAPI(1, 1).getTbLnOpendataRentV().getListTotalCount()
-                        / devide;
+        RentAPIResponse healthCheckResponse =
+                (RentAPIResponse) seoulOpenDataRentHouseAPI.fetchAPI(RentAPIRequest.healthCheckRequest());
+        int totalCount = healthCheckResponse.getTbLnOpendataRentV().getListTotalCount() / devide;
+
         for (int i = 1; i < totalCount; i += 999) {
-            RentAPIResponse rentAPIResponse = seoulOpenDataRentHouseAPI.fetchAPI(i, i + 999);
+            RentAPIResponse rentAPIResponse =
+                    (RentAPIResponse) seoulOpenDataRentHouseAPI.fetchAPI(RentAPIRequest.toRequest(i, 999));
             saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouse(rentAPIResponse));
             log.info("data search {}%", (float) i / totalCount * 100);
         }

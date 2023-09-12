@@ -1,4 +1,4 @@
-package com.ssafy.tott.member.dto.responsse;
+package com.ssafy.tott.member.data.dto.responsse;
 
 import lombok.AccessLevel;
 import lombok.Getter;

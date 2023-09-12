@@ -1,6 +1,9 @@
 package com.ssafy.tott.api.kakao.service;
 
 import com.ssafy.tott.api.core.FetchAPICore;
+import com.ssafy.tott.api.core.dto.APIRequest;
+import com.ssafy.tott.api.core.dto.APIResponse;
+import com.ssafy.tott.api.kakao.data.dto.request.KakaoAPIRequest;
 import com.ssafy.tott.api.kakao.data.dto.response.KakaoAPIResponse;
 import com.ssafy.tott.api.kakao.data.vo.Documents;
 import com.ssafy.tott.api.kakao.property.KakaoAddressProperties;
@@ -30,32 +33,31 @@ public class KakaoMapFetchAPI implements FetchAPICore {
     public Documents kakaoAddressSearch(String sggNm, String bjDongNm, String bobn, String bubn)
             throws IndexOutOfBoundsException {
         /* roadAddress : 지번 ( 구 / 동 / 본번-부번 ) */
-        StringBuilder roadAddress = makeRoadAddress(sggNm, bjDongNm, bobn, bubn);
-        KakaoAPIResponse kakaoAPIResponse = fetchAPI(roadAddress.toString());
+        KakaoAPIRequest request = makeRoadAddress(sggNm, bjDongNm, bobn, bubn);
+        KakaoAPIResponse kakaoAPIResponse = (KakaoAPIResponse) fetchAPI(request);
         validateToAPIResponse(kakaoAPIResponse);
         return kakaoAPIResponse.getDocuments().get(0);
     }
 
-    private StringBuilder makeRoadAddress(String sggNm, String bjDongNm, String bobn, String bubn) {
-        return new StringBuilder()
-                .append(sggNm)
-                .append(" ")
-                .append(bjDongNm)
-                .append(" ")
-                .append(bobn)
-                .append("-")
+    private KakaoAPIRequest makeRoadAddress(String sggNm, String bjDongNm, String bobn, String bubn) {
+        StringBuilder sb = new StringBuilder()
+                .append(sggNm).append(" ")
+                .append(bjDongNm).append(" ")
+                .append(bobn).append("-")
                 .append(bubn);
+        return KakaoAPIRequest.toRequest(sb.toString());
     }
 
     @Override
-    public KakaoAPIResponse fetchAPI(String roadAddress) {
+    public APIResponse fetchAPI(APIRequest request) {
+        KakaoAPIRequest kakaoAPIRequest = (KakaoAPIRequest) request;
         return kakaoWebClient
                 .method(kakaoAddressProperties.getMethod())
                 .uri(
                         builder ->
                                 builder
                                         .path(kakaoAddressProperties.getPath())
-                                        .queryParam("query", roadAddress)
+                                        .queryParam("query", kakaoAPIRequest.getQuery())
                                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()

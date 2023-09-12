@@ -1,7 +1,7 @@
 package com.ssafy.tott.api.shinhan.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ssafy.tott.api.core.APIResponse;
+import com.ssafy.tott.api.core.dto.APIResponse;
 import com.ssafy.tott.api.shinhan.dto.response.header.ResponseDataHeader;
 import lombok.AccessLevel;
 import lombok.Getter;

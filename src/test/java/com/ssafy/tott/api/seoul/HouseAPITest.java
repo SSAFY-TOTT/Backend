@@ -1,5 +1,6 @@
 package com.ssafy.tott.api.seoul;
 
+import com.ssafy.tott.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataRentHouseFetchAPI;
 import org.assertj.core.api.Assertions;
@@ -22,7 +23,8 @@ class HouseAPITest {
     @Test
     void connectAPI() {
         // given, when
-        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
+        RentAPIResponse model = (RentAPIResponse)
+                seoulOpenDataRentHouseAPI.fetchAPI(RentAPIRequest.toRequest(1, 4));
 
         // then
         assertEquals(5, model.getTbLnOpendataRentV().getRow().size());
@@ -32,7 +34,8 @@ class HouseAPITest {
     @Test
     void filteringRentHouseTest() {
         // given
-        RentAPIResponse model = seoulOpenDataRentHouseAPI.fetchAPI(1, 5);
+        RentAPIResponse model = (RentAPIResponse)
+                seoulOpenDataRentHouseAPI.fetchAPI(RentAPIRequest.toRequest(1, 4));
 
         // when
         // then
