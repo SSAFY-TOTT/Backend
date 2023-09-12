@@ -1,12 +1,15 @@
 package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.housedetail.data.cond.HouseDetailRecentViewCond;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.tott.housedetail.data.dto.response.HouseDetailRecentViewResponse;
 import com.ssafy.tott.housedetail.data.vo.HouseDetailRecentViewVO;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.exception.HouseDetailErrorCode;
+import com.ssafy.tott.housedetail.exception.HouseDetailException;
 import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.member.domain.Member;
@@ -34,6 +37,13 @@ public class HouseDetailService {
     public void saveHouseDetail(RentRow row, HouseGeo houseGeo) {
         houseDetailRepository.save(houseDetailMapper.toEntity(row, houseGeo));
     }
+
+    public HouseDetail findById(int id) {
+        return houseDetailRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new HouseDetailException(HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED)
+        );
 
     public HouseDetailRecentViewResponse findByRecentView(
             AuthMember authMember, HouseDetailRecentViewRequest request) {
