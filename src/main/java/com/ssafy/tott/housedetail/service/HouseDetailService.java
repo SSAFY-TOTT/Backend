@@ -30,7 +30,7 @@ public class HouseDetailService {
         return houseDetailRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new HouseDetailException(HouseDetailErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED)
+                        () -> new HouseDetailException(HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED)
         );
     }
 }
