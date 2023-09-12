@@ -44,10 +44,6 @@ public class HouseDetailService {
                 .map(HouseDetailRecentViewVO::from)
                 .collect(Collectors.toList());
         /* TODO: 2023/09/12 위시리스트 인지 확인 여부 필요 */
-        return HouseDetailRecentViewResponse.builder()
-                .memberId(findMember.getId())
-                .houseDetailList(list)
-                .resultCount(list.size())
-                .build();
+        return HouseDetailRecentViewResponse.toResponse(findMember, list);
     }
 }
