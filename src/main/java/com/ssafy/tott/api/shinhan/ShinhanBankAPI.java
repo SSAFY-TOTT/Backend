@@ -13,6 +13,10 @@ import com.ssafy.tott.api.shinhan.service.searchaccounts.ShinhanBankSearchAccoun
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequest;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.request.ShinhanBankSearchAccountsRequestBody;
 import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.response.ShinhanBankSearchAccountsResponse;
+import com.ssafy.tott.api.shinhan.service.searchcreditline.ShinhanBankSearchCreditLineFetchAPI;
+import com.ssafy.tott.api.shinhan.service.searchcreditline.dto.request.ShinhanBankSearchCreditLineRequest;
+import com.ssafy.tott.api.shinhan.service.searchcreditline.dto.request.ShinhanBankSearchCreditLineRequestBody;
+import com.ssafy.tott.api.shinhan.service.searchcreditline.dto.response.ShinhanBankSearchCreditLineResponse;
 import com.ssafy.tott.api.shinhan.service.searchname.ShinhanBankSearchNameFetchAPI;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequest;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequestDataBody;
@@ -36,6 +40,8 @@ public class ShinhanBankAPI {
     private final ShinhanBankTransfer1FetchAPI transfer1API;
     private final ShinhanBankSearchNameFetchAPI searchNameAPI;
     private final ShinhanBankSearchAccountsFetchAPI searchAccountsAPI;
+
+    private final ShinhanBankSearchCreditLineFetchAPI searchCreditLineFetchAPI;
 
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
@@ -65,13 +71,29 @@ public class ShinhanBankAPI {
     }
 
     public ShinhanBankSearchAccountsResponse fetchSearchAccountsAPI(String encodedName) {
-        ShinhanBankAPIRequest shinhanBankAPIRequest =
+        ShinhanBankAPIRequest request =
                 ShinhanBankAPIRequest.of(key, ShinhanBankSearchAccountsRequestBody.from(encodedName));
 
-        logging(shinhanBankAPIRequest.getShinhanBankDataBody());
+        logging(request.getShinhanBankDataBody());
 
         ShinhanBankSearchAccountsResponse response = searchAccountsAPI.fetchAPI(
-                ShinhanBankSearchAccountsRequest.toRequest(convertRequestToJson(shinhanBankAPIRequest)));
+                ShinhanBankSearchAccountsRequest.toRequest(convertRequestToJson(request)));
+
+        validate(response);
+        return response;
+    }
+
+    public ShinhanBankSearchCreditLineResponse fetchSearchCreditLineAPI(
+            String serviceCode, String linkedTransactionInformation, String housingLocationCode, String rentGtn, String annualIncome
+    ) {
+        ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
+                key, ShinhanBankSearchCreditLineRequestBody.of(
+                        serviceCode, linkedTransactionInformation, housingLocationCode, rentGtn + "0000", annualIncome));
+
+        logging(request.getShinhanBankDataBody());
+
+        ShinhanBankSearchCreditLineResponse response = searchCreditLineFetchAPI.fetchAPI(
+                ShinhanBankSearchCreditLineRequest.toRequest(convertRequestToJson(request)));
 
         validate(response);
         return response;

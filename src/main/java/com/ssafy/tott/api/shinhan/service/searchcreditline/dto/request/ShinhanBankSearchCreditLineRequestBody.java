@@ -1,13 +1,14 @@
 package com.ssafy.tott.api.shinhan.service.searchcreditline.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssafy.tott.api.shinhan.dto.ShinhanBankDataBody;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ShinhanBankSearchCreditLineRequestBody {
+public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody {
     @JsonProperty("serviceCode")
     private String serviceCode;
 
@@ -35,7 +36,7 @@ public class ShinhanBankSearchCreditLineRequestBody {
         this.annualIncome = annualIncome;
     }
 
-    public ShinhanBankSearchCreditLineRequestBody of(String serviceCode,
+    public static ShinhanBankSearchCreditLineRequestBody of(String serviceCode,
                                                      String linkedTransactionInformation,
                                                      String housingLocationCode,
                                                      String rentGtn,
