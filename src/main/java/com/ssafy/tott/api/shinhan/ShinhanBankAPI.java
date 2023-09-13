@@ -91,11 +91,7 @@ public class ShinhanBankAPI {
     ) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key, ShinhanBankSearchCreditLineRequestBody.of(
-                        serviceKey,
-                        "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
-                        "04513",
-                        "500000000",
-                        "60000000"));
+                        serviceKey, linkedTransactionInformation, housingLocationCode, rentGtn, annualIncome));
 
         logging(request.getShinhanBankDataBody());
 
