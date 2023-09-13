@@ -6,7 +6,7 @@ import com.ssafy.tott.budget.data.dto.response.BudgetsResponse;
 import com.ssafy.tott.budget.data.vo.BudgetVO;
 import com.ssafy.tott.budget.domain.Budget;
 import com.ssafy.tott.budget.domain.BudgetRepository;
-import com.ssafy.tott.global.fixture.BudgetFixture;
+import com.ssafy.tott.budget.fixture.BudgetFixture;
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.service.MemberService;
