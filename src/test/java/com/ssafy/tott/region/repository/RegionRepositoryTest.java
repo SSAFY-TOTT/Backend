@@ -1,6 +1,11 @@
 package com.ssafy.tott.region.repository;
 
 import com.ssafy.tott.global.config.RepositoryTest;
+import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.fixture.HouseDetailFixture;
+import com.ssafy.tott.housegeo.domain.HouseGeo;
+import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
+import com.ssafy.tott.housegeo.fixture.HouseGeoFixture;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
@@ -17,6 +22,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RegionRepositoryTest extends RepositoryTest {
     @Autowired
     private RegionRepository regionRepository;
+    @Autowired
+    private HouseGeoRepository houseGeoRepository;
+    @Autowired
+    private HouseDetailRepository houseDetailRepository;
     private Region region;
 
     @BeforeEach
@@ -66,12 +75,13 @@ class RegionRepositoryTest extends RepositoryTest {
         assertThat(optionalRegion).isEmpty();
     }
 
-    @DisplayName("필터 조건으로 조회에 성공한다.")
+    @DisplayName("필터 조건으로 조회한다.")
     @Test
     void findByFilterCondSuccess() {
         /* Given */
         regionRepository.save(region);
-        /* TODO: 2023/09/13 `region`과 연관이 있는 `geo`, `detail` 정보 저장 필요 */
+        HouseGeo geo = houseGeoRepository.save(HouseGeoFixture.GRAND_TOWER.toHouseGeo(region));
+        houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo));
         RegionFilterCond cond = RegionFixture.REGION_ONE.toCond();
 
         /* When */

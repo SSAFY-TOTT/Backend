@@ -28,10 +28,10 @@ public enum RegionFixture {
 
     public RegionFilterCond toCond() {
         return RegionFilterCond.builder()
-                .legalDongCode(districtCode)
+                .districtCode(districtCode)
                 .districtName(districtName)
+                .legalDongCode(legalDongCode)
                 .legalDongName(legalDongName)
-                .districtCode(legalDongCode)
                 .build();
     }
 

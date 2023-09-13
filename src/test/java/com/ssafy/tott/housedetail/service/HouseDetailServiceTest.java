@@ -52,7 +52,7 @@ class HouseDetailServiceTest extends ServiceTest {
         houseDetail = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo));
     }
 
-    @DisplayName("집 목록을 조회한다.")
+    @DisplayName("최근 본 집 목록을 조회한다.")
     @Test
     void findByRecentViewTestSuccess() {
         /* Given */

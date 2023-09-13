@@ -58,6 +58,7 @@ public class WishlistService {
     }
 
     public ViewWishlistResponse view(int memberId) {
+        /* TODO: 2023/09/13 builder -> from 으로 수정 */
         List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(memberId).stream().map(wishlist -> WishlistVO.builder()
                 .price(wishlist.getPrice())
                 .area(wishlist.getArea())
