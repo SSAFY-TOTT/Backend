@@ -1,19 +1,25 @@
 package com.ssafy.tott.housedetail.repository;
 
-import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.global.config.RepositoryTest;
+import com.ssafy.tott.housedetail.data.cond.HouseDetailRecentViewCond;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
-import com.ssafy.tott.housedetail.fixture.RentRowFixture;
+import com.ssafy.tott.housedetail.fixture.HouseDetailFixture;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
+import com.ssafy.tott.housegeo.fixture.HouseGeoFixture;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
-import org.assertj.core.api.Assertions;
+import com.ssafy.tott.region.fixture.RegionFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class HouseDetailRepositoryTest extends RepositoryTest {
@@ -23,42 +29,61 @@ class HouseDetailRepositoryTest extends RepositoryTest {
     private HouseGeoRepository houseGeoRepository;
     @Autowired
     private RegionRepository regionRepository;
-    private RentRow row;
-    private Region region;
     private HouseGeo houseGeo;
     private HouseDetail houseDetail;
 
     @BeforeEach
     void setup() {
-        row = RentRowFixture.RENT_ROW_ONE.toRentRow();
-        region = regionRepository.save(Region.from(row));
-        /* TODO: 2023/09/13 추후 `houseGeo fixture`로 수정 */
-        houseGeo = houseGeoRepository.save(HouseGeo.builder()
-                .mainNumber(Integer.parseInt(row.getBobn()))
-                .subNumber(Integer.parseInt(row.getBubn()))
-                .longitude(0)
-                .latitude(0)
-                .buildingName(row.getBldgNm())
-                .region(region)
-                .build());
-        /* TODO: 2023/09/13 추후 `houseDetail fixture`로 수정 */
-        houseDetail = HouseDetail.builder()
-                .houseGeo(houseGeo)
-                .floor(row.getFlrNo())
-                .price(Integer.parseInt(row.getRentGtn()))
-                .area(row.getRentArea())
-                .build();
+        Region region = regionRepository.save(RegionFixture.REGION_ONE.toRegion());
+        houseGeo = houseGeoRepository.save(HouseGeoFixture.JU_GONG4.toHouseGeo(region));
     }
 
-    @DisplayName("집의 상세 정보 저장에 성공한다.")
+    @DisplayName("집의 상세 정보를 저장한다.")
     @Test
     void saveSuccess() {
         /* Given */
+        houseDetail = HouseDetailFixture.JU_GONG4_1.toHouseDetail(houseGeo);
+
         /* When */
-        /* TODO: 2023/09/13 다른 조건 필요 */
         HouseDetail savedHouseDetail = houseDetailRepository.save(houseDetail);
 
         /* Then */
-        Assertions.assertThat(savedHouseDetail).isEqualTo(houseDetail);
+        assertThat(savedHouseDetail).isEqualTo(houseDetail);
+    }
+
+    @DisplayName("houseDetail의 식별자로 조회한다.")
+    @Test
+    void findByIdSuccess() {
+        /* Given */
+        houseDetail = HouseDetailFixture.JU_GONG4_1.toHouseDetail(houseGeo);
+        HouseDetail savedHouseDetail = houseDetailRepository.save(houseDetail);
+
+        /* When */
+        Optional<HouseDetail> optionalHouseDetail = houseDetailRepository.findById(savedHouseDetail.getId());
+
+        /* Then */
+        assertThat(optionalHouseDetail).isPresent();
+    }
+
+    @DisplayName("최근 본 집을 조회한다.")
+    @Test
+    void findByRecentViewCondSuccess() {
+        /* Given */
+        /* 조회 O */
+        HouseDetail savedHouseDetail1 =
+                houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(houseGeo));
+        HouseDetail savedHouseDetail2 =
+                houseDetailRepository.save(HouseDetailFixture.JU_GONG4_6.toHouseDetail(houseGeo));
+
+        /* 조회 X */
+        houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(houseGeo));
+
+        /* When */
+        List<HouseDetail> findHouseDetails = houseDetailRepository.findByRecentViewCond(
+                new HouseDetailRecentViewCond(
+                        List.of(savedHouseDetail1.getId(), savedHouseDetail2.getId())));
+
+        /* Then */
+        assertThat(findHouseDetails).hasSize(2);
     }
 }
