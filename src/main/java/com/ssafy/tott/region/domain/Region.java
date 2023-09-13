@@ -1,5 +1,6 @@
 package com.ssafy.tott.region.domain;
 
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import lombok.AccessLevel;
@@ -49,5 +50,14 @@ public class Region extends BaseEntity {
         this.districtName = districtName;
         this.legalDongCode = legalDongCode;
         this.legalDongName = legalDongName;
+    }
+
+    public static Region from(RentRow row) {
+        return Region.builder()
+                .legalDongCode(Integer.parseInt(row.getBjdongCd()))
+                .legalDongName(row.getBjdongNm())
+                .districtCode(Integer.parseInt(row.getSggCd()))
+                .districtName(row.getSggNm())
+                .build();
     }
 }
