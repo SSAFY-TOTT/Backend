@@ -1,5 +1,6 @@
 package com.ssafy.tott.region.domain;
 
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.global.domain.BaseEntity;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import lombok.AccessLevel;
@@ -18,7 +19,7 @@ import java.util.List;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "region_identifier",
-                        columnNames = {"districtCode", "legalDongCode"})
+                        columnNames = {"district_code", "legal_dong_code"})
         })
 public class Region extends BaseEntity {
     @Id
@@ -27,14 +28,14 @@ public class Region extends BaseEntity {
     private int id;
 
     /* district : 자치구 */
-    @Column(nullable = false)
+    @Column(name = "district_code", nullable = false)
     private int districtCode;
 
     @Column(length = 50, nullable = false)
     private String districtName;
 
     /* legalDong : 법정동 */
-    @Column(nullable = false)
+    @Column(name = "legal_dong_code", nullable = false)
     private int legalDongCode;
 
     @Column(length = 50, nullable = false)
@@ -49,5 +50,14 @@ public class Region extends BaseEntity {
         this.districtName = districtName;
         this.legalDongCode = legalDongCode;
         this.legalDongName = legalDongName;
+    }
+
+    public static Region from(RentRow row) {
+        return Region.builder()
+                .legalDongCode(Integer.parseInt(row.getBjdongCd()))
+                .legalDongName(row.getBjdongNm())
+                .districtCode(Integer.parseInt(row.getSggCd()))
+                .districtName(row.getSggNm())
+                .build();
     }
 }

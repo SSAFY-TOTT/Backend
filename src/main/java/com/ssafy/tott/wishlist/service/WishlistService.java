@@ -30,6 +30,7 @@ public class WishlistService {
     private final MemberService memberService;
     private final HouseDetailService houseDetailService;
 
+    /* TODO: 2023/09/13 해당 기능은 `WishlistService` 에서만 사용할 예정이기 때문에 `private`이 좋습니다. */
     public void verifyLimit(int memberID) {
         Member findMember = memberService.findById(memberID);
         if (findMember.getWishlists().size() >= 5)
@@ -58,6 +59,7 @@ public class WishlistService {
     }
 
     public ViewWishlistResponse view(int memberId) {
+        /* TODO: 2023/09/13 builder -> from 으로 수정 */
         List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(memberId).stream().map(wishlist -> WishlistVO.builder()
                 .price(wishlist.getPrice())
                 .area(wishlist.getArea())

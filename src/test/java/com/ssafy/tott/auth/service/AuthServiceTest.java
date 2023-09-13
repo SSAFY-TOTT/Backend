@@ -2,38 +2,29 @@ package com.ssafy.tott.auth.service;
 
 import com.ssafy.tott.auth.dto.request.LoginRequest;
 import com.ssafy.tott.auth.dto.response.TokenResponse;
+import com.ssafy.tott.global.config.ServiceTest;
 import com.ssafy.tott.global.fixture.MemberFixture;
-import com.ssafy.tott.member.domain.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
-@Transactional
-@SpringBootTest
-class AuthServiceTest {
+class AuthServiceTest extends ServiceTest {
     @Autowired
     AuthService authService;
 
-    @Autowired
-    MemberRepository memberRepository;
-
     @BeforeEach
     void setUp() {
-        memberRepository.save(MemberFixture.JEONGUK.toMember());
+        saveMember(MemberFixture.SHINHAN);
     }
 
     @DisplayName("사용자가 로그인에 성공한다.")
     @Test
     void loginSuccessTest() {
         /* Given */
-        LoginRequest request = MemberFixture.JEONGUK.toLoginRequest();
+        LoginRequest request = MemberFixture.SHINHAN.toLoginRequest();
 
         /* When */
         TokenResponse response = authService.login(request);

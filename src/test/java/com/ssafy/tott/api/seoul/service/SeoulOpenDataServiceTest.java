@@ -1,24 +1,19 @@
 package com.ssafy.tott.api.seoul.service;
 
 import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataService;
+import com.ssafy.tott.global.config.ServiceTest;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-@ActiveProfiles(profiles = {"test"})
-@Slf4j
-class SeoulOpenDataServiceTest {
+class SeoulOpenDataServiceTest extends ServiceTest {
     @Autowired
     private HouseDetailRepository houseDetailRepository;
 

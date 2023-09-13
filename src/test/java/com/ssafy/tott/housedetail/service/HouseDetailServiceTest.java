@@ -1,90 +1,101 @@
 package com.ssafy.tott.housedetail.service;
 
-import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.auth.vo.AuthMember;
+import com.ssafy.tott.global.config.ServiceTest;
+import com.ssafy.tott.global.fixture.MemberFixture;
+import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
+import com.ssafy.tott.housedetail.data.dto.response.HouseDetailRecentViewResponse;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
-import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
+import com.ssafy.tott.housedetail.exception.HouseDetailErrorCode;
+import com.ssafy.tott.housedetail.exception.HouseDetailException;
+import com.ssafy.tott.housedetail.fixture.HouseDetailFixture;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
+import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
+import com.ssafy.tott.housegeo.fixture.HouseGeoFixture;
+import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.region.domain.Region;
+import com.ssafy.tott.region.domain.RegionRepository;
+import com.ssafy.tott.region.fixture.RegionFixture;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-public class HouseDetailServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-    private final RentRow row =
-            new RentRow(
-                    "2023",
-                    "11380",
-                    "은평구",
-                    "10300",
-                    "불광동",
-                    "1",
-                    "대지",
-                    "0105",
-                    "0076",
-                    3,
-                    "20230901",
-                    "전세",
-                    57.76,
-                    "23000",
-                    "0",
-                    "105-76",
-                    "2018",
-                    "연립다세대",
-                    "",
-                    "신규",
-                    "",
-                    "0",
-                    "");
-    @InjectMocks
+class HouseDetailServiceTest extends ServiceTest {
+
+    @Autowired
     private HouseDetailService houseDetailService;
-    @Mock
+    @Autowired
     private HouseDetailRepository houseDetailRepository;
+    @Autowired
+    private HouseGeoRepository houseGeoRepository;
+    @Autowired
+    private RegionRepository regionRepository;
 
-    @Spy
-    private HouseDetailMapper houseDetailMapper;
+    private Member member;
+    private HouseGeo geo;
+    private HouseDetail houseDetail;
 
-    @DisplayName("house detail 저장 테스트")
+
+    @BeforeEach
+    void setup() {
+        member = saveMember(MemberFixture.SHINHAN);
+        Region region = regionRepository.save(RegionFixture.REGION_ONE.toRegion());
+        geo = houseGeoRepository.save(HouseGeoFixture.GRAND_TOWER.toHouseGeo(region));
+        houseDetail = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo));
+    }
+
+    @DisplayName("최근 본 집 목록을 조회한다.")
     @Test
-    void houseDetailSaveTest() {
-        // given
-        Region region =
-                Region.builder()
-                        .legalDongCode(Integer.parseInt(row.getBjdongCd()))
-                        .legalDongName(row.getBjdongNm())
-                        .districtCode(Integer.parseInt(row.getSggCd()))
-                        .districtName(row.getSggNm())
-                        .build();
-        HouseGeo houseGeo =
-                HouseGeo.builder()
-                        .mainNumber(Integer.parseInt(row.getBobn()))
-                        .subNumber(Integer.parseInt(row.getBubn()))
-                        .longitude(0)
-                        .latitude(0)
-                        .buildingName(row.getBldgNm())
-                        .region(region)
-                        .build();
+    void findByRecentViewTestSuccess() {
+        /* Given */
+        AuthMember authMember = new AuthMember(member.getId());
+        int id2 = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo)).getId();
+        int id3 = houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo)).getId();
 
-        HouseDetail houseDetail =
-                HouseDetail.builder()
-                        .area(row.getRentArea())
-                        .price(Integer.parseInt(row.getRentGtn()))
-                        .floor(row.getFlrNo())
-                        .houseGeo(houseGeo)
-                        .build();
-        given(houseDetailRepository.save(any())).willReturn(houseDetail);
+        /* When */
+        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(
+                authMember, new HouseDetailRecentViewRequest(List.of(id2, id3)));
 
-        // when,then
-        assertDoesNotThrow(() -> houseDetailService.saveHouseDetail(row, houseGeo));
+        /* Then */
+        assertThat(response.getHouseDetailList()).hasSize(2);
+    }
+
+    @DisplayName("HouseDetail을 Id로 조회한다.")
+    @Nested
+    class FindByIdTest {
+        @DisplayName("조회에 성공한다.")
+        @Test
+        void success() {
+            /* Given */
+            int id = houseDetail.getId();
+
+            /* When */
+            HouseDetail findDetail = houseDetailService.findById(id);
+
+            /* Then */
+            assertThat(findDetail).isEqualTo(houseDetail);
+        }
+
+        @DisplayName("조회에 실패한다.")
+        @Test
+        void fail() {
+            /* Given */
+            int id = Integer.MAX_VALUE;
+
+            /* When */
+            /* Then */
+            assertThatThrownBy(() -> houseDetailService.findById(id))
+                    .isInstanceOf(HouseDetailException.class)
+                    .hasMessageContaining(
+                            HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED.getMessage());
+        }
     }
 }

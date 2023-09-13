@@ -3,18 +3,15 @@ package com.ssafy.tott.api.seoul;
 import com.ssafy.tott.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.service.SeoulOpenDataRentHouseFetchAPI;
+import com.ssafy.tott.global.config.ServiceTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles(profiles = {"test"})
-@SpringBootTest
-class HouseAPITest {
+class HouseAPITest extends ServiceTest {
 
     @Autowired
     private SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;

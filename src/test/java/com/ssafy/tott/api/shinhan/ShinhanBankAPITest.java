@@ -2,19 +2,16 @@ package com.ssafy.tott.api.shinhan;
 
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
+import com.ssafy.tott.global.config.ServiceTest;
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class ShinhanBankAPITest {
+class ShinhanBankAPITest extends ServiceTest {
     @Autowired
     private ShinhanBankAPI shinhanBankAPI;
     private MemberFixture memberFixture;

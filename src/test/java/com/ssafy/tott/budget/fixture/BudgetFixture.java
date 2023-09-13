@@ -1,26 +1,23 @@
-package com.ssafy.tott.global.fixture;
+package com.ssafy.tott.budget.fixture;
 
 import com.ssafy.tott.budget.data.vo.BudgetVO;
 import com.ssafy.tott.budget.domain.Budget;
 import com.ssafy.tott.member.domain.Member;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 public enum BudgetFixture {
-    ONE_MILLION_WON(1_000_000L, "추가 예산 1"),
-    TEN_MILLION_WON(10_000_000L, "추가 예산 2"),
-    ONE_HUNDRED_MILLION_WON(100_000_000L, "추가 예산 3");
+    ONE_MILLION_WON(1_000_000L, "현금 자산"),
+    TEN_MILLION_WON(10_000_000L, "주식 자산"),
+    ONE_HUNDRED_MILLION_WON(100_000_000L, "비상금");
 
     private Long money;
     private String message;
-
-    BudgetFixture(Long money, String message) {
-        this.money = money;
-        this.message = message;
-    }
 
     public Budget toBudget(Member member) {
         return Budget.builder().money(money).message(message).member(member).build();
