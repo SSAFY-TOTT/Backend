@@ -19,7 +19,7 @@ import java.util.List;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "region_identifier",
-                        columnNames = {"districtCode", "legalDongCode"})
+                        columnNames = {"district_code", "legal_dong_code"})
         })
 public class Region extends BaseEntity {
     @Id
