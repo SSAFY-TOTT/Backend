@@ -39,10 +39,9 @@ public class HouseDetailService {
     }
 
     public HouseDetail findById(int id) {
-        return houseDetailRepository
-                .findById(id).orElseThrow(
-                        () -> new HouseDetailException(
-                                HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED));
+        return houseDetailRepository.findById(id)
+                .orElseThrow(() -> new HouseDetailException(
+                        HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED));
     }
 
     public HouseDetailRecentViewResponse findByRecentView(AuthMember authMember,

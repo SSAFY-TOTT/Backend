@@ -28,13 +28,12 @@ class HouseDetailServiceMockTest extends MockitoTest {
     private HouseDetailService houseDetailService;
     @Mock
     private HouseDetailRepository houseDetailRepository;
-
     @Spy
     private HouseDetailMapper houseDetailMapper;
 
-    @DisplayName("house detail 저장 테스트")
+    @DisplayName("houseDetail 을 저장한다.")
     @Test
-    void houseDetailSaveTest() {
+    void houseDetailSaveTestSuccess() {
         // given
         Region region = RegionFixture.REGION_ONE.toRegion(row);
         HouseGeo houseGeo = HouseGeoFixture.CREATE_HOUSE_GEO.toHouseGeo(region);

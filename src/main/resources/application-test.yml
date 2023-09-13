@@ -17,11 +17,3 @@ spring:
     redis:
       host: localhost
       port: 6379
-  redis:
-    lettuce:
-      pool:
-        min-idle: 0
-        max-idle: 0
-        max-active: 0
-    port: 6379
-    host: localhost
