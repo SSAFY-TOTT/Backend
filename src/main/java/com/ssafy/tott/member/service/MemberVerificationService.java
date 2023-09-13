@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -32,7 +30,8 @@ public class MemberVerificationService {
     }
 
     private String generateMemo() {
-        return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "전세역전");
+        return String.format("%04d %s", 1015, "전세역전");
+//        return String.format("%04d %s", ThreadLocalRandom.current().nextInt(10000), "전세역전");  // 실제로 사용하는 값
     }
 
     private void validateByExistedMember(MemberVerificationCache cache) {
