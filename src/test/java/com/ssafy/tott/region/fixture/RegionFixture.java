@@ -1,5 +1,6 @@
 package com.ssafy.tott.region.fixture;
 
+import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
 import com.ssafy.tott.region.domain.Region;
 import lombok.AccessLevel;
@@ -30,6 +31,15 @@ public enum RegionFixture {
                 .districtName(districtName)
                 .legalDongName(legalDongName)
                 .districtCode(legalDongCode)
+                .build();
+    }
+
+    public Region toRegion(RentRow row) {
+        return Region.builder()
+                .districtName(row.getSggNm())
+                .districtCode(Integer.parseInt(row.getSggCd()))
+                .legalDongName(row.getBjdongNm())
+                .legalDongCode(Integer.parseInt(row.getBjdongCd()))
                 .build();
     }
 }

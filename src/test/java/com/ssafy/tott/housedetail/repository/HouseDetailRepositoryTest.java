@@ -55,6 +55,7 @@ class HouseDetailRepositoryTest extends RepositoryTest {
     void saveSuccess() {
         /* Given */
         /* When */
+        /* TODO: 2023/09/13 다른 조건 필요 */
         HouseDetail savedHouseDetail = houseDetailRepository.save(houseDetail);
 
         /* Then */
