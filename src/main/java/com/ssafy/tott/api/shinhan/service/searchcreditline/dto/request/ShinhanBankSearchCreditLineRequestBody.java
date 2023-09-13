@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody {
-    @JsonProperty("serviceCode")
+    @JsonProperty()
     private String serviceCode;
 
     @JsonProperty("연동거래정보")
@@ -24,11 +24,12 @@ public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody 
     @JsonProperty("연소득")
     private String annualIncome;
 
-    private ShinhanBankSearchCreditLineRequestBody(String serviceCode,
-                                                  String linkedTransactionInformation,
-                                                  String housingLocationCode,
-                                                  String rentGtn,
-                                                  String annualIncome) {
+    private ShinhanBankSearchCreditLineRequestBody(
+            String serviceCode,
+            String linkedTransactionInformation,
+            String housingLocationCode,
+            String rentGtn,
+            String annualIncome) {
         this.serviceCode = serviceCode;
         this.linkedTransactionInformation = linkedTransactionInformation;
         this.housingLocationCode = housingLocationCode;
@@ -36,12 +37,14 @@ public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody 
         this.annualIncome = annualIncome;
     }
 
-    public static ShinhanBankSearchCreditLineRequestBody of(String serviceCode,
-                                                     String linkedTransactionInformation,
-                                                     String housingLocationCode,
-                                                     String rentGtn,
-                                                     String annualIncome) {
-        return new ShinhanBankSearchCreditLineRequestBody(serviceCode,
+    public static ShinhanBankSearchCreditLineRequestBody of(
+            String serviceCode,
+            String linkedTransactionInformation,
+            String housingLocationCode,
+            String rentGtn,
+            String annualIncome) {
+        return new ShinhanBankSearchCreditLineRequestBody(
+                serviceCode,
                 linkedTransactionInformation,
                 housingLocationCode,
                 rentGtn,

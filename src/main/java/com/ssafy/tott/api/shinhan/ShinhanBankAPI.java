@@ -46,6 +46,9 @@ public class ShinhanBankAPI {
     @Value("${SHINHAN_BANK.API.KEY}")
     private String key;
 
+    @Value("${SHINHAN_BANK.API.SERVICE_KEY.SEARCH_CREDIT_LINE}")
+    private String serviceKey;
+
     public ShinhanBankSearchNameResponse fetchSearchNameAPI(BankCode bankCode, String account) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key, ShinhanBankSearchNameRequestDataBody.of(bankCode.getCode(), account));
@@ -84,11 +87,15 @@ public class ShinhanBankAPI {
     }
 
     public ShinhanBankSearchCreditLineResponse fetchSearchCreditLineAPI(
-            String serviceCode, String linkedTransactionInformation, String housingLocationCode, String rentGtn, String annualIncome
+            String linkedTransactionInformation, String housingLocationCode, String rentGtn, String annualIncome
     ) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key, ShinhanBankSearchCreditLineRequestBody.of(
-                        serviceCode, linkedTransactionInformation, housingLocationCode, rentGtn + "0000", annualIncome));
+                        serviceKey,
+                        "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
+                        "04513",
+                        "500000000",
+                        "60000000"));
 
         logging(request.getShinhanBankDataBody());
 
