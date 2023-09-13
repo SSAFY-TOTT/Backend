@@ -1,91 +1,59 @@
 package com.ssafy.tott.housegeo.repository;
 
-import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
-import com.ssafy.tott.housegeo.domain.BuildingType;
+import com.ssafy.tott.global.config.RepositoryTest;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
+import com.ssafy.tott.housegeo.fixture.HouseGeoFixture;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
+import com.ssafy.tott.region.fixture.RegionFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@ActiveProfiles(profiles = {"test"})
-@Transactional
-@DataJpaTest
-class HouseGeoRepositoryTest {
-    private final RentRow row =
-            new RentRow(
-                    "2023",
-                    "11380",
-                    "은평구",
-                    "10300",
-                    "불광동",
-                    "1",
-                    "대지",
-                    "0105",
-                    "0076",
-                    3,
-                    "20230901",
-                    "전세",
-                    57.76,
-                    "23000",
-                    "0",
-                    "105-76",
-                    "2018",
-                    "연립다세대",
-                    "",
-                    "신규",
-                    "",
-                    "0",
-                    "");
+class HouseGeoRepositoryTest extends RepositoryTest {
+
     @Autowired
     private HouseGeoRepository houseGeoRepository;
     @Autowired
     private RegionRepository regionRepository;
-    private Region region;
     private HouseGeo houseGeo;
 
     @BeforeEach
     void setUp() {
-        region =
-                regionRepository.save(
-                        Region.builder()
-                                .legalDongCode(Integer.parseInt(row.getBjdongCd()))
-                                .legalDongName(row.getBjdongNm())
-                                .districtCode(Integer.parseInt(row.getSggCd()))
-                                .districtName(row.getSggNm())
-                                .build());
-        houseGeo =
-                houseGeoRepository.save(
-                        HouseGeo.builder()
-                                .mainNumber(Integer.parseInt(row.getBobn()))
-                                .buildingType(BuildingType.연립다세대)
-                                .subNumber(Integer.parseInt(row.getBubn()))
-                                .longitude(0)
-                                .latitude(0)
-                                .buildingName(row.getBldgNm())
-                                .region(region)
-                                .build());
+        Region region = regionRepository.save(RegionFixture.CREATE_REGION_BY_ROW.toRegion());
+        houseGeo = houseGeoRepository.save(HouseGeoFixture.GRAND_TOWER.toHouseGeo(region));
     }
 
-    @DisplayName("houseGeo 찾기")
+    @DisplayName("본번과 부번으로 houseGeo 조회한다.")
     @Test
-    void findHouseGeoWhenExist() {
-        Optional<HouseGeo> findHouseGeo =
-                houseGeoRepository.findByMainNumberAndSubNumber(
-                        Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()));
-        assertTrue(findHouseGeo.isPresent());
+    void findByMainNumberAndSubNumberTest() {
+        /* Given, When */
+        Optional<HouseGeo> findHouseGeo = houseGeoRepository
+                .findByMainNumberAndSubNumber(houseGeo.getMainNumber(), houseGeo.getSubNumber());
+
+        /* Then */
         assertAll(
-                () -> assertEquals(houseGeo.getLatitude(), findHouseGeo.get().getLatitude()),
-                () -> assertEquals(houseGeo.getLongitude(), findHouseGeo.get().getLongitude()));
+                () -> assertThat(findHouseGeo).isPresent(),
+                () -> assertThat(findHouseGeo).contains(houseGeo)
+        );
+    }
+
+    @DisplayName("필터 검색 조건으로 houseGeo 조회한다.")
+    @Test
+    void findByFilterCondTest() {
+        /* TODO: 2023/09/13 houseDetail 필요 */
+        /* Given */
+
+        /* When */
+
+        /* Then */
+
     }
 }

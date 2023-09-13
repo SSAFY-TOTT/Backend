@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 public class RegionServiceTest extends MockitoTest {
-    private final RentRow row = RentRowFixture.HOUSE_DETAIL_ONE.toRentRow();
+    private final RentRow row = RentRowFixture.RENT_ROW_ONE.toRentRow();
     @InjectMocks
     private RegionService regionService;
     @Mock

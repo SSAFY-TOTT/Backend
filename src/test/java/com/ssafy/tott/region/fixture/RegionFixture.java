@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public enum RegionFixture {
+    CREATE_REGION_BY_ROW(0, "", 0, ""),
     REGION_ONE(11170, "용산구", 10100, "후암동"),
     REGION_TWO(11290, "성북구", 10300, "돈암동"),
     REGION_THREE(11680, "강남구", 10600, "대치동"),

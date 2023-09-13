@@ -1,9 +1,11 @@
 package com.ssafy.tott.wishlist.domain;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.global.config.RepositoryTest;
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
+import com.ssafy.tott.housedetail.fixture.RentRowFixture;
 import com.ssafy.tott.housegeo.domain.BuildingType;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
@@ -17,9 +19,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,36 +26,9 @@ import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ActiveProfiles("test")
-@Transactional
-@DataJpaTest
-class WishlistRepositoryTest {
+class WishlistRepositoryTest extends RepositoryTest {
+    private final RentRow row = RentRowFixture.RENT_ROW_ONE.toRentRow();
 
-    private final RentRow row =
-            new RentRow(
-                    "2023",
-                    "11380",
-                    "은평구",
-                    "10300",
-                    "불광동",
-                    "1",
-                    "대지",
-                    "0105",
-                    "0076",
-                    3,
-                    "20230901",
-                    "전세",
-                    57.76,
-                    "23000",
-                    "0",
-                    "105-76",
-                    "2018",
-                    "연립다세대",
-                    "",
-                    "신규",
-                    "",
-                    "0",
-                    "");
     @Autowired
     private WishlistRepository wishlistRepository;
     @Autowired
@@ -152,5 +124,4 @@ class WishlistRepositoryTest {
             });
         }
     }
-
 }

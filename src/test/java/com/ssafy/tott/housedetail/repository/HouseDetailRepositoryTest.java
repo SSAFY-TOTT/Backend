@@ -30,7 +30,7 @@ class HouseDetailRepositoryTest extends RepositoryTest {
 
     @BeforeEach
     void setup() {
-        row = RentRowFixture.HOUSE_DETAIL_ONE.toRentRow();
+        row = RentRowFixture.RENT_ROW_ONE.toRentRow();
         region = regionRepository.save(Region.from(row));
         /* TODO: 2023/09/13 추후 `houseGeo fixture`로 수정 */
         houseGeo = houseGeoRepository.save(HouseGeo.builder()

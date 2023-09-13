@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public enum RentRowFixture {
-    HOUSE_DETAIL_ONE("2023", "11380", "은평구", "10300", "불광동", "1",
+    RENT_ROW_ONE("2023", "11380", "은평구", "10300", "불광동", "1",
             "대지", "0105", "0076", 3, "20230901", "전세", 57.76,
             "23000", "0", "105-76", "2018", "연립다세대",
             "", "신규", "", "0", ""),
