@@ -2,6 +2,7 @@ package com.ssafy.tott.account.service;
 
 import com.ssafy.tott.account.domain.AccountRepository;
 import com.ssafy.tott.global.config.ServiceTest;
+import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.member.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class AccountServiceTest extends ServiceTest {
 
     @BeforeEach
     void setup() {
-        member = saveMember();
+        member = saveMember(MemberFixture.SHINHAN);
     }
 
     @DisplayName("계좌 조회에 성공한다.")
@@ -30,6 +31,7 @@ class AccountServiceTest extends ServiceTest {
         /* Given */
         /* When */
         accountService.searchAccounts(member);
+
         /* Then */
         assertThat(accountRepository.findByMember(member)).isNotNull();
     }

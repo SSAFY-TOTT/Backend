@@ -2,11 +2,11 @@ package com.ssafy.tott.global.fixture;
 
 import com.ssafy.tott.account.domain.BankCode;
 import com.ssafy.tott.auth.dto.request.LoginRequest;
+import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.domain.embbeded.Email;
 import com.ssafy.tott.member.domain.embbeded.Password;
 import com.ssafy.tott.member.domain.embbeded.PhoneNumber;
-import com.ssafy.tott.member.data.dto.request.MemberSignupRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

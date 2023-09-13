@@ -15,7 +15,7 @@ public abstract class ServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
-    public Member saveMember() {
-        return memberRepository.save(MemberFixture.JEONGUK.toMember());
+    public Member saveMember(MemberFixture fixture) {
+        return memberRepository.save(fixture.toMember());
     }
 }
