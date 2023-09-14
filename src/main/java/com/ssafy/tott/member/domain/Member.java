@@ -41,8 +41,6 @@ public class Member extends BaseEntity {
 
     private int maxHouseGtn;
 
-    private int creditLine;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -88,10 +86,6 @@ public class Member extends BaseEntity {
 
     public void updateMaxHouseGtn(int maxHouseGtn) {
         this.maxHouseGtn = maxHouseGtn;
-    }
-
-    public void updateCreditLine(int creditLine) {
-        this.creditLine = creditLine;
     }
 
     public void removeBudgets() {

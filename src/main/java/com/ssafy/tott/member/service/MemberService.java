@@ -3,7 +3,6 @@ package com.ssafy.tott.member.service;
 import com.ssafy.tott.account.domain.BankCode;
 import com.ssafy.tott.account.service.AccountService;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
-import com.ssafy.tott.api.shinhan.service.searchcreditline.dto.response.ShinhanBankSearchCreditLineResponse;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.body.Transfer1ResponseShinhanBankDataBody;
@@ -57,33 +56,6 @@ public class MemberService {
 
         accountService.searchAccounts(savedMember);
         return MemberVerificationResponse.from(savedMember.getId());
-    }
-
-    @Transactional
-    public void updateCreditLine(int memberId) {
-        Member member = findById(memberId);
-
-        if (canCreditLineReset(member)) {
-            return;
-        }
-        member.updateCreditLine(searchCreditLine(member));
-    }
-
-    private boolean canCreditLineReset(Member member) {
-        if (member.getAnnualIncome() == 0 || member.getMaxHouseGtn() == 0){
-            member.updateCreditLine(0);
-            return false;
-        }
-        return true;
-    }
-
-    private int searchCreditLine(Member member) {
-        ShinhanBankSearchCreditLineResponse response = shinhanBankAPI.fetchSearchCreditLineAPI(
-                "1",
-                "04513",
-                member.getMaxHouseGtn(),
-                member.getAnnualIncome());
-        return response.getCreditLine();
     }
 
     @Transactional
