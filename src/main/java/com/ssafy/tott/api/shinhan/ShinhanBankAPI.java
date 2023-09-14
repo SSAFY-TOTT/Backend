@@ -87,7 +87,7 @@ public class ShinhanBankAPI {
     }
 
     public ShinhanBankSearchCreditLineResponse fetchSearchCreditLineAPI(
-            String linkedTransactionInformation, String housingLocationCode, String rentGtn, String annualIncome
+            String linkedTransactionInformation, String housingLocationCode, int rentGtn, int annualIncome
     ) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key, ShinhanBankSearchCreditLineRequestBody.of(

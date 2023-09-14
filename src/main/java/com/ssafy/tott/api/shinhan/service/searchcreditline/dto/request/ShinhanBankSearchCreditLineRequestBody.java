@@ -41,13 +41,13 @@ public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody 
             String serviceCode,
             String linkedTransactionInformation,
             String housingLocationCode,
-            String rentGtn,
-            String annualIncome) {
+            int rentGtn,
+            int annualIncome) {
         return new ShinhanBankSearchCreditLineRequestBody(
                 serviceCode,
                 linkedTransactionInformation,
                 housingLocationCode,
-                rentGtn,
-                annualIncome);
+                rentGtn + "0000",
+                annualIncome + "0000");
     }
 }

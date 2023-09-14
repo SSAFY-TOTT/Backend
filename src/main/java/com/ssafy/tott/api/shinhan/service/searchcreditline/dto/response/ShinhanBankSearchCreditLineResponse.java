@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 public class ShinhanBankSearchCreditLineResponse extends ShinhanBankAPIResponse {
     @JsonProperty("dataBody")
     ShinhanBankSearchCreditLineResponseDataBody responseDataBody;
+
+    public int getCreditLine() {
+        return Integer.parseInt(responseDataBody.getCreditLine());
+    }
 }
