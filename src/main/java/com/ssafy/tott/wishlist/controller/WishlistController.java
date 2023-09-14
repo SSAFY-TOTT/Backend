@@ -20,16 +20,16 @@ public class WishlistController {
     @PostMapping("/auth/create")
     public ResponseEntity<CreateWishlistResponse> create(
             @Authenticated AuthMember authMember,
-            @RequestParam("houseDetailId")int houseDetailId) {
+            @RequestParam("houseDetailId") int houseDetailId) {
         wishlistService.verifyLimit(authMember.getMemberId());
         CreateWishlistResponse response = wishlistService.create(authMember.getMemberId(), houseDetailId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/auth/remove")
-    public ResponseEntity remove(
+    public ResponseEntity<Void> remove(
             @Authenticated AuthMember authMember,
-            @RequestParam("wishlistId")int wishlistId) {
+            @RequestParam("wishlistId") int wishlistId) {
         wishlistService.remove(wishlistId, authMember);
         return ResponseEntity.ok().build();
     }

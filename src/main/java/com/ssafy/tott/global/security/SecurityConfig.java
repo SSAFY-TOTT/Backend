@@ -32,21 +32,30 @@ public class SecurityConfig {
                 .disable()
                 .cors()
                 .and()
+
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
+
                 .and()
                 .headers()
                 .frameOptions()
                 .sameOrigin()
+
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
-                .authorizeRequests()
-                /* TODO: 2023/09/06 추후 로그인 유저만 사용 가능한 API 제작 */
-                .anyRequest()
-                .permitAll()
+                .authorizeHttpRequests()
+                .antMatchers("/api/budget/auth/**").authenticated()
+                .antMatchers("/api/house/auth/**").authenticated()
+                .antMatchers("/api/member/auth/**").authenticated()
+                .antMatchers("/api/geo/auth/**").authenticated()
+                .antMatchers("/api/region/auth/**").authenticated()
+                .antMatchers("/api/wishlist/auth/**").authenticated()
+                .anyRequest().permitAll()
+
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
 
