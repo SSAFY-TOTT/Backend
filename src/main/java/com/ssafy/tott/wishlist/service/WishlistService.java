@@ -37,6 +37,7 @@ public class WishlistService {
             throw new WishlistException(WishlistErrorCode.ERROR_CLIENT_WITH_WISHLIST_IS_FULL);
     }
 
+    @Transactional
     public CreateWishlistResponse create(int memberID, int houseId) {
         Member findMember = memberService.findById(memberID);
         HouseDetail findHouseDetail = houseDetailService.findById(houseId);
