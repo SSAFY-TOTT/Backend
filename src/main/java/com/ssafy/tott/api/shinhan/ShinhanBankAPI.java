@@ -81,7 +81,7 @@ public class ShinhanBankAPI {
 
         ShinhanBankSearchAccountsResponse response = searchAccountsAPI.fetchAPI(
                 ShinhanBankSearchAccountsRequest.toRequest(convertRequestToJson(request)));
-
+        response.initAccounts();    // 랜덤한 계좌번호를 조회하기 위한 숫자
         validate(response);
         return response;
     }
