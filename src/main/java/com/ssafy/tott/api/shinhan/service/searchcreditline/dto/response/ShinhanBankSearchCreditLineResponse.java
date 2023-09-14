@@ -13,7 +13,7 @@ public class ShinhanBankSearchCreditLineResponse extends ShinhanBankAPIResponse 
     @JsonProperty("dataBody")
     ShinhanBankSearchCreditLineResponseDataBody responseDataBody;
 
-    public int getCreditLine() {
-        return Integer.parseInt(responseDataBody.getCreditLine());
+    public String getCreditLine() {
+        return responseDataBody.getCreditLine();
     }
 }
