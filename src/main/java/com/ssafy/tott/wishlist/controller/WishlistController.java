@@ -2,8 +2,9 @@ package com.ssafy.tott.wishlist.controller;
 
 import com.ssafy.tott.auth.annotation.Authenticated;
 import com.ssafy.tott.auth.vo.AuthMember;
-import com.ssafy.tott.wishlist.dto.response.CreateWishlistResponse;
-import com.ssafy.tott.wishlist.dto.response.ViewWishlistResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCheckResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCreateResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistViewResponse;
 import com.ssafy.tott.wishlist.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,11 @@ public class WishlistController {
     private final WishlistService wishlistService;
 
     @PostMapping("/auth/create")
-    public ResponseEntity<CreateWishlistResponse> create(
+    public ResponseEntity<WishlistCreateResponse> create(
             @Authenticated AuthMember authMember,
             @RequestParam("houseDetailId") int houseDetailId) {
         wishlistService.verifyLimit(authMember.getMemberId());
-        CreateWishlistResponse response = wishlistService.create(authMember.getMemberId(), houseDetailId);
+        WishlistCreateResponse response = wishlistService.create(authMember.getMemberId(), houseDetailId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -35,8 +36,14 @@ public class WishlistController {
     }
 
     @PostMapping("/auth/view")
-    public ResponseEntity<ViewWishlistResponse> view(@Authenticated AuthMember authMember) {
-        ViewWishlistResponse response = wishlistService.view(authMember.getMemberId());
+    public ResponseEntity<WishlistViewResponse> view(@Authenticated AuthMember authMember) {
+        WishlistViewResponse response = wishlistService.view(authMember.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/auth/check")
+    public ResponseEntity<WishlistCheckResponse> check(@Authenticated AuthMember authMember, @RequestParam("houseDetailId") int houseDetailId){
+        WishlistCheckResponse response = wishlistService.check(authMember.getMemberId(), houseDetailId);
         return ResponseEntity.ok(response);
     }
 }

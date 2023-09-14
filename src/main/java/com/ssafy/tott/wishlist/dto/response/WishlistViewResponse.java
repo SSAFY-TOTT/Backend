@@ -9,14 +9,14 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ViewWishlistResponse {
+public class WishlistViewResponse {
     private List<WishlistVO> wishlistVOList;
 
-    private ViewWishlistResponse(List<WishlistVO> wishlistVOList) {
+    private WishlistViewResponse(List<WishlistVO> wishlistVOList) {
         this.wishlistVOList = wishlistVOList;
     }
 
-    public static ViewWishlistResponse from(List<WishlistVO> wishlistVOList) {
-        return new ViewWishlistResponse(wishlistVOList);
+    public static WishlistViewResponse from(List<WishlistVO> wishlistVOList) {
+        return new WishlistViewResponse(wishlistVOList);
     }
 }

@@ -6,16 +6,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CreateWishlistResponse {
+public class WishlistCreateResponse {
     private int memberId;
     private int houseId;
 
-    private CreateWishlistResponse(int memberId, int houseId) {
+    private WishlistCreateResponse(int memberId, int houseId) {
         this.memberId = memberId;
         this.houseId = houseId;
     }
 
-    public static CreateWishlistResponse of(int memberId, int houseId) {
-        return new CreateWishlistResponse(memberId, houseId);
+    public static WishlistCreateResponse of(int memberId, int houseId) {
+        return new WishlistCreateResponse(memberId, houseId);
     }
 }
