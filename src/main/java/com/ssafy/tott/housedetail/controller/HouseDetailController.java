@@ -27,4 +27,6 @@ public class HouseDetailController {
         return ResponseEntity.ok(response);
     }
     /* TODO: 2023/09/12 GeoId로 조회 */
+
+
 }

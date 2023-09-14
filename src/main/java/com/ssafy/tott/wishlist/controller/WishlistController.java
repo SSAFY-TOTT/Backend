@@ -2,6 +2,7 @@ package com.ssafy.tott.wishlist.controller;
 
 import com.ssafy.tott.auth.annotation.Authenticated;
 import com.ssafy.tott.auth.vo.AuthMember;
+import com.ssafy.tott.wishlist.dto.response.CheckWishlistResponse;
 import com.ssafy.tott.wishlist.dto.response.CreateWishlistResponse;
 import com.ssafy.tott.wishlist.dto.response.ViewWishlistResponse;
 import com.ssafy.tott.wishlist.service.WishlistService;
@@ -37,6 +38,12 @@ public class WishlistController {
     @PostMapping("/auth/view")
     public ResponseEntity<ViewWishlistResponse> view(@Authenticated AuthMember authMember) {
         ViewWishlistResponse response = wishlistService.view(authMember.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/auth/check")
+    public ResponseEntity<CheckWishlistResponse> check(@Authenticated AuthMember authMember, @RequestParam("houseDetailId") int houseDetailId){
+        CheckWishlistResponse response = wishlistService.check(authMember.getMemberId(), houseDetailId);
         return ResponseEntity.ok(response);
     }
 }

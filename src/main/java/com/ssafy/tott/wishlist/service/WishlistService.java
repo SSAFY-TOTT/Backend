@@ -7,6 +7,7 @@ import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.service.MemberService;
 import com.ssafy.tott.wishlist.domain.Wishlist;
 import com.ssafy.tott.wishlist.domain.WishlistRepository;
+import com.ssafy.tott.wishlist.dto.response.CheckWishlistResponse;
 import com.ssafy.tott.wishlist.dto.response.CreateWishlistResponse;
 import com.ssafy.tott.wishlist.dto.response.ViewWishlistResponse;
 import com.ssafy.tott.wishlist.exception.WishlistErrorCode;
@@ -69,5 +70,10 @@ public class WishlistService {
                 .legalDongName(wishlist.getLegalDongName())
                 .build()).collect(Collectors.toList());
         return ViewWishlistResponse.from(wishlistVOList);
+    }
+
+    public CheckWishlistResponse check(int memberId, int houseDetailId) {
+        boolean isWishlist = wishlistRepository.existsByMemberIdAndHouseDetailId(memberId, houseDetailId);
+        return CheckWishlistResponse.from(isWishlist);
     }
 }
