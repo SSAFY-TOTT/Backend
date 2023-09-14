@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class RemoveWishlistRequest {
+public class WishlistRemoveRequest {
     private int wishlistId;
 }

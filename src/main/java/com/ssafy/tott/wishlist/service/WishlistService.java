@@ -7,9 +7,9 @@ import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.service.MemberService;
 import com.ssafy.tott.wishlist.domain.Wishlist;
 import com.ssafy.tott.wishlist.domain.WishlistRepository;
-import com.ssafy.tott.wishlist.dto.response.CheckWishlistResponse;
-import com.ssafy.tott.wishlist.dto.response.CreateWishlistResponse;
-import com.ssafy.tott.wishlist.dto.response.ViewWishlistResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCheckResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCreateResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistViewResponse;
 import com.ssafy.tott.wishlist.exception.WishlistErrorCode;
 import com.ssafy.tott.wishlist.exception.WishlistException;
 import com.ssafy.tott.wishlist.vo.WishlistVO;
@@ -39,7 +39,7 @@ public class WishlistService {
     }
 
     @Transactional
-    public CreateWishlistResponse create(int memberID, int houseId) {
+    public WishlistCreateResponse create(int memberID, int houseId) {
         Member findMember = memberService.findById(memberID);
         HouseDetail findHouseDetail = houseDetailService.findById(houseId);
 
@@ -48,7 +48,7 @@ public class WishlistService {
                 .houseDetail(findHouseDetail)
                 .build()
         );
-        return CreateWishlistResponse.of(memberID, houseId);
+        return WishlistCreateResponse.of(memberID, houseId);
     }
 
     public void remove(int wishlistId, AuthMember authMember) {
@@ -60,7 +60,7 @@ public class WishlistService {
         wishlistRepository.delete(wishlist);
     }
 
-    public ViewWishlistResponse view(int memberId) {
+    public WishlistViewResponse view(int memberId) {
         /* TODO: 2023/09/13 builder -> from 으로 수정 */
         List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(memberId).stream().map(wishlist -> WishlistVO.builder()
                 .price(wishlist.getPrice())
@@ -69,11 +69,11 @@ public class WishlistService {
                 .districtName(wishlist.getDistrictName())
                 .legalDongName(wishlist.getLegalDongName())
                 .build()).collect(Collectors.toList());
-        return ViewWishlistResponse.from(wishlistVOList);
+        return WishlistViewResponse.from(wishlistVOList);
     }
 
-    public CheckWishlistResponse check(int memberId, int houseDetailId) {
+    public WishlistCheckResponse check(int memberId, int houseDetailId) {
         boolean isWishlist = wishlistRepository.existsByMemberIdAndHouseDetailId(memberId, houseDetailId);
-        return CheckWishlistResponse.from(isWishlist);
+        return WishlistCheckResponse.from(isWishlist);
     }
 }

@@ -3,7 +3,7 @@ package com.ssafy.tott.wishlist.service;
 
 import com.ssafy.tott.global.config.MockitoTest;
 import com.ssafy.tott.wishlist.domain.WishlistRepository;
-import com.ssafy.tott.wishlist.dto.response.CheckWishlistResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCheckResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ public class WishlistServiceMockTest extends MockitoTest {
         given(wishlistRepository.existsByMemberIdAndHouseDetailId(anyInt(),anyInt())).willReturn(true);
 
         /* When */
-        CheckWishlistResponse response = wishlistService.check(1,1);
+        WishlistCheckResponse response = wishlistService.check(1,1);
 
         /* Then */
         assertTrue(response.isWishlist());

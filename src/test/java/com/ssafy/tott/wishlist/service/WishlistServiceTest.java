@@ -15,8 +15,8 @@ import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.fixture.RegionFixture;
 import com.ssafy.tott.wishlist.domain.Wishlist;
 import com.ssafy.tott.wishlist.domain.WishlistRepository;
-import com.ssafy.tott.wishlist.dto.response.CreateWishlistResponse;
-import com.ssafy.tott.wishlist.dto.response.ViewWishlistResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistCreateResponse;
+import com.ssafy.tott.wishlist.dto.response.WishlistViewResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +55,7 @@ class WishlistServiceTest extends ServiceTest {
     void saveTestSuccess() {
         /* Given */
         /* When */
-        CreateWishlistResponse response = wishlistService.create(member.getId(), houseDetail.getId());
+        WishlistCreateResponse response = wishlistService.create(member.getId(), houseDetail.getId());
 
         /* Then */
         assertAll(
@@ -72,7 +72,7 @@ class WishlistServiceTest extends ServiceTest {
         wishlistService.create(member.getId(), houseDetail.getId());
 
         /* When */
-        ViewWishlistResponse response = wishlistService.view(member.getId());
+        WishlistViewResponse response = wishlistService.view(member.getId());
 
         /* Then */
         assertThat(response.getWishlistVOList()).hasSize(1);
@@ -91,7 +91,7 @@ class WishlistServiceTest extends ServiceTest {
         wishlistService.remove(savedWishlist.getId(), new AuthMember(member.getId()));
 
         /* Then */
-        ViewWishlistResponse response = wishlistService.view(member.getId());
+        WishlistViewResponse response = wishlistService.view(member.getId());
         assertThat(response.getWishlistVOList()).isEmpty();
     }
 }

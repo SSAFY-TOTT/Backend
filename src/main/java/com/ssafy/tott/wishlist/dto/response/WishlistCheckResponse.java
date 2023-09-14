@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CheckWishlistResponse {
+public class WishlistCheckResponse {
     private boolean isWishlist;
 
-    public static CheckWishlistResponse from(boolean isWishlist) {
-        return new CheckWishlistResponse(isWishlist);
+    public static WishlistCheckResponse from(boolean isWishlist) {
+        return new WishlistCheckResponse(isWishlist);
     }
 }
