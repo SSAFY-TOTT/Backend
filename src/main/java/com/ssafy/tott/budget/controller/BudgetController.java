@@ -18,8 +18,9 @@ public class BudgetController {
     @PostMapping("/save")
     public ResponseEntity<BudgetsResponse> saveAll(
             @Authenticated AuthMember authMember,
-            @RequestBody BudgetsUpdateRequest budgetsUpdateRequest) {
-        BudgetsResponse response = budgetService.saveAll(authMember, budgetsUpdateRequest);
+            @RequestBody BudgetsUpdateRequest budgetsUpdateRequest,
+            @RequestParam int annualIncome) {
+        BudgetsResponse response = budgetService.saveAll(authMember, budgetsUpdateRequest, annualIncome);
         return ResponseEntity.ok(response);
     }
 
