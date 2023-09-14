@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class BudgetController {
     private final BudgetService budgetService;
 
-    @PostMapping("/save")
+    @PostMapping("/auth/save")
     public ResponseEntity<BudgetsResponse> saveAll(
             @Authenticated AuthMember authMember,
             @RequestBody BudgetsUpdateRequest budgetsUpdateRequest) {
@@ -23,7 +23,7 @@ public class BudgetController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/auth/find")
     public ResponseEntity<BudgetsResponse> findAll(@Authenticated AuthMember authMember) {
         BudgetsResponse response = budgetService.findAll(authMember);
         return ResponseEntity.ok(response);

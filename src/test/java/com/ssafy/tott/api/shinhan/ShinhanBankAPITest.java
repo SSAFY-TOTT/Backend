@@ -1,5 +1,6 @@
 package com.ssafy.tott.api.shinhan;
 
+import com.ssafy.tott.api.shinhan.service.searchaccounts.dto.response.ShinhanBankSearchAccountsResponse;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
 import com.ssafy.tott.api.shinhan.service.transfer1.dto.response.ShinhanBankTransfer1Response;
 import com.ssafy.tott.global.config.ServiceTest;
@@ -39,6 +40,18 @@ class ShinhanBankAPITest extends ServiceTest {
         /* When */
         ShinhanBankSearchNameResponse response =
                 shinhanBankAPI.fetchSearchNameAPI(request.getBankCode(), request.getAccountNumber());
+
+        /* Then */
+        assertThat(response.isFailed()).isFalse();
+    }
+
+    @DisplayName("신한은행 계좌 목록 조회 API를 정상적으로 호출한다.")
+    @Test
+    void fetchAccountsTest() {
+        /* Given */
+        /* When */
+        ShinhanBankSearchAccountsResponse response =
+                shinhanBankAPI.fetchSearchAccountsAPI("encodeName");
 
         /* Then */
         assertThat(response.isFailed()).isFalse();
