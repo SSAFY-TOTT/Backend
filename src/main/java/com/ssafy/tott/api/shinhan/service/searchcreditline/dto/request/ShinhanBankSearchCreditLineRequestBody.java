@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody {
-    @JsonProperty()
+    @JsonProperty
     private String serviceCode;
 
     @JsonProperty("연동거래정보")
@@ -41,13 +41,13 @@ public class ShinhanBankSearchCreditLineRequestBody extends ShinhanBankDataBody 
             String serviceCode,
             String linkedTransactionInformation,
             String housingLocationCode,
-            String rentGtn,
-            String annualIncome) {
+            int rentGtn,
+            int annualIncome) {
         return new ShinhanBankSearchCreditLineRequestBody(
                 serviceCode,
                 linkedTransactionInformation,
                 housingLocationCode,
-                rentGtn,
-                annualIncome);
+                String.format("%d%s",rentGtn , "0000"),
+                String.format("%d%s",annualIncome, "0000"));
     }
 }

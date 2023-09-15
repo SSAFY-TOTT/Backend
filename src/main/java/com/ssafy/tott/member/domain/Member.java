@@ -37,7 +37,9 @@ public class Member extends BaseEntity {
     @Embedded
     private PhoneNumber phoneNumber;
 
-    private Long creditLine;
+    private int annualIncome;
+
+    private int maxHouseGtn;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -57,14 +59,12 @@ public class Member extends BaseEntity {
             String name,
             Email email,
             Password password,
-            PhoneNumber phoneNumber,
-            Long creditLine) {
+            PhoneNumber phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.creditLine = creditLine;
         role = Role.USER;
     }
 
@@ -78,6 +78,14 @@ public class Member extends BaseEntity {
 
     public String getEncryptedPassword() {
         return password.getValue();
+    }
+
+    public void updateAnnualIncome(int annualIncome) {
+        this.annualIncome = annualIncome;
+    }
+
+    public void updateMaxHouseGtn(int maxHouseGtn) {
+        this.maxHouseGtn = maxHouseGtn;
     }
 
     public void removeBudgets() {

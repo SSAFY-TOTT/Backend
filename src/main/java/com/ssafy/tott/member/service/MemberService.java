@@ -58,6 +58,11 @@ public class MemberService {
         return MemberVerificationResponse.from(savedMember.getId());
     }
 
+    @Transactional
+    public void updateAnnualIncome(Member member, int annualIncome) {
+        member.updateAnnualIncome(annualIncome);
+    }
+
     public Member findById(int id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new MemberException(MemberErrorCode.ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED));

@@ -23,7 +23,6 @@ public class MemberMapper {
                 .email(memberVerificationCache.getEmail())
                 .password(memberVerificationCache.getPassword())
                 .phoneNumber(memberVerificationCache.getPhoneNumber())
-                .creditLine(0L)
                 .build();
     }
 

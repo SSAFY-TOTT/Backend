@@ -27,7 +27,6 @@ public class AuthService {
         int memberId = Integer.parseInt(authenticate.getName());
 
         AuthToken token = AuthToken.builder().id(memberId).value(response.getRefreshToken()).build();
-
         authTokenRepository.save(token);
         return response;
     }

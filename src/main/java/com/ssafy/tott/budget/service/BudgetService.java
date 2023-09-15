@@ -24,7 +24,7 @@ public class BudgetService {
     private final MemberService memberService;
 
     @Transactional
-    public BudgetsResponse saveAll(AuthMember authMember, BudgetsUpdateRequest request) {
+    public BudgetsResponse saveAll(AuthMember authMember, BudgetsUpdateRequest request, int annualIncome) {
         Member member = memberService.findById(authMember.getMemberId());
 
         member.removeBudgets();
@@ -33,6 +33,8 @@ public class BudgetService {
         List<Budget> budgets = toBudgets(member, request);
 
         List<Budget> savedBudgets = budgetRepository.saveAll(budgets);
+        memberService.updateAnnualIncome(member, annualIncome);
+
         return new BudgetsResponse(
                 savedBudgets.stream().map(BudgetVO::from).collect(Collectors.toList()));
     }

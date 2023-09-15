@@ -40,7 +40,6 @@ public class ShinhanBankAPI {
     private final ShinhanBankTransfer1FetchAPI transfer1API;
     private final ShinhanBankSearchNameFetchAPI searchNameAPI;
     private final ShinhanBankSearchAccountsFetchAPI searchAccountsAPI;
-
     private final ShinhanBankSearchCreditLineFetchAPI searchCreditLineFetchAPI;
 
     @Value("${SHINHAN_BANK.API.KEY}")
@@ -87,16 +86,18 @@ public class ShinhanBankAPI {
     }
 
     public ShinhanBankSearchCreditLineResponse fetchSearchCreditLineAPI(
-            String linkedTransactionInformation, String housingLocationCode, String rentGtn, String annualIncome
+            String linkedTransactionInformation, String housingLocationCode, int rentGtn, int annualIncome
     ) {
         ShinhanBankAPIRequest request = ShinhanBankAPIRequest.of(
                 key, ShinhanBankSearchCreditLineRequestBody.of(
                         serviceKey, linkedTransactionInformation, housingLocationCode, rentGtn, annualIncome));
 
-        logging(request.getShinhanBankDataBody());
+
 
         ShinhanBankSearchCreditLineResponse response = searchCreditLineFetchAPI.fetchAPI(
                 ShinhanBankSearchCreditLineRequest.toRequest(convertRequestToJson(request)));
+
+        logging(request.getShinhanBankDataBody());
 
         validate(response);
         return response;
