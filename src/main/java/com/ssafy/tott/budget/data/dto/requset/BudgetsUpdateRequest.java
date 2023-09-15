@@ -11,8 +11,10 @@ import java.util.List;
 @Getter
 public class BudgetsUpdateRequest {
     private List<BudgetVO> budgetSaveRequestList;
+    private int annualIncome;
 
-    public BudgetsUpdateRequest(List<BudgetVO> budgetSaveRequestList) {
+    public BudgetsUpdateRequest(List<BudgetVO> budgetSaveRequestList, int annualIncome) {
+        this.annualIncome = annualIncome;
         this.budgetSaveRequestList = budgetSaveRequestList;
     }
 }

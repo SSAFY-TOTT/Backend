@@ -40,7 +40,7 @@ class BudgetServiceTest extends ServiceTest {
         BudgetsUpdateRequest request = toRequest(savedMember);
 
         /* When */
-        BudgetsResponse response = budgetService.saveAll(authMember, request, 0);
+        BudgetsResponse response = budgetService.saveAll(authMember, request);
 
         /* Then */
         assertAll(
@@ -53,7 +53,7 @@ class BudgetServiceTest extends ServiceTest {
     @Test
     void findAllTest() {
         /* Given */
-        budgetService.saveAll(authMember, toRequest(savedMember), 0);
+        budgetService.saveAll(authMember, toRequest(savedMember));
 
         /* When */
         BudgetsResponse response = budgetService.findAll(authMember);
@@ -68,6 +68,7 @@ class BudgetServiceTest extends ServiceTest {
     private BudgetsUpdateRequest toRequest(Member member) {
         return new BudgetsUpdateRequest(new ArrayList<>(List.of(
                 BudgetVO.from(BudgetFixture.TEN_MILLION_WON.toBudget(member)),
-                BudgetVO.from(BudgetFixture.ONE_MILLION_WON.toBudget(member)))));
+                BudgetVO.from(BudgetFixture.ONE_MILLION_WON.toBudget(member)))),
+                6000);
     }
 }
