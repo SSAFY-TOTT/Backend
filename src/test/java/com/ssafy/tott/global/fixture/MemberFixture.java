@@ -51,7 +51,6 @@ public enum MemberFixture {
                 .name(name)
                 .email(Email.from(email))
                 .password(Password.of(password, password, new BCryptPasswordEncoder()))
-                .creditLine(0L)
                 .phoneNumber(PhoneNumber.from(phoneNumber))
                 .build();
     }
@@ -62,7 +61,6 @@ public enum MemberFixture {
                 .name(name)
                 .email(Email.from(email))
                 .password(Password.of(password, password, new BCryptPasswordEncoder()))
-                .creditLine(0L)
                 .phoneNumber(PhoneNumber.from(phoneNumber))
                 .build();
     }

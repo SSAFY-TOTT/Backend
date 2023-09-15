@@ -19,8 +19,7 @@ public class HouseDetailRecentViewVO {
     private int area;
     private int price;
     private int builtYear;
-    /* TODO: 2023/09/12 찜 목록 조회 여부 query 구현 */
-    private boolean isWishlist; // 찜 목록 여부
+    private int floor;
 
     public static HouseDetailRecentViewVO from(HouseDetail detail) {
         HouseGeo geo = detail.getHouseGeo();
@@ -34,6 +33,7 @@ public class HouseDetailRecentViewVO {
                 .builtYear(geo.getConstructionYear())
                 .area((int) (detail.getArea() / 3.3D))
                 .price(detail.getPrice())
+                .floor(detail.getFloor())
                 .build();
     }
 }
