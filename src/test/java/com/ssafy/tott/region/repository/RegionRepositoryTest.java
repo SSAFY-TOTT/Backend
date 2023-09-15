@@ -7,6 +7,7 @@ import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.domain.HouseGeoRepository;
 import com.ssafy.tott.housegeo.fixture.HouseGeoFixture;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
+import com.ssafy.tott.region.data.vo.DistrictVO;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.fixture.RegionFixture;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +32,7 @@ class RegionRepositoryTest extends RepositoryTest {
 
     @BeforeEach
     void setUp() {
-        region = RegionFixture.REGION_ONE.toRegion();
+        region = regionRepository.save(RegionFixture.REGION_ONE.toRegion());
     }
 
     @DisplayName("지역을 정상적으로 저장한다.")
@@ -89,5 +91,19 @@ class RegionRepositoryTest extends RepositoryTest {
 
         /* Then */
         assertThat(optionalRegion).isPresent();
+    }
+
+    @DisplayName("지역구를 조회한다.")
+    @Test
+    void findAllToDistrictTest() {
+        /* Given */
+        regionRepository.save(RegionFixture.REGION_TWO.toRegion());
+        regionRepository.save(RegionFixture.REGION_THREE.toRegion());
+
+        /* When */
+        List<DistrictVO> list = regionRepository.findAllToDistrict();
+
+        /* Then */
+        assertThat(list).hasSize(3);
     }
 }
