@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegionController {
     private final RegionService regionService;
 
-    @GetMapping("/auth/find")
+    @GetMapping("/auth/find/district")
     public ResponseEntity<DistrictResponse> searchDistrict(@Authenticated AuthMember authMember) {
         DistrictResponse response = regionService.findDistrictAll();
         return ResponseEntity.ok(response);
     }
+
     /* TODO: 2023/09/15 법정동 코드 */
 }
