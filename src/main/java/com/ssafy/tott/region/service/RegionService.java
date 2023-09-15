@@ -2,6 +2,7 @@ package com.ssafy.tott.region.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
+import com.ssafy.tott.region.data.dto.response.DistrictResponse;
 import com.ssafy.tott.region.data.vo.DistrictVO;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
@@ -40,7 +41,8 @@ public class RegionService {
                 .orElseThrow(() -> new RegionException(RegionErrorCode.ERROR_CLIENT_BY_IS_NOT_EXISTED_REGION));
     }
 
-    public List<DistrictVO> findDistrictAll() {
-        return regionRepository.findAllToDistrict();
+    public DistrictResponse findDistrictAll() {
+        List<DistrictVO> list = regionRepository.findAllToDistrict();
+        return DistrictResponse.from(list);
     }
 }
