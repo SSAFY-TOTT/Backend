@@ -21,7 +21,7 @@ public class ShinhanBankController {
 
     MemberService memberService;
     @GetMapping("/searchCreditLine")
-    public ResponseEntity<String> searchCreditLine(
+    public ResponseEntity<Integer> searchCreditLine(
             @Authenticated AuthMember authMember, @RequestParam int houseGtn
     ) {
         Member member = memberService.findById(authMember.getMemberId());
