@@ -28,7 +28,8 @@ public class HouseDetailController {
 
     @GetMapping("/auth/state")
     public ResponseEntity<HouseDetailStateResponse> state(
-            @Authenticated AuthMember authMember, int houseDetailId) {
+            @Authenticated AuthMember authMember,
+            @RequestParam int houseDetailId) {
         HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetailId);
         return ResponseEntity.ok(response);
     }
