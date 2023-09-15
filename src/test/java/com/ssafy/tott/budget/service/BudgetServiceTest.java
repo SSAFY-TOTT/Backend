@@ -40,7 +40,7 @@ class BudgetServiceTest extends ServiceTest {
         BudgetsUpdateRequest request = toRequest(savedMember);
 
         /* When */
-        BudgetsResponse response = budgetService.saveAll(authMember, request);
+        BudgetsResponse response = budgetService.saveAll(authMember, request, 0);
 
         /* Then */
         assertAll(
@@ -53,7 +53,7 @@ class BudgetServiceTest extends ServiceTest {
     @Test
     void findAllTest() {
         /* Given */
-        budgetService.saveAll(authMember, toRequest(savedMember));
+        budgetService.saveAll(authMember, toRequest(savedMember), 0);
 
         /* When */
         BudgetsResponse response = budgetService.findAll(authMember);
