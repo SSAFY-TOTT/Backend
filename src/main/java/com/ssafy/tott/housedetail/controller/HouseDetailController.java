@@ -4,13 +4,11 @@ import com.ssafy.tott.auth.annotation.Authenticated;
 import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.tott.housedetail.data.dto.response.HouseDetailRecentViewResponse;
+import com.ssafy.tott.housedetail.data.dto.response.HouseDetailStateResponse;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/house")
 @RequiredArgsConstructor
@@ -28,5 +26,10 @@ public class HouseDetailController {
     }
     /* TODO: 2023/09/12 GeoId로 조회 */
 
-
+    @GetMapping("/auth/state")
+    public ResponseEntity<HouseDetailStateResponse> state(
+            @Authenticated AuthMember authMember, int houseDetailId) {
+        HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetailId);
+        return ResponseEntity.ok(response);
+    }
 }
