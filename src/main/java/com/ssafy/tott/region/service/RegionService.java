@@ -2,6 +2,7 @@ package com.ssafy.tott.region.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
+import com.ssafy.tott.region.data.vo.DistrictVO;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.exception.RegionErrorCode;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -36,5 +38,9 @@ public class RegionService {
     public Region findByFilter(RegionFilterCond cond) {
         return regionRepository.findByFilterCond(cond)
                 .orElseThrow(() -> new RegionException(RegionErrorCode.ERROR_CLIENT_BY_IS_NOT_EXISTED_REGION));
+    }
+
+    public List<DistrictVO> findDistrictAll() {
+        return regionRepository.findAllToDistrict();
     }
 }
