@@ -1,8 +1,10 @@
 package com.ssafy.tott.api.seoulopendata.service;
 
+import com.ssafy.tott.api.seoulopendata.data.cond.ExistByDetailCond;
 import com.ssafy.tott.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.tott.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
+import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.service.HouseDetailService;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.housegeo.service.HouseGeoService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -56,6 +59,12 @@ public class SeoulOpenDataService {
             try {
                 Region region = regionService.getRegion(row);
                 HouseGeo houseGeo = houseGeoService.getHouseGeo(row, region);
+                Optional<HouseDetail> optionalHouseDetail =
+                        houseDetailService.findByDataCond(ExistByDetailCond.from(row));
+                if (optionalHouseDetail.isPresent()) {
+                    optionalHouseDetail.get().modifyUpdateDateByNow();
+                    continue;
+                }
                 houseDetailService.saveHouseDetail(row, houseGeo);
             } catch (IndexOutOfBoundsException ignored) {
             }
