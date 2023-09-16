@@ -75,6 +75,36 @@ class HouseDetailServiceTest extends ServiceTest {
         assertThat(response.getHouseDetailList()).hasSize(2);
     }
 
+    @DisplayName("사용자가 입력한 추가 자산의 총 액과 매물액에 따른 전세 대출 한도액을 조회한다.")
+    @Test
+    void searchStateTestSuccess() {
+        /* Given */
+        AuthMember authMember = new AuthMember(member.getId());
+
+        long budgetSum = 0L;
+        budgetSum += budgetRepository.save(BudgetFixture.ONE_MILLION_WON.toBudget(member)).getMoney();
+        budgetSum += budgetRepository.save(BudgetFixture.TEN_MILLION_WON.toBudget(member)).getMoney();
+        budgetSum += budgetRepository.save(BudgetFixture.ONE_HUNDRED_MILLION_WON.toBudget(member)).getMoney();
+
+        long creditLine = shinhanBankAPI.fetchSearchCreditLineAPI(
+                "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
+                "04513",
+                houseDetail.getPrice(),
+                member.getAnnualIncome()
+        ).getCreditLine() * 10000L;
+
+        houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo));
+
+        HouseDetailStateResponse result = HouseDetailStateResponse.of(0L, budgetSum, creditLine);
+
+        /* When */
+        HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetail.getPrice());
+
+        /* Then */
+        assertThat(response.getAmount()).isZero();
+        assertThat(response.getBudget()).isEqualTo(result.getBudget());
+    }
+
     @DisplayName("HouseDetail을 Id로 조회한다.")
     @Nested
     class FindByIdTest {
@@ -104,35 +134,5 @@ class HouseDetailServiceTest extends ServiceTest {
                     .hasMessageContaining(
                             HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED.getMessage());
         }
-    }
-
-    @DisplayName("사용자가 입력한 추가 자산의 총 액과 매물액에 따른 전세 대출 한도액을 조회한다.")
-    @Test
-    void searchStateTestSuccess() {
-        /* Given */
-        AuthMember authMember = new AuthMember(member.getId());
-
-        long budgetSum = 0L;
-        budgetSum += budgetRepository.save(BudgetFixture.ONE_MILLION_WON.toBudget(member)).getMoney();
-        budgetSum += budgetRepository.save(BudgetFixture.TEN_MILLION_WON.toBudget(member)).getMoney();
-        budgetSum += budgetRepository.save(BudgetFixture.ONE_HUNDRED_MILLION_WON.toBudget(member)).getMoney();
-
-        long creditLine = shinhanBankAPI.fetchSearchCreditLineAPI(
-                "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
-                "04513",
-                houseDetail.getPrice(),
-                member.getAnnualIncome()
-        ).getCreditLine() * 10000L;
-
-        houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo));
-
-        HouseDetailStateResponse result = HouseDetailStateResponse.of(budgetSum, creditLine);
-
-        /* When */
-        HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetail.getId());
-
-        /* Then */
-        assertThat(response.getBudget()).isEqualTo(result.getBudget());
-        assertThat(response.getCreditLine()).isEqualTo(result.getCreditLine());
     }
 }

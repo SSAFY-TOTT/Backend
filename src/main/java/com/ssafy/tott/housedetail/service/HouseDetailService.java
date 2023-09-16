@@ -1,5 +1,6 @@
 package com.ssafy.tott.housedetail.service;
 
+import com.ssafy.tott.account.service.AccountService;
 import com.ssafy.tott.api.seoulopendata.data.cond.ExistByDetailCond;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
@@ -35,6 +36,7 @@ public class HouseDetailService {
     private final ShinhanBankAPI shinhanBankAPI;
     private final BudgetService budgetService;
     private final MemberService memberService;
+    private final AccountService accountService;
 
     /**
      * HouseDetail 데이터를 저장한다.
@@ -64,15 +66,18 @@ public class HouseDetailService {
         return HouseDetailRecentViewResponse.toResponse(findMember, list);
     }
 
-    public HouseDetailStateResponse searchState(AuthMember authMember, int houseDetailId) {
+    public HouseDetailStateResponse searchState(AuthMember authMember, int price) {
         Member member = memberService.findById(authMember.getMemberId());
+        long accountsAmount = accountService.findTotalAmountByMemberId(member);
         BudgetsResponse budgetsResponse = budgetService.findAll(authMember);
-
         long budgetSum = getBudgetSum(budgetsResponse.getBudgets());
-        int price = findById(houseDetailId).getPrice();
 
+        if (price == 0) {
+            return HouseDetailStateResponse.of(accountsAmount, budgetSum);
+        }
 
         return HouseDetailStateResponse.of(
+                accountsAmount,
                 budgetSum,
                 shinhanBankAPI.fetchSearchCreditLineAPI(
                         "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
@@ -81,7 +86,6 @@ public class HouseDetailService {
                         member.getAnnualIncome()
                 ).getCreditLine() * 10000L
         );
-        // (단위) budgetSum: 원, creditLine: 원
     }
 
     private long getBudgetSum(List<BudgetVO> budgetVOList) {
