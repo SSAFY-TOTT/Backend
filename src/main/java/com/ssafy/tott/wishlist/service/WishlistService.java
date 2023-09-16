@@ -61,14 +61,7 @@ public class WishlistService {
     }
 
     public WishlistViewResponse view(int memberId) {
-        /* TODO: 2023/09/13 builder -> from 으로 수정 */
-        List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(memberId).stream().map(wishlist -> WishlistVO.builder()
-                .price(wishlist.getPrice())
-                .area(wishlist.getArea())
-                .buildingName(wishlist.getBuildingName())
-                .districtName(wishlist.getDistrictName())
-                .legalDongName(wishlist.getLegalDongName())
-                .build()).collect(Collectors.toList());
+        List<WishlistVO> wishlistVOList = wishlistRepository.findByMemberId(memberId);
         return WishlistViewResponse.from(wishlistVOList);
     }
 

@@ -43,7 +43,7 @@ public class HouseGeo extends BaseEntity {
     @Column(nullable = false)
     private int constructionYear;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 100, nullable = false)
     private String buildingName;
 
     @Column(length = 30, nullable = false)

@@ -14,7 +14,7 @@ class PhoneNumberTest {
     @Test
     void success() {
         /* Given */
-        String vaildPhoneNumberString = "12345678";
+        String vaildPhoneNumberString = "01012345678";
 
         /* When */
         PhoneNumber phoneNumber = PhoneNumber.from(vaildPhoneNumberString);
@@ -27,7 +27,7 @@ class PhoneNumberTest {
 
     @DisplayName("올바른 형식의 전화번호를 입력하지 않으면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(strings = {"123456789", "일이삼사오육칠팔", "1234567*", "abcdefggh", "1234"})
+    @ValueSource(strings = {"123456789", "일이삼사오육칠팔", "0101234567*", "010abcdefggh", "1234"})
     void fail(String invalidPhoneNumber) {
         /* Given */
         /* When */

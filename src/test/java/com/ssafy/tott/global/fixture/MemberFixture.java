@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Getter
 public enum MemberFixture {
     SHINHAN(
-            "김신한", "shinhan1234@gmail.com", "Password1234!@", "12345678", BankCode.SHINHAN, "1234567890"),
+            "김신한", "shinhan1234@gmail.com", "Password1234!@", "01012345678", BankCode.SHINHAN, "1234567890"),
     JEONGUK(
-            "김정욱", "workju1124@gmail.com", "Password123!@", "64817041", BankCode.SHINHAN, "110545895267");
+            "김정욱", "workju1124@gmail.com", "Password123!@", "01064817041", BankCode.SHINHAN, "110545895267");
 
     private String name;
     private String email;
