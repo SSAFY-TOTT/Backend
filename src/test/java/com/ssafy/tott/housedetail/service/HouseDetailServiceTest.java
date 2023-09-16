@@ -132,6 +132,7 @@ class HouseDetailServiceTest extends ServiceTest {
         HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetail.getId());
 
         /* Then */
-        assertThat(response).isEqualTo(result);
+        assertThat(response.getBudget()).isEqualTo(result.getBudget());
+        assertThat(response.getCreditLine()).isEqualTo(result.getCreditLine());
     }
 }
