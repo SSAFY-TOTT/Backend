@@ -22,8 +22,8 @@ public class ShinhanBankSearchAccountsResponseAccount {
     /* 데이터 가공을 위한 계좌 정보 생성기 */
     public void initAccount() {
         accountNumber = String.format("%14d", randomNumberByLongType(100000000000000L));
-        long randomAmount = randomNumberByLongType(1000000000L);
-        amount = String.valueOf(Math.max(randomAmount, 100000000 + randomAmount));
+        long randomAmount = randomNumberByLongType(100_000_000L);
+        amount = String.valueOf(Math.max(randomAmount, 10_000_000 + randomAmount));
     }
 
     private Long randomNumberByLongType(Long bound) {
