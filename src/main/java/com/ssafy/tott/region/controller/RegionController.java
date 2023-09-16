@@ -3,6 +3,7 @@ package com.ssafy.tott.region.controller;
 import com.ssafy.tott.auth.annotation.Authenticated;
 import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.region.data.dto.response.DistrictResponse;
+import com.ssafy.tott.region.data.dto.response.LegalDongResponse;
 import com.ssafy.tott.region.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,10 @@ public class RegionController {
         return ResponseEntity.ok(response);
     }
 
-    /* TODO: 2023/09/15 법정동 코드 */
     @GetMapping("/auth/find/legal")
     public ResponseEntity<?> searchLegalDong(@Authenticated AuthMember authMember,
                                              @RequestParam int districtCode) {
-
-        return ResponseEntity.ok().build();
+        LegalDongResponse response = regionService.findLegalDongAll(districtCode);
+        return ResponseEntity.ok(response);
     }
 }

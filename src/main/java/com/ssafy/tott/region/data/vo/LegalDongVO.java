@@ -18,5 +18,4 @@ public class LegalDongVO {
                 .name(region.getLegalDongName())
                 .build();
     }
-
 }

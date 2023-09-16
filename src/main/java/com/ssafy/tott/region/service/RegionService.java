@@ -3,7 +3,9 @@ package com.ssafy.tott.region.service;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.region.data.cond.RegionFilterCond;
 import com.ssafy.tott.region.data.dto.response.DistrictResponse;
+import com.ssafy.tott.region.data.dto.response.LegalDongResponse;
 import com.ssafy.tott.region.data.vo.DistrictVO;
+import com.ssafy.tott.region.data.vo.LegalDongVO;
 import com.ssafy.tott.region.domain.Region;
 import com.ssafy.tott.region.domain.RegionRepository;
 import com.ssafy.tott.region.exception.RegionErrorCode;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,5 +47,12 @@ public class RegionService {
     public DistrictResponse findDistrictAll() {
         List<DistrictVO> list = regionRepository.findAllToDistrict();
         return DistrictResponse.from(list);
+    }
+
+    public LegalDongResponse findLegalDongAll(int districtCode) {
+        List<Region> regions = regionRepository.findAllToLegalDong(districtCode);
+        return LegalDongResponse.from(regions.stream()
+                .map(LegalDongVO::from)
+                .collect(Collectors.toList()));
     }
 }
