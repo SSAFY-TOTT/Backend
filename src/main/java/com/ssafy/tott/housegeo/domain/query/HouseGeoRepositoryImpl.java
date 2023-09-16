@@ -5,7 +5,6 @@ import com.ssafy.tott.housegeo.data.cond.HouseGeoFilterCond;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.util.List;
 
 import static com.ssafy.tott.housedetail.domain.QHouseDetail.houseDetail;
@@ -30,7 +29,7 @@ public class HouseGeoRepositoryImpl implements HouseGeoRepositoryCustom {
                 .where(houseGeo.buildingType.in(cond.getTypes()))
                 .where(houseDetail.area.between(cond.getMinArea(), cond.getMaxArea()))
                 .where(houseDetail.price.between(cond.getMinPrice(), cond.getMaxPrice()))
-                .where(houseDetail.updateDate.eq(LocalDate.now()))
+//                .where(houseDetail.updateDate.eq(LocalDate.now()))    // TimeZone 설정으로 인한 주석 처리
                 .fetch();
     }
 }
