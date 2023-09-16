@@ -1,22 +1,22 @@
 package com.ssafy.tott.wishlist.dto.response;
 
 import com.ssafy.tott.wishlist.vo.WishlistVO;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class WishlistViewResponse {
     private List<WishlistVO> wishlistVOList;
+    private int resultCount;
 
-    private WishlistViewResponse(List<WishlistVO> wishlistVOList) {
-        this.wishlistVOList = wishlistVOList;
-    }
-
-    public static WishlistViewResponse from(List<WishlistVO> wishlistVOList) {
-        return new WishlistViewResponse(wishlistVOList);
+    public static WishlistViewResponse from(List<WishlistVO> list) {
+        return WishlistViewResponse.builder()
+                .wishlistVOList(list)
+                .resultCount(list.size())
+                .build();
     }
 }

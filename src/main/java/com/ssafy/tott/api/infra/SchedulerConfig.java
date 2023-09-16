@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class SchedulerConfig {
     private final SeoulOpenDataService seoulOpenDataService;
 
-    @Scheduled(cron = "${schedules.cron.reward.publish}") /* 01:00 Start*/
+        @Scheduled(cron = "${schedules.cron.reward.publish}") /* 01:00 Start*/
 //    @Scheduled(fixedDelay = 1000 * 60 * 60 * 24, initialDelay = 3000)   /* 3초후 시작, 24시간 후 업데이트 */
     void runHouseDataJob() {
         seoulOpenDataService.fetchHouseData(100);

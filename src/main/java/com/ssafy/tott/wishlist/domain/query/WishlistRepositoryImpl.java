@@ -25,12 +25,18 @@ public class WishlistRepositoryImpl implements WishlistRepositoryCustom {
     @Override
     public List<WishlistVO> findByMemberId(int memberId) {
         return query.select(new QWishlistVO(
-                        wishlist.id,
-                        houseDetail.price,
-                        houseDetail.area,
-                        houseGeo.buildingName,
-                        region.legalDongName,
-                        region.districtName)
+                                houseDetail.id,
+                                region.districtName,
+                                region.legalDongName,
+                                houseGeo.buildingName,
+                                houseGeo.latitude,
+                                houseGeo.longitude,
+                                houseDetail.area,
+                                houseDetail.price,
+                                houseGeo.constructionYear,
+                                houseDetail.floor,
+                                houseGeo.buildingType
+                        )
                 )
                 .from(wishlist)
                 .join(wishlist.member, member)
