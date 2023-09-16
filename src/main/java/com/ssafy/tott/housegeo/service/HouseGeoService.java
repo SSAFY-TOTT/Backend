@@ -38,16 +38,13 @@ public class HouseGeoService {
      * @return HouseGeo 참조
      */
     public HouseGeo getHouseGeo(RentRow row, Region region) {
-        Optional<HouseGeo> houseGeo =
-                houseGeoRepository.findByMainNumberAndSubNumber(
-                        Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()));
-        return houseGeo.orElseGet(
-                () -> {
-                    Documents position =
-                            kakaoMapFetchAPI.kakaoAddressSearch(
-                                    row.getSggNm(), row.getBjdongNm(), row.getBobn(), row.getBubn());
-                    return houseGeoRepository.save(houseGeoMapper.toEntity(row, position, region));
-                });
+        Optional<HouseGeo> houseGeo = houseGeoRepository.findByMainNumberAndSubNumber(
+                Integer.parseInt(row.getBobn()), Integer.parseInt(row.getBubn()));
+        return houseGeo.orElseGet(() -> {
+            Documents position = kakaoMapFetchAPI.kakaoAddressSearch(
+                    row.getSggNm(), row.getBjdongNm(), row.getBobn(), row.getBubn());
+            return houseGeoRepository.save(houseGeoMapper.toEntity(row, position, region));
+        });
     }
 
     public HouseGeoSearchResponse findByFilter(GeoSearchRequest request) {

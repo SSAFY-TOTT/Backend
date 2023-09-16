@@ -56,6 +56,8 @@ public class SeoulOpenDataService {
             try {
                 Region region = regionService.getRegion(row);
                 HouseGeo houseGeo = houseGeoService.getHouseGeo(row, region);
+                /* TODO: 2023/09/16 해당 매물이 이미 존재한다면 시간만 업데이트 */
+
                 houseDetailService.saveHouseDetail(row, houseGeo);
             } catch (IndexOutOfBoundsException ignored) {
             }
