@@ -1,5 +1,6 @@
 package com.ssafy.tott.housedetail.service;
 
+import com.ssafy.tott.api.seoulopendata.data.cond.ExistByDetailCond;
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
 import com.ssafy.tott.auth.vo.AuthMember;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -84,5 +86,9 @@ public class HouseDetailService {
 
     private long getBudgetSum(List<BudgetVO> budgetVOList) {
         return budgetVOList.stream().mapToLong(BudgetVO::getMoney).sum();
+    }
+
+    public Optional<HouseDetail> findByDataCond(ExistByDetailCond cond) {
+        return houseDetailRepository.findByDataCond(cond);
     }
 }
