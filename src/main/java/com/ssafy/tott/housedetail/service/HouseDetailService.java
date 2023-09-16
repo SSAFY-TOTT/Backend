@@ -65,12 +65,12 @@ public class HouseDetailService {
     }
 
     public HouseDetailStateResponse searchState(AuthMember authMember, int houseDetailId) {
+        Member member = memberService.findById(authMember.getMemberId());
         BudgetsResponse budgetsResponse = budgetService.findAll(authMember);
 
         long budgetSum = getBudgetSum(budgetsResponse.getBudgets());
         int price = findById(houseDetailId).getPrice();
 
-        Member member = memberService.findById(authMember.getMemberId());
 
         return HouseDetailStateResponse.of(
                 budgetSum,
