@@ -25,8 +25,8 @@ public class RegionController {
     }
 
     @GetMapping("/auth/find/legal")
-    public ResponseEntity<?> searchLegalDong(@Authenticated AuthMember authMember,
-                                             @RequestParam int districtCode) {
+    public ResponseEntity<LegalDongResponse> searchLegalDong(@Authenticated AuthMember authMember,
+                                                             @RequestParam int districtCode) {
         LegalDongResponse response = regionService.findLegalDongAll(districtCode);
         return ResponseEntity.ok(response);
     }
