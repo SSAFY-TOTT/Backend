@@ -9,5 +9,8 @@ import java.util.Optional;
 
 public interface RegionRepositoryCustom {
     Optional<Region> findByFilterCond(RegionFilterCond cond);
+
     List<DistrictVO> findAllToDistrict();
+
+    List<Region> findAllToLegalDong(int districtCode);
 }

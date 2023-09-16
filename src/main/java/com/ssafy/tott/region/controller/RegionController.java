@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -23,4 +24,10 @@ public class RegionController {
     }
 
     /* TODO: 2023/09/15 법정동 코드 */
+    @GetMapping("/auth/find/legal")
+    public ResponseEntity<?> searchLegalDong(@Authenticated AuthMember authMember,
+                                             @RequestParam int districtCode) {
+
+        return ResponseEntity.ok().build();
+    }
 }
