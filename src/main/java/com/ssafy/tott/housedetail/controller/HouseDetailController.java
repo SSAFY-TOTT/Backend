@@ -24,7 +24,6 @@ public class HouseDetailController {
         HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(authMember, request);
         return ResponseEntity.ok(response);
     }
-    /* TODO: 2023/09/12 GeoId로 조회 */
 
     @GetMapping("/auth/state")
     public ResponseEntity<HouseDetailStateResponse> state(

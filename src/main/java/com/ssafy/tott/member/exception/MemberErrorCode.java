@@ -10,7 +10,9 @@ public enum MemberErrorCode implements ErrorCode {
     ERROR_CLIENT_WITH_MEMBER_IS_NOT_EXISTED(400, "MEMBER_03", "존재하지 않는 회원입니다."),
     ERROR_CLIENT_BY_MEMBER_IS_EXISTED(400, "MEMBER_04", "이미 가입된 회원입니다."),
     ERROR_CLIENT_BY_PASSWORD_IS_NOT_SAME_VALID_PASSWORD(400, "MEMBER_05", "비밀번호가 일치하지 않습니다."),
-    ERROR_CLIENT_BY_PASSWORD_IS_NOT_VALID(400, "MEMBER_06", "유효하지 않은 비밀번호 형식입니다.");
+    ERROR_CLIENT_BY_PASSWORD_IS_NOT_VALID(400, "MEMBER_06", "유효하지 않은 비밀번호 형식입니다."),
+    ERROR_CLIENT_BY_EMAIL_IS_NOT_VALID(400, "MEMBER_07", "유효하지 않은 이메일 형식입니다."),
+    ;
     private final int statusCode;
     private final String errorCode;
     private final String message;
