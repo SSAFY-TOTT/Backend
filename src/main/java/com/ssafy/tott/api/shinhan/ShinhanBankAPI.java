@@ -92,8 +92,6 @@ public class ShinhanBankAPI {
                 key, ShinhanBankSearchCreditLineRequestBody.of(
                         serviceKey, linkedTransactionInformation, housingLocationCode, rentGtn, annualIncome));
 
-
-
         ShinhanBankSearchCreditLineResponse response = searchCreditLineFetchAPI.fetchAPI(
                 ShinhanBankSearchCreditLineRequest.toRequest(convertRequestToJson(request)));
 
