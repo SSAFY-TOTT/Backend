@@ -31,12 +31,11 @@ public class BudgetService {
         budgetRepository.deleteAllByMember(member);
 
         List<Budget> budgets = toBudgets(member, request);
-
         List<Budget> savedBudgets = budgetRepository.saveAll(budgets);
         memberService.updateAnnualIncome(member, request.getAnnualIncome());
 
         return new BudgetsResponse(
-                savedBudgets.stream().map(BudgetVO::from).collect(Collectors.toList()));
+                savedBudgets.stream().map(BudgetVO::from).collect(Collectors.toList()), member.getAnnualIncome());
     }
 
     private List<Budget> toBudgets(Member member, BudgetsUpdateRequest request) {
@@ -56,6 +55,8 @@ public class BudgetService {
 
         List<Budget> budgets = budgetRepository.findByMember(member);
 
-        return new BudgetsResponse(budgets.stream().map(BudgetVO::from).collect(Collectors.toList()));
+        return BudgetsResponse.of(
+                budgets.stream().map(BudgetVO::from).collect(Collectors.toList()),
+                member.getAnnualIncome());
     }
 }
