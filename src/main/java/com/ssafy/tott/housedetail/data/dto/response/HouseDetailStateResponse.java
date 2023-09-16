@@ -4,6 +4,7 @@ import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder
 @Getter
 public class HouseDetailStateResponse {

@@ -1,10 +1,14 @@
 package com.ssafy.tott.housedetail.service;
 
+import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
 import com.ssafy.tott.auth.vo.AuthMember;
+import com.ssafy.tott.budget.domain.BudgetRepository;
+import com.ssafy.tott.budget.fixture.BudgetFixture;
 import com.ssafy.tott.global.config.ServiceTest;
 import com.ssafy.tott.global.fixture.MemberFixture;
 import com.ssafy.tott.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.tott.housedetail.data.dto.response.HouseDetailRecentViewResponse;
+import com.ssafy.tott.housedetail.data.dto.response.HouseDetailStateResponse;
 import com.ssafy.tott.housedetail.domain.HouseDetail;
 import com.ssafy.tott.housedetail.domain.HouseDetailRepository;
 import com.ssafy.tott.housedetail.exception.HouseDetailErrorCode;
@@ -33,16 +37,19 @@ class HouseDetailServiceTest extends ServiceTest {
     @Autowired
     private HouseDetailService houseDetailService;
     @Autowired
+    private ShinhanBankAPI shinhanBankAPI;
+    @Autowired
     private HouseDetailRepository houseDetailRepository;
     @Autowired
     private HouseGeoRepository houseGeoRepository;
     @Autowired
     private RegionRepository regionRepository;
+    @Autowired
+    private BudgetRepository budgetRepository;
 
     private Member member;
     private HouseGeo geo;
     private HouseDetail houseDetail;
-
 
     @BeforeEach
     void setup() {
@@ -97,5 +104,34 @@ class HouseDetailServiceTest extends ServiceTest {
                     .hasMessageContaining(
                             HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED.getMessage());
         }
+    }
+
+    @DisplayName("사용자가 입력한 추가 자산의 총 액과 매물액에 따른 전세 대출 한도액을 조회한다.")
+    @Test
+    void searchStateTestSuccess() {
+        /* Given */
+        AuthMember authMember = new AuthMember(member.getId());
+
+        long budgetSum = 0L;
+        budgetSum += budgetRepository.save(BudgetFixture.ONE_MILLION_WON.toBudget(member)).getMoney();
+        budgetSum += budgetRepository.save(BudgetFixture.TEN_MILLION_WON.toBudget(member)).getMoney();
+        budgetSum += budgetRepository.save(BudgetFixture.ONE_HUNDRED_MILLION_WON.toBudget(member)).getMoney();
+
+        long creditLine = shinhanBankAPI.fetchSearchCreditLineAPI(
+                "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
+                "04513",
+                houseDetail.getPrice(),
+                member.getAnnualIncome()
+        ).getCreditLine() * 10000L;
+
+        houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo));
+
+        HouseDetailStateResponse result = HouseDetailStateResponse.of(budgetSum, creditLine);
+
+        /* When */
+        HouseDetailStateResponse response = houseDetailService.searchState(authMember, houseDetail.getId());
+
+        /* Then */
+        assertThat(response).isEqualTo(result);
     }
 }
