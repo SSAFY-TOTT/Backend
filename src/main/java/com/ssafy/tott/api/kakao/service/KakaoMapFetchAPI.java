@@ -53,12 +53,10 @@ public class KakaoMapFetchAPI implements FetchAPICore {
         KakaoAPIRequest kakaoAPIRequest = (KakaoAPIRequest) request;
         return kakaoWebClient
                 .method(kakaoAddressProperties.getMethod())
-                .uri(
-                        builder ->
-                                builder
-                                        .path(kakaoAddressProperties.getPath())
-                                        .queryParam("query", kakaoAPIRequest.getQuery())
-                                        .build())
+                .uri(builder -> builder
+                        .path(kakaoAddressProperties.getPath())
+                        .queryParam("query", kakaoAPIRequest.getQuery())
+                        .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(KakaoAPIResponse.class)
