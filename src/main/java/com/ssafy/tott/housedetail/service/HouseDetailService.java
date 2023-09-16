@@ -2,7 +2,6 @@ package com.ssafy.tott.housedetail.service;
 
 import com.ssafy.tott.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.tott.api.shinhan.ShinhanBankAPI;
-import com.ssafy.tott.auth.annotation.Authenticated;
 import com.ssafy.tott.auth.vo.AuthMember;
 import com.ssafy.tott.budget.data.dto.response.BudgetsResponse;
 import com.ssafy.tott.budget.data.vo.BudgetVO;
@@ -20,7 +19,6 @@ import com.ssafy.tott.housedetail.mapper.HouseDetailMapper;
 import com.ssafy.tott.housegeo.domain.HouseGeo;
 import com.ssafy.tott.member.domain.Member;
 import com.ssafy.tott.member.service.MemberService;
-import com.ssafy.tott.wishlist.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,6 @@ import java.util.stream.Collectors;
 public class HouseDetailService {
     private final HouseDetailRepository houseDetailRepository;
     private final HouseDetailMapper houseDetailMapper;
-    private final WishlistService wishlistService;
     private final ShinhanBankAPI shinhanBankAPI;
     private final BudgetService budgetService;
     private final MemberService memberService;
@@ -65,7 +62,7 @@ public class HouseDetailService {
         return HouseDetailRecentViewResponse.toResponse(findMember, list);
     }
 
-    public HouseDetailStateResponse searchState(@Authenticated AuthMember authMember, int houseDetailId) {
+    public HouseDetailStateResponse searchState(AuthMember authMember, int houseDetailId) {
         BudgetsResponse budgetsResponse = budgetService.findAll(authMember);
 
         long budgetSum = getBudgetSum(budgetsResponse.getBudgets());
@@ -74,15 +71,14 @@ public class HouseDetailService {
         Member member = memberService.findById(authMember.getMemberId());
 
         return HouseDetailStateResponse.of(
-                wishlistService.check(authMember.getMemberId(), houseDetailId).isWishlist(),
                 budgetSum,
                 shinhanBankAPI.fetchSearchCreditLineAPI(
                         "/Yqu0KRktzwFOQn2Yv//k254smViUMSf/0Z+z9XMIOFl8cv4OS3ZQHRIHufe61jEqLJNsOANugmvpVGpRwGdjg==",
                         "04513",
                         price,
-                        member.getAnnualIncome())
-                        .getCreditLine() * 10000L
-                );
+                        member.getAnnualIncome()
+                ).getCreditLine() * 10000L
+        );
         // (단위) budgetSum: 원, creditLine: 원
     }
 
