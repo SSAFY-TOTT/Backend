@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum APIErrorCode implements ErrorCode {
     ERROR_SERVER_BY_JSON_PROCESSING(500, "API_01", "내부 서버 오류 입니다."),
-    ERROR_SERVER_BY_OUTER_API_SERVER(500, "API_02", "API 서버 오류 입니다.");
+    ERROR_SERVER_BY_OUTER_API_SERVER(500, "API_02", "API 서버 오류 입니다."),
+    ERROR_SERVER_BY_API_KEY_IS_NOT_VALID(500, "API_03", "올바르지 않은 API 키 입니다."),
+    ;
 
     private int statusCode;
     private String errorCode;
