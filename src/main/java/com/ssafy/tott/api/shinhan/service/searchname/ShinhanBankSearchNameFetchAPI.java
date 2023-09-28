@@ -1,24 +1,30 @@
 package com.ssafy.tott.api.shinhan.service.searchname;
 
+import com.ssafy.tott.account.domain.BankCode;
 import com.ssafy.tott.api.core.FetchAPICore;
 import com.ssafy.tott.api.core.dto.APIRequest;
 import com.ssafy.tott.api.exception.APIErrorCode;
 import com.ssafy.tott.api.exception.APIException;
 import com.ssafy.tott.api.shinhan.dto.request.ShinhanBankAPIRequest;
+import com.ssafy.tott.api.shinhan.dto.response.header.ResponseDataHeader;
 import com.ssafy.tott.api.shinhan.factory.ShinhanBankWebClientFactory;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequest;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.request.ShinhanBankSearchNameRequestDataBody;
 import com.ssafy.tott.api.shinhan.service.searchname.dto.response.ShinhanBankSearchNameResponse;
+import com.ssafy.tott.api.shinhan.service.searchname.dto.response.body.ShinhanBankSearchNameResponseDataBody;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class ShinhanBankSearchNameFetchAPI implements FetchAPICore {
     private final ShinhanBankWebClientFactory shinhanBankWebClientFactory;
 
@@ -30,14 +36,16 @@ public class ShinhanBankSearchNameFetchAPI implements FetchAPICore {
 
     @Override
     public ShinhanBankSearchNameResponse fetchAPI(APIRequest json) {
-        ShinhanBankSearchNameRequest shinhanBankSearchNameRequest = (ShinhanBankSearchNameRequest) json;
-        WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
-        return webClient
-                .post()
-                .bodyValue(shinhanBankSearchNameRequest.getJson())
-                .retrieve()
-                .bodyToMono(ShinhanBankSearchNameResponse.class)
-                .block();
+        return dummyFetchAPI(json);
+        /* 원래라면 정상 동작하는 코드이지만 현재는 비활성화 되어서 주석 처리 */
+//        ShinhanBankSearchNameRequest shinhanBankSearchNameRequest = (ShinhanBankSearchNameRequest) json;
+//        WebClient webClient = shinhanBankWebClientFactory.createWebClientWithURI(uri);
+//        return webClient
+//                .post()
+//                .bodyValue(shinhanBankSearchNameRequest.getJson())
+//                .retrieve()
+//                .bodyToMono(ShinhanBankSearchNameResponse.class)
+//                .block();
     }
 
     private ShinhanBankSearchNameResponse dummyFetchAPI(APIRequest request) {
@@ -45,6 +53,7 @@ public class ShinhanBankSearchNameFetchAPI implements FetchAPICore {
             ShinhanBankSearchNameRequest shinhanBankSearchNameRequest = (ShinhanBankSearchNameRequest) request;
             ShinhanBankAPIRequest searchNameRequest = parseByJson(shinhanBankSearchNameRequest.getJson());
             validateApiKey(searchNameRequest.getDataHeader().getApikey());
+            return sendResponse((ShinhanBankSearchNameRequestDataBody) searchNameRequest.getShinhanBankDataBody());
         }
         throw new APIException(APIErrorCode.ERROR_SERVER_BY_JSON_PROCESSING);
     }
@@ -55,7 +64,7 @@ public class ShinhanBankSearchNameFetchAPI implements FetchAPICore {
             JSONObject object = (JSONObject) parser.parse(json);
             JSONObject dataHeader = (JSONObject) object.get("dataHeader");
             JSONObject dataBody = (JSONObject) object.get("dataBody");
-            String apiKey = (String) dataHeader.get("apiKey");
+            String apiKey = (String) dataHeader.get("apikey");
             String bankCode = (String) dataBody.get("입금은행코드");
             String account = (String) dataBody.get("입금계좌번호");
             return ShinhanBankAPIRequest.of(apiKey, ShinhanBankSearchNameRequestDataBody.of(bankCode, account));
@@ -68,5 +77,19 @@ public class ShinhanBankSearchNameFetchAPI implements FetchAPICore {
         if (!apiKey.equals(validateKey)) {
             throw new APIException(APIErrorCode.ERROR_SERVER_BY_API_KEY_IS_NOT_VALID);
         }
+    }
+
+    private ShinhanBankSearchNameResponse sendResponse(ShinhanBankSearchNameRequestDataBody dataBody) {
+        if (validateDataBody(dataBody)) {
+            return ShinhanBankSearchNameResponse.of(ResponseDataHeader.from("1"),
+                    ShinhanBankSearchNameResponseDataBody.of(dataBody.getBankCode(), dataBody.getAccount(), null));
+        }
+        return ShinhanBankSearchNameResponse.of(ResponseDataHeader.from("0"),
+                ShinhanBankSearchNameResponseDataBody.of(dataBody.getBankCode(), dataBody.getAccount(), "김신한"));
+    }
+
+    private boolean validateDataBody(ShinhanBankSearchNameRequestDataBody dataBody) {
+        return !dataBody.getBankCode().equals(BankCode.SHINHAN.getCode()) ||
+                !Pattern.matches("\\d{10,14}", dataBody.getAccount());
     }
 }

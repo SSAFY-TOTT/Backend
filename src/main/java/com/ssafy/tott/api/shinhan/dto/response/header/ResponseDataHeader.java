@@ -16,4 +16,14 @@ public class ResponseDataHeader {
 
     @JsonProperty("resultMessage")
     private String resultMessage;
+
+    private ResponseDataHeader(String successCode) {
+        this.successCode = successCode;
+        this.resultCode = "";
+        this.resultMessage = "";
+    }
+
+    public static ResponseDataHeader from(String successCode) {
+        return new ResponseDataHeader(successCode);
+    }
 }

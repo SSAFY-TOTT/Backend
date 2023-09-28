@@ -18,4 +18,8 @@ public abstract class ShinhanBankAPIResponse implements APIResponse {
     public boolean isFailed() {
         return dataHeader.getSuccessCode().equals(ERROR_CODE);
     }
+
+    protected void setDataHeader(ResponseDataHeader dataHeader) {
+        this.dataHeader = dataHeader;
+    }
 }
