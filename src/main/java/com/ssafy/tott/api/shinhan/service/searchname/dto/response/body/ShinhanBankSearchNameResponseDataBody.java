@@ -17,4 +17,14 @@ public class ShinhanBankSearchNameResponseDataBody extends ShinhanBankDataBody {
 
     @JsonProperty("입금계좌성명")
     private String accountOwnerName;
+
+    private ShinhanBankSearchNameResponseDataBody(String bankCode, String account, String accountOwnerName) {
+        this.bankCode = bankCode;
+        this.account = account;
+        this.accountOwnerName = accountOwnerName;
+    }
+
+    public static ShinhanBankSearchNameResponseDataBody of(String bankCode, String account, String accountOwnerName) {
+        return new ShinhanBankSearchNameResponseDataBody(bankCode, account, accountOwnerName);
+    }
 }
